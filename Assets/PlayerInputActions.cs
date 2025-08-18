@@ -108,6 +108,15 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ThrowBalloon"",
+                    ""type"": ""Value"",
+                    ""id"": ""1d7a2d3a-da1e-4527-9ec9-11971fdcf08d"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -124,8 +133,8 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""997ec574-12a0-4520-adca-c91b525d4925"",
-                    ""path"": """",
+                    ""id"": ""3de96f1f-0037-4c12-96e8-952b6797febb"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -135,12 +144,12 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3de96f1f-0037-4c12-96e8-952b6797febb"",
-                    ""path"": ""<Keyboard>/w"",
+                    ""id"": ""24f27873-900c-44dd-acc9-4e81e2f62691"",
+                    ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Dash"",
+                    ""action"": ""ThrowBalloon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -153,6 +162,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+        m_Player_ThrowBalloon = m_Player.FindAction("ThrowBalloon", throwIfNotFound: true);
     }
 
     ~@InputMap()
@@ -235,6 +245,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Dash;
+    private readonly InputAction m_Player_ThrowBalloon;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -254,6 +265,10 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Dash".
         /// </summary>
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/ThrowBalloon".
+        /// </summary>
+        public InputAction @ThrowBalloon => m_Wrapper.m_Player_ThrowBalloon;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -286,6 +301,9 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
+            @ThrowBalloon.started += instance.OnThrowBalloon;
+            @ThrowBalloon.performed += instance.OnThrowBalloon;
+            @ThrowBalloon.canceled += instance.OnThrowBalloon;
         }
 
         /// <summary>
@@ -303,6 +321,9 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
+            @ThrowBalloon.started -= instance.OnThrowBalloon;
+            @ThrowBalloon.performed -= instance.OnThrowBalloon;
+            @ThrowBalloon.canceled -= instance.OnThrowBalloon;
         }
 
         /// <summary>
@@ -357,5 +378,12 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnDash(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ThrowBalloon" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnThrowBalloon(InputAction.CallbackContext context);
     }
 }
