@@ -1,0 +1,32 @@
+{
+  "name": "com.unity.psn.ps5",
+  "version": "0.0.37-preview",
+  "unity": "2020.3",
+  "displayName": "PS5 PlayStation Network",
+  "description": "Provides the implementation for PSN features on PS5",
+  "keywords": [
+    "psn",
+    "ps5",
+    "playstation"
+  ],
+  "dependencies": {},
+  "_upm": {
+    "changelog": "### Fixed\n   - Fixed issue with MatchRequests.ReportResultsRequest failing to run in the MatchesCommands::ReportResultsImpl native code."
+  },
+  "upmCi": {
+    "footprint": "bf53eca3c818f0bc8d4f94b25e5d5e7cfec6d827"
+  },
+  "documentationUrl": "https://docs.unity3d.com/Packages/com.unity.psn.ps5@0.0/manual/index.html",
+  "repository": {
+    "url": "https://github.cds.internal.unity3d.com/unity/platform.ps5.packages.git",
+    "type": "git",
+    "revision": "2b88b86172214cb4735c973e65ce17dc9426d88f"
+  },
+  "samples": [
+    {
+      "displayName": "PSN Sample",
+      "description": "Shows how to implement the various API's provided by the PSN Package. See the README.md file in the sample for details.",
+      "path": "Samples~/PSNSample"
+    }
+  ]
+}

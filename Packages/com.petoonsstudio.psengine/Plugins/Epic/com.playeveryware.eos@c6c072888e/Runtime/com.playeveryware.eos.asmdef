@@ -1,0 +1,23 @@
+{
+    "name": "com.playeveryware.eos",
+    "rootNamespace": "",
+    "references": [
+        "GUID:be1f6e9efffcfce41aeb5c2f4c27cf75"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "LinuxStandalone64",
+        "WindowsStandalone32",
+        "WindowsStandalone64"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "STANDALONE_EPIC"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

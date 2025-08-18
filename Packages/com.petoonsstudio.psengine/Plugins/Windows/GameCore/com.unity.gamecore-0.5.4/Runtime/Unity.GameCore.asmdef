@@ -1,0 +1,24 @@
+{
+    "name": "Unity.GameCore",
+    "rootNamespace": "",
+    "references": [],
+    "includePlatforms": [
+        "Editor",
+        "GameCoreScarlett",
+        "GameCoreXboxOne"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "Unity",
+            "expression": "[2020.2.0f1,2020.2.6f1]",
+            "define": "GDK_AUGUST_2020_OR_EARLIER"
+        }
+    ],
+    "noEngineReferences": false
+}

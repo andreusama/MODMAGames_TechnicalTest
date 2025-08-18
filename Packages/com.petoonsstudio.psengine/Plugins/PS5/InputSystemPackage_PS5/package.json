@@ -1,0 +1,29 @@
+{
+  "name": "com.unity.inputsystem.ps5",
+  "displayName": "Input System PS5",
+  "version": "0.1.12-preview",
+  "unity": "2019.3",
+  "description": "Provides PS5 Devices classes for new Input System.",
+  "keywords": [
+    "input",
+    "keyboard",
+    "mouse",
+    "gamepad",
+    "touch"
+  ],
+  "dependencies": {
+    "com.unity.inputsystem": "1.6.1"
+  },
+  "_upm": {
+    "changelog": "Set Input System runtime to run in the background. This fixes issues where the InputSystem would not receive input events when the game was not in focus.\nUpdate Input System dependency to version 1.6.1"
+  },
+  "upmCi": {
+    "footprint": "539887a00b9a2dd51b1577301ab44f80352e0e70"
+  },
+  "documentationUrl": "https://docs.unity3d.com/Packages/com.unity.inputsystem.ps5@0.1/manual/index.html",
+  "repository": {
+    "url": "https://github.cds.internal.unity3d.com/unity/platform.ps5.packages.git",
+    "type": "git",
+    "revision": "ef82ecd4401395080116fd8fbdc044a9431b1985"
+  }
+}

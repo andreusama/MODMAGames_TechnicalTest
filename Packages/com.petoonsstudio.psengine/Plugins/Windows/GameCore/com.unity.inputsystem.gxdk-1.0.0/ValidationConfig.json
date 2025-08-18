@@ -1,0 +1,10 @@
+{
+	"SuiteConfig":
+	{
+		"Targets":
+		[
+			"+GameCoreXboxOne",
+			"+GameCoreScarlett"
+		]
+	}
+}

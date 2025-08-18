@@ -1,0 +1,1583 @@
+{
+  "sitemap": {
+    "fileOptions": {},
+    "priority": 0.0,
+    "lastmod": "0001-01-01T00:00:00"
+  },
+  "homepages": [],
+  "source_base_path": "C:/temp/com.unity.savedata.ps5@0.0",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      },
+      "is_incremental": false
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Packages/com.unity.savedata.ps5/Documentation~/CreateSequence.md",
+      "output": {
+        ".html": {
+          "relative_path": "manual/CreateSequence.html",
+          "hash": "ywy5tLDrozhZH+0e/g0Q570rEUqPHQrtrIBVDJGWSn0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Packages/com.unity.savedata.ps5/Documentation~/DialogSequence.md",
+      "output": {
+        ".html": {
+          "relative_path": "manual/DialogSequence.html",
+          "hash": "Hy1FFpXDulJohQ/ioXs983i3J1BvhARn0vz1nlp0NxU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Packages/com.unity.savedata.ps5/Documentation~/ExternalLinks.md",
+      "output": {
+        ".html": {
+          "relative_path": "manual/ExternalLinks.html",
+          "hash": "/9Kn4tLNGj1VfEJ/DcvAJ7tE5ooFUX7m3E0zh/GPk/8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "Packages/com.unity.savedata.ps5/Documentation~/Features.md",
+      "output": {
+        ".html": {
+          "relative_path": "manual/Features.html",
+          "hash": "rB45EL/zjYC4xfITlYWlSVqwM8wa+xju5xjyr8aHUR8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "Packages/com.unity.savedata.ps5/Documentation~/Images/Packman.png",
+      "output": {
+        "resource": {
+          "relative_path": "manual/images/Packman.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "Packages/com.unity.savedata.ps5/Documentation~/Images/SampleTitle.png",
+      "output": {
+        "resource": {
+          "relative_path": "manual/images/SampleTitle.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Packages/com.unity.savedata.ps5/Documentation~/Initialization.md",
+      "output": {
+        ".html": {
+          "relative_path": "manual/Initialization.html",
+          "hash": "ETmdI3S6CZTlSVoJoDE/TK7t5EFC2P9liB5Mun0ag/c="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Packages/com.unity.savedata.ps5/Documentation~/Installation.md",
+      "output": {
+        ".html": {
+          "relative_path": "manual/Installation.html",
+          "hash": "Y3APn/unyRicgz+1iQ4WXmgIsS4CNYAd0ce+A9RMrz4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "Packages/com.unity.savedata.ps5/Documentation~/MakingRequests.md",
+      "output": {
+        ".html": {
+          "relative_path": "manual/MakingRequests.html",
+          "hash": "kX4cMwtSASOSW2u478pUR3l4Oq60Wi3s22QtfwrevSk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Packages/com.unity.savedata.ps5/Documentation~/Sample.md",
+      "output": {
+        ".html": {
+          "relative_path": "manual/Sample.html",
+          "hash": "Xu27JLmUk0pz5DVMN3Hbhbyw4CIMOD1XrG23jUJUpNo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "Packages/com.unity.savedata.ps5/Documentation~/TableOfContents.md",
+      "output": {
+        ".html": {
+          "relative_path": "manual/TableOfContents.html",
+          "hash": "nUSZ9KKWQ2Z3JzXqgvzpdh6dHASzgTZeE/eZG8UjTF4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Packages/com.unity.savedata.ps5/Documentation~/ViewHTML.md",
+      "output": {
+        ".html": {
+          "relative_path": "manual/ViewHTML.html",
+          "hash": "MaV0/AGDlG3YQkDr+WTbGsC2f0Lj5Ru1YmpD+Yatjmk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Packages/com.unity.savedata.ps5/Documentation~/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "manual/index.html",
+          "hash": "jNILtyRf+sWcYIohTOKkc4//S/TzpTDTvl5SLFzYwnY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "Packages/com.unity.savedata.ps5/Documentation~/toc.md",
+      "output": {
+        ".html": {
+          "relative_path": "manual/toc.html",
+          "hash": "l3ylswcVKDVZDDliNQaZ5CUYxdH0Jiua4GjVpVzOQIU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/SaveDataTests.BaseTestFramework.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SaveDataTests.BaseTestFramework.html",
+          "hash": "ZCerhZeDXo7KL3vdk7Ign2dNSOUjABC5ItUvpwaonos="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/SaveDataTests.Tests.TestEnumerateFilesRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SaveDataTests.Tests.TestEnumerateFilesRequest.html",
+          "hash": "hGNct7PB3x2ksc9ZsKB7UPf6aThB85yNBwplfV3zF10="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/SaveDataTests.Tests.TestEnumerateFilesResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SaveDataTests.Tests.TestEnumerateFilesResponse.html",
+          "hash": "egq50bS9ufHNY12gctqU1wMMAvQXr81OyFbVl2orA4I="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/SaveDataTests.Tests.TestReadFilesRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SaveDataTests.Tests.TestReadFilesRequest.html",
+          "hash": "3H+XFllhG7b1UZr+CPpVmG6MQHB3EWNvDWJIHTb0zOk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/SaveDataTests.Tests.TestReadFilesResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SaveDataTests.Tests.TestReadFilesResponse.html",
+          "hash": "XAZ1N9tlR5aEH/xaV1C9mp4pO+jxfuot55qEIGlMjFA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/SaveDataTests.Tests.TestWriteFilesRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SaveDataTests.Tests.TestWriteFilesRequest.html",
+          "hash": "4ifiNGuKjYr0IRtxkuaBtg9MvbFmKvg2Np9uTnpIKbI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/SaveDataTests.Tests.TestWriteFilesResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SaveDataTests.Tests.TestWriteFilesResponse.html",
+          "hash": "3HpN888xBwGpdwQ8lRBnnAoE50p8JduYZuVTE2r4LMk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/SaveDataTests.Tests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SaveDataTests.Tests.html",
+          "hash": "INaxkruj7iwJyOW89ItMJVFm03aOjNA5m3Tmk6d2V0Q="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/SaveDataTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SaveDataTests.html",
+          "hash": "SgNp43eQEJJaginYwVaBhUr3IwtHtPfgdNwI7JcWy+4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Backup.Backups.BackupRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Backup.Backups.BackupRequest.html",
+          "hash": "A5xp51+085dBAzY4muEYlX5+1zHW/aNzUgD8fAN4v0c="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Backup.Backups.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Backup.Backups.html",
+          "hash": "JsI5MMo/O7isC0wJaSUgjl2fWJkBiIXnSe2gqoDnj3M="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Backup.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Backup.html",
+          "hash": "WwUvqrXwc4QdM7IIshzX994klp3SbHqqsjhVpckUTos="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Core.APIResultTypes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Core.APIResultTypes.html",
+          "hash": "D/LcevPgpq5tsRMcJNJNrJFpzmgSSwH7hbPDq+ybV6Q="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Core.BackupNotification.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Core.BackupNotification.html",
+          "hash": "UMpgXjpH8wfgA/vyAmV0mPzsOaSmjzSJ6KW931xAjhk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Core.DirName.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Core.DirName.html",
+          "hash": "xH23i/QuDowCfvhrzUSNKA477vxDD6ymPxgGaphpGps="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Core.EmptyResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Core.EmptyResponse.html",
+          "hash": "QNERt/I+tv3Krf0B6/5WqrmoLhaRyVkbr1ftvc++cEI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Core.Fingerprint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Core.Fingerprint.html",
+          "hash": "F8idPaBsapaLc+HQtf7UcfhE6q4gyWXWPtxFbwjeMC4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Core.FunctionTypes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Core.FunctionTypes.html",
+          "hash": "+9kvoi2vxw6J+yBVLg4SVDiG7m35/9gIi3xwfIKUjjg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Core.PendingRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Core.PendingRequest.html",
+          "hash": "7SBZP/RdhpSkEEzGvJaDIiXIZ30bvxwVTL7fiDROymo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Core.RequestBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Core.RequestBase.html",
+          "hash": "Czy56mIR7WDX5kX1x5ymfucNHzLpQa0uWwo6qMLynig="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Core.ResponseBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Core.ResponseBase.html",
+          "hash": "H40WzjcKipIRuWqB0opUEskBLX/P1XPXyCcZG5xKSy4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Core.ReturnCodes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Core.ReturnCodes.html",
+          "hash": "DKbU7saZIJaY9p6In73eX3rQjuga+5e0hLn/6o6zGps="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Core.SaveDataCallbackEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Core.SaveDataCallbackEvent.html",
+          "hash": "uq8mGulErS1JDFMQLsAqJ+Bw90T/yn8niyvQptA472Y="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Core.SaveDataException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Core.SaveDataException.html",
+          "hash": "Ao3XCpOHmUmserOIm0f048zz8cRES99XPhZ7dPjrkdw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Core.TitleId.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Core.TitleId.html",
+          "hash": "N/QSWbPPxFuU1nmUM+OwdHWgb8HMFOTmqr+8dwEok/Q="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Core.UnmountWithBackupNotification.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Core.UnmountWithBackupNotification.html",
+          "hash": "GZBBC0ayUsig0hRo3hm3hz5MoG2pS3YOrXJfeM93OsY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Core.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Core.html",
+          "hash": "Sz3e/zneZ/EojiN5IrWrF4ifJPt37qeMQmorVS7M8u4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Delete.Deleting.DeleteRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Delete.Deleting.DeleteRequest.html",
+          "hash": "9VCXB4iHR91CTOR4xHC7aDfTl+yqnvz3rxxE0+mcQxY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Delete.Deleting.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Delete.Deleting.html",
+          "hash": "QgCQ46loOD13NllG6HPW/i+qAnyfrfb/TcROOu4SauM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Delete.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Delete.html",
+          "hash": "hjIf2PdqbIsVl2bpntwnPxSIW1Fs1I0j3SQ3fevzEco="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.Animation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.Animation.html",
+          "hash": "HMsVo4G8gGl/auqvZ9G2Ya3S0/9wc4UTLHcycXcfuoo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.AnimationParam.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.AnimationParam.html",
+          "hash": "QAboT02dEP4DDbWmtVOh+Dl8l84cGolABYgAWguiO4s="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.CloseParam.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.CloseParam.html",
+          "hash": "1EJglZWzSZkLPFe2DKDH+UMJqj8p8X0hiSFkShHX/t8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.DialogButtonIds.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.DialogButtonIds.html",
+          "hash": "Pp7/u0ShaDHWAvjKU4c+D3Bu+rNksxODln7wFIL+OFs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.DialogButtonTypes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.DialogButtonTypes.html",
+          "hash": "Tuj7oNzzDsjkGlUe/Q/JmQWR5g4PP7PcB5uEnDH0QQ0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.DialogCallResults.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.DialogCallResults.html",
+          "hash": "lvxanDg4w7dKllu0Mfly48/GJZbgF7VnNyp2ZbcLGYw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.DialogMode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.DialogMode.html",
+          "hash": "ZzvNw85Os4gtsx6olcQahUSAWlpRjuZdTArH/0rlwyw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.DialogResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.DialogResult.html",
+          "hash": "qVVjVEYJMuGTn5qW9x18oOE/T1SkcYk9wiUHWkE0m6M="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.DialogStatus.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.DialogStatus.html",
+          "hash": "Nd8sCvzpgicNQOjuSznMZt7q+hEuwztXtIGReRTYT60="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.DialogType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.DialogType.html",
+          "hash": "BQYNzYjbxve0XyRH09ETy8xIB24Gszlk6acGJCFa5Hg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.ErrorCodeParam.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.ErrorCodeParam.html",
+          "hash": "+M6nKjPOl7Xyyipg9Is+6P1Pk3kZfFYo3lx2qC6Q7gQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.FocusPos.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.FocusPos.html",
+          "hash": "+EG2/esnZNor8zRAeDKhbl+j5FqpTirmTZwtEmNZvb8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.ItemStyle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.ItemStyle.html",
+          "hash": "dYz7mJfflFqjQC8amZjuB2i3UmixlSRtQ3+pkY0xVfs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.Items.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.Items.html",
+          "hash": "xObzbjDn4pzEatBPjr1EpL1aE/9ar9gngvOw7UZOJLQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.NewItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.NewItem.html",
+          "hash": "PFnENf8dYjeTWWiMx0Nnc4tyDApA+eH9HRbQ8KZydig="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.OpenDialogRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.OpenDialogRequest.html",
+          "hash": "QyYfzhPzGBYKjgsdJ6unYhCRQtS6U+LPUewyn3nnHNc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.OpenDialogResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.OpenDialogResponse.html",
+          "hash": "6UUlHihKiaRx+NPORLDZwCXbuew2x4uJiZI9HEezO0M="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.OptionBack.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.OptionBack.html",
+          "hash": "ZCRRIg1ePRhI/P8Q+eHhmW1UjJGRZNIYa+zwd9IOV6k="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.OptionParam.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.OptionParam.html",
+          "hash": "94ZJyk2O0Qg2JPgmB8UhTYD7Ti+M97KbWwdIvPybB94="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.ProgressBarParam.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.ProgressBarParam.html",
+          "hash": "2i1FNCTeXYVHX5DF+WlYpBOhRC39wZVP/8oztjR3rxY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.ProgressBarType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.ProgressBarType.html",
+          "hash": "WD+IRqgQ/+dLMgfrWwAxp6WxFL5u9FV8anL1/ZPssLw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.ProgressSystemMessageType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.ProgressSystemMessageType.html",
+          "hash": "+XUJNxyJqHbfZ0aUNvrBS+ThciW5yskOK62NsyvU1To="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.SystemMessageParam.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.SystemMessageParam.html",
+          "hash": "lqqhUlxG5sG6vD+dp7jehsmjEmc942TsVP5s/GVXpHo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.SystemMessageType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.SystemMessageType.html",
+          "hash": "x+Z4j047pC/lKzdcLeIBv9ur9wl5aQ7vAIzD9oS+8Zc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.UserMessageParam.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.UserMessageParam.html",
+          "hash": "GVn9zXBIWPuo1/v0UryTzDPTiHZmKNQ1KO2dX8vlY8k="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.UserMessageType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.UserMessageType.html",
+          "hash": "ZrQXsLr3rIhnIYSIivIa51ENgCyqUVt/gl5Sfd4rFAA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.Dialogs.html",
+          "hash": "8u+kLGB2bGx8gRD7B9OC8qgorgP7SgaFPcJ0TAcSh8Q="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.SaveDataDialogProcess.AllowNewItemTest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.SaveDataDialogProcess.AllowNewItemTest.html",
+          "hash": "EyifX/zA+NDFyBgGy8nzeMbGFySADKC1T9F74kmuWNU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.SaveDataDialogProcess.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.SaveDataDialogProcess.html",
+          "hash": "iD6H5YXMdIHS/nV8qai+kTDWv1ZrtOGHo6hQKEkIr0Q="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Dialog.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Dialog.html",
+          "hash": "qgGfTvim25QFp0KoHpOh5zuYloK4EEGFtQX0ZokIiGU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Files.Progress.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Files.Progress.html",
+          "hash": "e3SH7YxrtuBX5JuPvSYjgbi3ZfyuvWbR/iE90q8uX1Y="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Files.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Files.html",
+          "hash": "e/pPtOXKnpbprPVLIneUIzXzplXbJ9itXtomMpC2gyM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Info.FileOps.FileOperationRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Info.FileOps.FileOperationRequest.html",
+          "hash": "lrxtT+xGyS2b/WnjxSpVK3GIO2RGUNHGtpTo/2EDlLQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Info.FileOps.FileOperationResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Info.FileOps.FileOperationResponse.html",
+          "hash": "l43xIWRS6o48laodB04BpkEwcRFXlQ2PY5RApTI+Y0M="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Info.FileOps.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Info.FileOps.html",
+          "hash": "OZuwAogEGJ8oXV4iuAw45nxSDW49e5fNVP6GnaBQDLw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Info.Icon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Info.Icon.html",
+          "hash": "G9cpO9Ty4jWBKBUs/laPRf+pAx6eQiSoZEWvcp5/IYM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Info.SaveDataInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Info.SaveDataInfo.html",
+          "hash": "Y7e+YDxj2Bu/CQKkhwxJoHqMxMy7rvTz9nmHfLrXm/g="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Info.SaveDataParams.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Info.SaveDataParams.html",
+          "hash": "lIo23U06knFzTkNGAA4MOcx9gP5A6f/cBpIPTqhI1MI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Info.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Info.html",
+          "hash": "Y1jsyv6G56AsO1hmMYwXF41C7AuiccpDVw0B8GQgBGk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Initialization.InitResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Initialization.InitResult.html",
+          "hash": "TZqnQYBi/gcol9OeI0Q4n4vJM/uD9bfWl/V6ihflqkM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Initialization.InitSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Initialization.InitSettings.html",
+          "hash": "f8UjJvYtoZEF/hvOCI0fiQ5l2qgCnNb/bBbI3h43w/g="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Initialization.SceSDKVersion.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Initialization.SceSDKVersion.html",
+          "hash": "xxDIzmQvzq5J58cumeEvIOUegvw8j4Kic3Y5uJsVjY0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Initialization.ThreadAffinity.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Initialization.ThreadAffinity.html",
+          "hash": "vggdkD8ZqeTRsg1oxhERdwRMmV+7K23EZjV3JKekChA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Initialization.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Initialization.html",
+          "hash": "D4qu6QeLuCRf/ydFdIXstdZ3mPl7/ryLhkXhoofwiYQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Main.EventHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Main.EventHandler.html",
+          "hash": "z2o6BD16IO3TINTW4QYmgrea7h5rx8vbISY1nFricEU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Main.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Main.html",
+          "hash": "i39GOX5WRPRqSQbRI1gIL6AIHXct1bZJo2Za6iJ6yOs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.GetMountInfoRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.GetMountInfoRequest.html",
+          "hash": "RawlWPtVDE/TzxyeWKfPM9a7R3bDLxDZhyBZahf2qvA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.GetMountParamsRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.GetMountParamsRequest.html",
+          "hash": "E99o83ga/LLIzGJH7nGzXCUPzAGMB/C7f3x9QGF5smA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.LoadIconRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.LoadIconRequest.html",
+          "hash": "3J9nb8uDwjnFnXsb7hOMclibUrCfE+Db4H0pGK5ou4o="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.LoadIconResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.LoadIconResponse.html",
+          "hash": "tDuaVwxnAvDg+3kySjGkTYVfLEfugICfKFGQEkPhaKY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.MountInfoResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.MountInfoResponse.html",
+          "hash": "9p3IzilsfOFH7uiCO0RulvEDgzZqabAp6bXyAPWcFXA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.MountModeFlags.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.MountModeFlags.html",
+          "hash": "Zf4fuBoIPCsIKK55Ngfe1ENVuEEI/yZgCxzVPWk8AZ4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.MountPS4Request.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.MountPS4Request.html",
+          "hash": "j0YJ6A5qWiI/sABD77b24vK/Z8D1qfmxHUu8t9R5PQM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.MountParamsResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.MountParamsResponse.html",
+          "hash": "y7yUxoMv/fWsiCIgGQlzEF8EZvAjhtTSFWaDsmb2Wkg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.MountPoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.MountPoint.html",
+          "hash": "DecdIPqfo9zr5Ky6tXcA7CPSYdWCDkGKFM4iFzBKsAI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.MountPointName.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.MountPointName.html",
+          "hash": "ML1NCzPgL15Yj4t1hgdmA3tIzrCAZOcskVnedJiEK8k="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.MountRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.MountRequest.html",
+          "hash": "B9g0OAzjUOPWZXQBjsGmag/smVthemyUgPUe927vuZI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.MountResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.MountResponse.html",
+          "hash": "55lEb+nr+vOD172h/IU0oTcG8f9OW+ihlAHGqbc1X7A="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.SaveIconRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.SaveIconRequest.html",
+          "hash": "Sg45IXm29s9EqV5bWdvlOukDSkxpRtA/U6+5G9oijJA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.SetMountParamsRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.SetMountParamsRequest.html",
+          "hash": "FV4lLU9npQJfp+5YbikX0o85aKbfV3m/Mvy0MPsDcuU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.UnmountRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.UnmountRequest.html",
+          "hash": "psTil+k1WDaiQgOOm/bEQrM8n1y9Kc4gD5Bm4Q2+Vjg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Mount.Mounting.html",
+          "hash": "5hKJpu3GKF5RVC1yLJWl/PnUk4tZBbjwtyHS+qiQVrc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Mount.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Mount.html",
+          "hash": "zSVHfW3Aif1F1X/DdxppJRkXkL4tEUMUox+lpG0AHAY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Search.Searching.DirNameSearchRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Search.Searching.DirNameSearchRequest.html",
+          "hash": "mlz/pxD1Ty3CZWzawlmThwuWBvohe1zeu93YMItxlVg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Search.Searching.DirNameSearchResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Search.Searching.DirNameSearchResponse.html",
+          "hash": "9mXx5MBn0tmKxfaTo00X0b/lbU3zz72TeVaKc095pyU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Search.Searching.SearchSaveDataItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Search.Searching.SearchSaveDataItem.html",
+          "hash": "ON66j/WmGBESosqMufuVVmoKfkY3L3EZ5Kl4tiOKkhs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Search.Searching.SearchSortKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Search.Searching.SearchSortKey.html",
+          "hash": "Plkgqx10NhozR3DYH/dURvYo9gZxiQqZSL0a3BTB7k4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Search.Searching.SearchSortOrder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Search.Searching.SearchSortOrder.html",
+          "hash": "EqovhwHU0uTIU4o+wMKkM6+TxsFyO1YwKMc3cJ9zrA0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Search.Searching.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Search.Searching.html",
+          "hash": "WQ4Gdtukz40eZUM1l/m3803fThygUvZCyW+7VBqMtE8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.Search.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.Search.html",
+          "hash": "Kk/ccLqkT5FDyIRs4c5E2Q8FzPAsG0oeSrgsoqif8qU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Unity.SaveData.PS5.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Unity.SaveData.PS5.html",
+          "hash": "mHti8z7dT+Yk1a3Xvi5U1U7XJ8+oAB9Fuk8y1HQtbF0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "vaRqrgLMF8LEHQwoo8019HgaWCFZKLxCnS3HZe/G7LM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "wCdxX1mxMMe8gIj5vfaz2Fn0JTVfC1a2q5O4kOa+MT0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "changelog/CHANGELOG.md",
+      "output": {
+        ".html": {
+          "relative_path": "changelog/CHANGELOG.html",
+          "hash": "J0sLvQk8Ymgwdxdsdh8Dn51ncNEVsvyB2JE5MpY7JsA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "changelog/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "changelog/toc.html",
+          "hash": "NNxjDmqfyrYxcv1MzNCvi8NHk74c3SXHi83RxB1PZEA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "aQSi1BpX6O9ON2KdC9zO9GsKqkcvHJF+UmT3syK07Ek="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "license/LICENSE.md",
+      "output": {
+        ".html": {
+          "relative_path": "license/LICENSE.html",
+          "hash": "RcB8iKU+zP4QgM0vvVU6JkiUSGU9MDOxLxqXS806S04="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "license/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "license/index.html",
+          "hash": "etHlWOEehq8twpuKHj+9ffgx7ndoOk996njFIiAGfKk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "license/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "license/toc.html",
+          "hash": "7fCxril+M8ICr7R7Qn3c0wfv2eAxkUGYLPYxG+4SZTw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "logo.svg",
+      "output": {
+        "resource": {
+          "relative_path": "logo.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "tH9aI7TCqgezsDogM7bZQutX6s9gGwS7k34n2cYZBX8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0,
+        "full_build_reason_code": "NoAvailableBuildCache"
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 16,
+          "skipped_file_count": 0
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 101,
+          "skipped_file_count": 0
+        },
+        "ResourceDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: should not trace intermediate info.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

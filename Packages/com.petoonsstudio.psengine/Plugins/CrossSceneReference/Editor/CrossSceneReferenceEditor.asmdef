@@ -1,0 +1,18 @@
+{
+    "name": "CrossSceneReferenceEditor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:1d34e6dbba7165149a8739778d97a945"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

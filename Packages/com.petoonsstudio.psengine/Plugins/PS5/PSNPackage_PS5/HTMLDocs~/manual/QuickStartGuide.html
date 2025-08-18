@@ -1,0 +1,241 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');</script>
+    <script type="text/javascript">thisPackageMetaData = { name: "com.unity.psn.ps5", version: "0.0.14-preview", displayTitle:"PS5 PlayStation Network 0.0.14-preview", lang: "en" };</script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+  
+    <title>Quick Start Quide | PS5 PlayStation Network | 0.0.14-preview </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Quick Start Quide | PS5 PlayStation Network | 0.0.14-preview ">
+    <meta name="generator" content="docfx 2.51.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/version-switcher.css">
+    <link rel="stylesheet" href="../styles/language-switcher.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    <meta property="unity:packageTitle" content="PS5 PlayStation Network | 0.0.14-preview">
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" class="">
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5V25JL6" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+        
+        		<div class="back-to-unity-group">
+        			<a class="back-to-unity" href="http://docs.unity3d.com/">docs.unity3d.com</a>
+        		</div>
+        
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items"></div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10" id="main_content">
+          <div id="breadcrumb_placeholder"></div>
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="quick-start-quide">Quick Start Quide</h1>
+
+<p>This will show how to setup your own project to use the PSN API.</p>
+<h2 id="ps5-title-configuration">PS5 Title Configuration</h2>
+<p>You will need to use Sony&#39;s <strong>UDS Management Tool</strong> and <strong>Package/Disc Management Tool (GEMS)</strong> on DevNet to configure your titles Events, Activities, Trophies and other game releated data. </p>
+<p>Once the Universal Data system is configured or changes have been made use the <strong>Package/Disc Management Tool (GEMS)</strong> to download the titles <strong>npconfig.zip</strong> and reference this in Unity project publishing settings.</p>
+<p>Some systems may also need configuring in the titles <strong>param.json</strong> file. </p>
+<p>For example if the title uses <strong>GameIntent</strong> you may need to config the types of intent the title supports. e.g. this may need to be added to the file.</p>
+<pre><code class="lang-json">&quot;gameIntent&quot;: {
+    &quot;permittedIntents&quot;: [
+      {
+        &quot;intentType&quot;: &quot;joinSession&quot;
+      },
+      {
+        &quot;intentType&quot;: &quot;launchActivity&quot;
+      },
+      {
+        &quot;intentType&quot;: &quot;launchMultiplayerActivity&quot;
+      }
+    ]
+  },
+</code></pre><p>Please refer to the Sony documention on how to configure your title.</p>
+<h2 id="unity-initialisation">Unity Initialisation</h2>
+<p>The system will first need to be initialised. Do this from a MonoBehaviour or script code as it <em>must</em> be called on the main Unity thread.</p>
+<pre><code class="lang-CSharp">InitResult initResult;
+
+try
+{
+    initResult = Main.Initialize();
+
+    if (initResult.Initialized == true)
+    {
+        // Initialization succeeded
+    }
+    else
+    {
+        // Initialization failed
+    }
+}
+catch (PSNException e)
+{
+    // Exception - See e.ExtendedMessage for more info
+}
+</code></pre><p>View <a href="../api/Unity.PSN.PS5.Main.html"><code>Main</code></a> documention for details on initialization.</p>
+<h2 id="updating">Updating</h2>
+<p>Each frame the PSN system needs an update call to handle various internal PSN callback API&#39;s. This can be done in a monobehaviour update. It <em>must</em> be called on the main Unity thread.</p>
+<pre><code class="lang-CSharp">Main.Update();
+</code></pre><h2 id="registering-a-user">Registering a user</h2>
+<p>Whenever a user logs into the PS5 system or the app wants to use a User Id then user needs to be first registered with the PSN system. </p>
+<p>This is an asynchronous operation which will take time to complete. Don&#39;t call other methods until the user has been registered.</p>
+<pre><code class="lang-csharp">// Create the request data
+UserSystem.AddUserRequest request = new UserSystem.AddUserRequest() { UserId = id };
+
+// Create the async operation and response once completed
+var requestOp = new AsyncRequest&lt;UserSystem.AddUserRequest&gt;(request).ContinueWith((antecedent) =&gt;
+{
+    // Operation completed
+    // User has been registered (antecedent.Request.UserId)
+});
+
+// Schedule the request operation
+UserSystem.Schedule(requestOp);
+</code></pre><p>View <a href="../api/Unity.PSN.PS5.Users.UserSystem.AddUserRequest.html"><code>AddUserRequest</code></a> documention for details on users.</p>
+<h2 id="unregistering-a-user">Unregistering a user</h2>
+<p>When a user logs off from the PS5 system use <a href="../api/Unity.PSN.PS5.Users.UserSystem.RemoveUserRequest.html"><code>RemoveUserRequest</code></a> operation to unregister the user from the system. </p>
+<h2 id="basic-usage-examples">Basic Usage Examples</h2>
+<h3 id="unlocking-a-trophy">Unlocking a Trophy</h3>
+<p>The <a href="../api/Unity.PSN.PS5.UDS.html"><code>Universal Data System</code></a> is used to unlock trophies. To retrieve infomation about trophies use the <a href="../api/Unity.PSN.PS5.Trophies.html"><code>Trophy System</code></a></p>
+<pre><code class="lang-csharp">UniversalDataSystem.UnlockTrophyRequest request = new UniversalDataSystem.UnlockTrophyRequest()
+{
+    TrophyId = trophyId,
+    UserId = userId
+};
+
+var getTrophyOp = new AsyncRequest&lt;UniversalDataSystem.UnlockTrophyRequest&gt;(request).ContinueWith((antecedent) =&gt;
+{
+    // Trophy unlocked for the given user (antecedent.Request.TrophyId)
+});
+
+UniversalDataSystem.Schedule(getTrophyOp);
+</code></pre><h3 id="retrieving-friends">Retrieving Friends</h3>
+<p>This example will retrieve the first 95 friends for a user (online or offline) and sorted into online status order.</p>
+<pre><code class="lang-csharp">UInt32 limit = 95;
+
+UserSystem.GetFriendsRequest request = new UserSystem.GetFriendsRequest()
+{
+    UserId = id,
+    Offset = 0,
+    Limit = limit,
+    Filter = UserSystem.GetFriendsRequest.Filters.NotSet,
+    SortOrder = UserSystem.GetFriendsRequest.Order.OnlineId,
+    RetrievedAccountIds = new System.Collections.Generic.List&lt;UInt64&gt;((int)limit)
+};
+
+var requestOp = new AsyncRequest&lt;UserSystem.GetFriendsRequest&gt;(request).ContinueWith((antecedent) =&gt;
+{
+    if (antecedent.Request.Result.apiResult == APIResultTypes.Success)
+    {
+        var accountIds = antecedent.Request.RetrievedAccountIds;
+
+        for (int i = 0; i &lt; accountIds.Count; i++)
+        {
+            // Process friends list
+        }
+    }
+    else
+    {
+        // Error condition
+    }
+});
+
+UserSystem.Schedule(requestOp);
+</code></pre></article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2020 Unity Technologies<br>Generated by <strong>DocFX</strong></span> on 25 September 2020
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript" src="../styles/metadata-collector.js"></script>
+    <script type="text/javascript" src="../styles/version-switcher.js"></script>
+    <script type="text/javascript" src="../styles/language-switcher.js"></script>
+  </body>
+</html>

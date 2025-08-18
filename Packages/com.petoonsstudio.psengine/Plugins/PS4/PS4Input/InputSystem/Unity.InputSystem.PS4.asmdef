@@ -1,0 +1,17 @@
+{
+    "name": "Unity.InputSystem.PS4",
+    "references": [
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "PS4"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

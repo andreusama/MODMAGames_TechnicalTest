@@ -1,0 +1,23 @@
+{
+  "name": "com.petoonsstudio.psengine",
+  "version": "1.6.77",
+  "displayName": "Petoons Studio Engine",
+  "description": "Petoons Studio Custom Unity Engine",
+  "unity": "2020.3",
+  "dependencies": 
+  {
+    "com.unity.addressables": "1.19.19",
+    "com.unity.vectorgraphics": "2.0.0-preview.20",
+    "com.unity.cinemachine": "2.8.9",
+    "com.unity.textmeshpro": "3.0.6",
+    "com.unity.timeline": "1.7.5",
+    "com.unity.localization": "1.4.4",
+    "com.unity.splines": "2.4.0",
+    "com.unity.inputsystem": "1.4.3",
+    "com.unity.collections": "2.5.2"
+  },
+  "author": 
+  {
+    "name": "Petoons Studio SL"
+  }
+}

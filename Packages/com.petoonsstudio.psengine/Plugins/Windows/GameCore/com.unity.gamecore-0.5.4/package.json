@@ -1,0 +1,36 @@
+{
+  "name": "com.unity.gamecore",
+  "displayName": "Game Core",
+  "version": "0.5.4",
+  "unity": "2019.4",
+  "unityRelease": "30f1",
+  "description": "The Game Core native package: \n▪ Provides access to platform APIs and services not covered by the core Unity engine functionality \n▪ Allows Unity users to implement required functionality for the Game Core console platforms (Xbox One and Scarlett) in their projects, as per the platform holder's certification process\n\nWhen importing the sample, make sure to also manually add the Input System GXDK package as the samples require it.",
+  "samples": [
+    {
+      "displayName": "Users",
+      "description": "This demo shows how to use the XUser* Game Core APIs.",
+      "path": "Samples~/Users"
+    },
+    {
+      "displayName": "Leaderboards",
+      "description": "The leaderboards sample demonstrates the usage of Xbox Live Leaderboards with Events-Based stats (previously referred to as Stats 2013).",
+      "path": "Samples~/Leaderboards"
+    },
+    {
+      "displayName": "Speech Synthesizer",
+      "description": "The Speech Synthesizer sample demonstrates the usage of XSpeechSynthesizer APIs.",
+      "path": "Samples~/SpeechSynthesizer"
+    }
+  ],
+  "_upm": {
+    "changelog": "* Added support for the following APIs:\r\n    * XSpeechSynthesizerEnumerateInstalledVoices\r\n    * XSpeechSynthesizerCreate\r\n    * XSpeechSynthesizerCloseHandle\r\n    * XSpeechSynthesizerSetDefaultVoice\r\n    * XSpeechSynthesizerSetCustomVoice\r\n    * XSpeechSynthesizerCreateStreamFromText\r\n    * XSpeechSynthesizerCreateStreamFromSsml\r\n    * XSpeechSynthesizerCloseStreamHandle\r\n    * XSpeechSynthesizerGetStreamDataSize\r\n    * XSpeechSynthesizerGetStreamData\r\n    * XUserAddByIdWithUiAsync\r\n    * XSystemGetAnalyticsInfo\r\n    * XSystemGetConsoleId\r\n    * XSystemGetXboxLiveSandboxId\r\n    * XSystemGetAppSpecificDeviceId\r\n* Added SpeechSynthesizer Sample"
+  },
+  "upmCi": {
+    "footprint": "eaf257f43f759b4e78b7c83faafed7b8ad5df1cc"
+  },
+  "repository": {
+    "url": "https://github.cds.internal.unity3d.com/unity/com.unity.gamecore.git",
+    "type": "git",
+    "revision": "373652da7734e9019508961f1933fbdd2dff1a87"
+  }
+}

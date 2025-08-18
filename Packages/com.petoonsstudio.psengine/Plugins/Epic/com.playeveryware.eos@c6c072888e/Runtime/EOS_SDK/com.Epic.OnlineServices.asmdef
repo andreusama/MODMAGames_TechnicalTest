@@ -1,0 +1,21 @@
+{
+    "name": "com.Epic.OnlineServices",
+    "rootNamespace": "",
+    "references": [],
+    "includePlatforms": [
+        "Editor",
+        "LinuxStandalone64",
+        "WindowsStandalone32",
+        "WindowsStandalone64"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "STANDALONE_EPIC"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

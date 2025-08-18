@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Source\CommonDialog.cpp" />
+    <ClCompile Include="Source\ErrorCodes.cpp" />
+    <ClCompile Include="Source\ErrorDialog.cpp" />
+    <ClCompile Include="Source\ImeDialog.cpp" />
+    <ClCompile Include="Source\MessagePipe.cpp" />
+    <ClCompile Include="Source\prx.cpp" />
+    <ClCompile Include="Source\SigninDialog.cpp" />
+    <ClCompile Include="Source\VrSetupDialog.cpp" />
+    <ClCompile Include="Source\WebBrowser.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\CommonDialog.h" />
+    <ClInclude Include="Source\ErrorCodes.h" />
+    <ClInclude Include="Source\ErrorDialog.h" />
+    <ClInclude Include="Source\ImeDialog.h" />
+    <ClInclude Include="Source\MessagePipe.h" />
+    <ClInclude Include="Source\prx.chpp" />
+    <ClInclude Include="Source\SigninDialog.h" />
+    <ClInclude Include="Source\VrSetupDialog.h" />
+    <ClInclude Include="Source\WebBrowser.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{8f87ccce-64a6-4aa6-8e8a-250d53b8dd8a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

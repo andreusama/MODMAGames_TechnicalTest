@@ -1,0 +1,14 @@
+{
+    "name": "Unity.GameCore.EditorTests",
+    "references": [
+        "Unity.GameCore.Editor",
+        "Unity.GameCore"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
+}

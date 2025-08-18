@@ -1,0 +1,20 @@
+{
+    "name": "Unity.InputSystem.GXDK",
+    "rootNamespace": "",
+    "references": [
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "GameCoreScarlett",
+        "GameCoreXboxOne"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
