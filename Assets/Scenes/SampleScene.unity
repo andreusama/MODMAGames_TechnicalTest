@@ -1938,11 +1938,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2381373032268733825, guid: 21fd7d661947915429f1c2e03b56ab4c, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6634441654494870657, guid: 21fd7d661947915429f1c2e03b56ab4c, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7593808236874999970, guid: 21fd7d661947915429f1c2e03b56ab4c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2000,6 +2000,14 @@ PrefabInstance:
     - target: {fileID: 1656245476017090635, guid: 77c469a630f21d046b439087ba455933, type: 3}
       propertyPath: m_Name
       value: EnemySpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 5845390169971836899, guid: 77c469a630f21d046b439087ba455933, type: 3}
+      propertyPath: MaxWaves
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5845390169971836899, guid: 77c469a630f21d046b439087ba455933, type: 3}
+      propertyPath: TimeBetweenWaves
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8032190352184479261, guid: 77c469a630f21d046b439087ba455933, type: 3}
       propertyPath: m_LocalPosition.x

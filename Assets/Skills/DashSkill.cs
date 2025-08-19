@@ -62,9 +62,16 @@ public class DashSkill : Skill
 
         Vector3 targetPosition = startPosition + dashDir * DashDistance;
 
+        // Raycast para detectar colisiones, pero ignora objetos en la capa "Interactables" (por ejemplo, Sponges)
         if (Physics.Raycast(startPosition, dashDir, out RaycastHit hit, DashDistance))
         {
-            targetPosition = hit.point - dashDir * safeOffset;
+            // Comprobamos si el objeto impactado está en la capa "Interactables"
+            int interactablesLayer = LayerMask.NameToLayer("IgnoreDashImpact");
+            if (hit.collider.gameObject.layer != interactablesLayer)
+            {
+                targetPosition = hit.point - dashDir * safeOffset;
+            }
+            // Si es Interactables (por ejemplo, Sponge), el dash atraviesa y no se acorta
         }
 
         if (Vector3.Distance(startPosition, targetPosition) < 0.01f)
