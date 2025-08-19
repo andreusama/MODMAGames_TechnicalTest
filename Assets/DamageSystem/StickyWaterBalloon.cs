@@ -26,6 +26,7 @@ public class StickyWaterBalloon : WaterBalloon
                 transform.position = collision.contacts[0].point;
             }
 
+            Debug.Log("Before exploding");
             m_ExplosionCoroutine = StartCoroutine(ExplodeAfterDelay());
         }
     }

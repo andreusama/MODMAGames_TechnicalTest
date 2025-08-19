@@ -18,12 +18,33 @@ public class WaterBalloonSkill : Skill
     public float MaxRange = 10f;
     public float MaxHeight = 2f;
 
+    [Header("Flight Settings")]
+    [SerializeField]
+    private float m_FlightTime = 2f;
+
     [SerializeField]
     private Transform m_SpawnPoint;
     private CircleDrawer m_CircleDrawer;
 
     // Guarda el último input válido
     private Vector2 m_LastAimInput = Vector2.zero;
+
+    [Header("Curve Settings")]
+    public bool UseAnimationCurve = false;
+
+    [SerializeField, Tooltip("Curva de posición-tiempo para el vuelo del globo")]
+    public AnimationCurve VelocityCurve = AnimationCurve.Linear(0, 1, 1, 1);
+
+#if UNITY_EDITOR
+    // Oculta el campo en el inspector si UseAnimationCurve es false
+    private void OnValidate()
+    {
+        UnityEditor.SerializedObject so = new UnityEditor.SerializedObject(this);
+        var prop = so.FindProperty("VelocityCurve");
+        prop.isExpanded = UseAnimationCurve;
+        so.ApplyModifiedProperties();
+    }
+#endif
 
     public override void Initialize(PlayerMotor motor)
     {
@@ -48,7 +69,6 @@ public class WaterBalloonSkill : Skill
         actions.Player.ThrowBalloon.Disable();
     }
 
-    // Guarda el último input válido y actualiza la visualización
     public void OnAimingPerformed(InputAction.CallbackContext ctx)
     {
         Vector2 input = ctx.ReadValue<Vector2>();
@@ -58,7 +78,6 @@ public class WaterBalloonSkill : Skill
         UpdateAimingVisual(input);
     }
 
-    // Cuando se cancela, lanza el globo usando el último input válido
     public void OnAimingCanceled(InputAction.CallbackContext ctx)
     {
         if (m_LastAimInput.sqrMagnitude > 0.01f)
@@ -69,7 +88,6 @@ public class WaterBalloonSkill : Skill
         m_CircleDrawer.Hide();
     }
 
-    // Visualización de la parábola y círculo
     public void UpdateAimingVisual(Vector2 input)
     {
         if (m_CircleDrawer == null)
@@ -83,18 +101,57 @@ public class WaterBalloonSkill : Skill
 
         Vector3 direction = new Vector3(input.x, 0, input.y).normalized;
         float range = Mathf.Lerp(MinRange, MaxRange, input.magnitude);
-        Vector3 target = m_SpawnPoint.position + direction * range;
+        Vector3 target = GetGroundedTarget(m_SpawnPoint.position + direction * range);
 
         m_CircleDrawer.DrawCircle(target, ExplosionRadius);
-        m_CircleDrawer.DrawParabola(
-            m_SpawnPoint.position,
-            ParabolicCalculator.CalculateLaunchVelocity(m_SpawnPoint.position, target, MaxHeight, Mathf.Abs(Physics.gravity.y)),
-            Mathf.Abs(Physics.gravity.y),
-            2f // Puedes ajustar el tiempo máximo de la parábola
-        );
+
+        if (UseAnimationCurve && VelocityCurve != null)
+        {
+            // Simula la parábola usando la curva
+            DrawParabolaWithCurve(m_SpawnPoint.position, target, VelocityCurve, m_FlightTime, m_CircleDrawer.ParabolicSegments);
+        }
+        else
+        {
+            // Simulación física estándar
+            float gravity = Mathf.Abs(Physics.gravity.y);
+            float maxHeight = m_SpawnPoint.position.y + MaxHeight;
+            Vector3 launchVelocity = ParabolicCalculator.CalculateLaunchVelocity(
+                m_SpawnPoint.position, target, maxHeight, gravity
+            );
+            m_CircleDrawer.DrawParabola(
+                m_SpawnPoint.position,
+                launchVelocity,
+                gravity,
+                3f
+            );
+        }
     }
 
-    // Lanza el globo usando el input guardado
+    private void DrawParabolaWithCurve(Vector3 start, Vector3 target, AnimationCurve curve, float totalFlightTime, int steps = 30)
+    {
+        if (m_CircleDrawer == null || curve == null)
+            return;
+
+        Vector3[] points = new Vector3[steps];
+        for (int i = 0; i < steps; i++)
+        {
+            float tNorm = i / (float)(steps - 1);
+            float curveT = curve.Evaluate(tNorm);
+            points[i] = ParabolicLerp(start, target, curveT);
+        }
+        m_CircleDrawer.m_ParabolicLineRenderer.positionCount = steps;
+        m_CircleDrawer.m_ParabolicLineRenderer.SetPositions(points);
+    }
+
+    private Vector3 ParabolicLerp(Vector3 start, Vector3 end, float t)
+    {
+        float height = Mathf.Max(start.y, end.y) + 3f;
+        Vector3 mid = Vector3.Lerp(start, end, t);
+        float parabola = 4 * height * t * (1 - t);
+        mid.y += parabola;
+        return mid;
+    }
+
     public void ThrowWaterBalloon(Vector2 aimInput)
     {
         SetCooldown(Cooldown);
@@ -103,13 +160,7 @@ public class WaterBalloonSkill : Skill
 
         Vector3 direction = new Vector3(aimInput.x, 0, aimInput.y).normalized;
         float range = Mathf.Lerp(MinRange, MaxRange, aimInput.magnitude);
-        Vector3 target = m_SpawnPoint.position + direction * range;
-
-        float gravity = Mathf.Abs(Physics.gravity.y);
-        float maxHeight = m_SpawnPoint.position.y + MaxHeight;
-        Vector3 launchVelocity = ParabolicCalculator.CalculateLaunchVelocity(
-            m_SpawnPoint.position, target, maxHeight, gravity
-        );
+        Vector3 target = GetGroundedTarget(m_SpawnPoint.position + direction * range);
 
         GameObject balloonObj = GameObject.Instantiate(WaterBalloonPrefab, m_SpawnPoint.position, Quaternion.identity);
         var balloon = balloonObj.GetComponent<WaterBalloon>();
@@ -120,8 +171,33 @@ public class WaterBalloonSkill : Skill
             balloon.ExplosionRadius = ExplosionRadius;
             balloon.TargetLayers = TargetLayers;
 
-            balloon.Throw(launchVelocity);
+            if (UseAnimationCurve && VelocityCurve != null)
+            {
+                balloon.Throw(Vector3.zero, target, VelocityCurve, m_FlightTime);
+            }
+            else
+            {
+                Debug.Log("Don't use it");
+                // Usa física normal
+                float gravity = Mathf.Abs(Physics.gravity.y);
+                float maxHeight = m_SpawnPoint.position.y + MaxHeight;
+                Vector3 launchVelocity = ParabolicCalculator.CalculateLaunchVelocity(
+                    m_SpawnPoint.position, target, maxHeight, gravity
+                );
+                balloon.Throw(launchVelocity);
+            }
         }
         StartCooldown();
+    }
+
+    // Añade este método auxiliar
+    private Vector3 GetGroundedTarget(Vector3 target)
+    {
+        Ray ray = new Ray(target + Vector3.up * 2f, Vector3.down);
+        if (Physics.Raycast(ray, out RaycastHit hit, 10f))
+        {
+            target.y = hit.point.y;
+        }
+        return target;
     }
 }

@@ -36,4 +36,21 @@ public static class ParabolicCalculator
 
         return target; // Retorna el objetivo calculado
     }
+
+    public static Vector3 CalculateLaunchVelocityByTime(Vector3 start, Vector3 target, float flightTime, float gravity)
+    {
+        Vector3 toTarget = target - start;
+        Vector3 toTargetXZ = new Vector3(toTarget.x, 0, toTarget.z);
+
+        float yOffset = toTarget.y;
+        float xzDistance = toTargetXZ.magnitude;
+
+        float t = flightTime;
+        float v0y = (yOffset + 0.5f * Mathf.Abs(Physics.gravity.y) * t * t) / t;
+        float v0xz = xzDistance / t;
+
+        Vector3 result = toTargetXZ.normalized * v0xz + Vector3.up * v0y;
+
+        return result;
+    }
 }
