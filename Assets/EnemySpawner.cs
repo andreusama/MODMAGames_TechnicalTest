@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : MonoBehaviour, IEventListener<GameStartEvent>, IEventListener<GameEndEvent>
 {
     [Header("Spawner Settings")]
     public GameObject EnemyPrefab;
@@ -12,33 +12,66 @@ public class EnemySpawner : MonoBehaviour
 
     private int m_CurrentWave = 0;
     private bool m_Spawning = false;
+    private bool m_GameEnded = false;
+    private Coroutine m_SpawnCoroutine;
 
-    private void Start()
+    private void OnEnable()
     {
-        StartCoroutine(SpawnWaves());
+        this.EventStartListening<GameStartEvent>();
+        this.EventStartListening<GameEndEvent>();
+    }
+
+    private void OnDisable()
+    {
+        this.EventStopListening<GameStartEvent>();
+        this.EventStopListening<GameEndEvent>();
+    }
+
+    public void OnEvent(GameStartEvent e)
+    {
+        m_CurrentWave = 0;
+        m_GameEnded = false;
+        if (m_SpawnCoroutine == null)
+            m_SpawnCoroutine = StartCoroutine(SpawnWaves());
+    }
+
+    public void OnEvent(GameEndEvent e)
+    {
+        m_GameEnded = true;
+        if (m_SpawnCoroutine != null)
+        {
+            StopCoroutine(m_SpawnCoroutine);
+            m_SpawnCoroutine = null;
+        }
+        m_Spawning = false;
     }
 
     private IEnumerator SpawnWaves()
     {
         m_Spawning = true;
-        while (m_CurrentWave < MaxWaves)
+        while (m_CurrentWave < MaxWaves && !m_GameEnded)
         {
             SpawnWave();
             m_CurrentWave++;
-            yield return new WaitForSeconds(TimeBetweenWaves);
+            float timer = 0f;
+            while (timer < TimeBetweenWaves && !m_GameEnded)
+            {
+                timer += Time.deltaTime;
+                yield return null;
+            }
         }
         m_Spawning = false;
+        m_SpawnCoroutine = null;
     }
 
     private void SpawnWave()
     {
+        if (m_GameEnded) return;
         for (int i = 0; i < EnemiesPerWave; i++)
         {
             Vector3 spawnPos = GetRandomPointAround(transform.position, SpawnRadius);
             GameObject enemy = Instantiate(EnemyPrefab, spawnPos, Quaternion.identity);
-
-            // Opcional: puedes inicializar aquí cualquier lógica extra del enemigo
-            // Por ejemplo, si tu EnemyAI necesita alguna referencia especial, puedes pasarla aquí
+            // Lógica extra de inicialización del enemigo aquí si es necesario
         }
     }
 
@@ -47,7 +80,6 @@ public class EnemySpawner : MonoBehaviour
         float angle = Random.Range(0f, Mathf.PI * 2f);
         float distance = Random.Range(0.5f * radius, radius);
         Vector3 pos = center + new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * distance;
-        // Ajusta la altura al terreno si es necesario
         pos.y = center.y;
         return pos;
     }

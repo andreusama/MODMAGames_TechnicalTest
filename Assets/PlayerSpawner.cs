@@ -1,16 +1,34 @@
 using UnityEngine;
+using Game.Framework;
 
-public class PlayerSpawner : MonoBehaviour
+public class PlayerSpawner : MonoBehaviour, IEventListener<GameStartEvent>
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [Header("Configuración")]
+    public GameObject PlayerPrefab;
+    public Transform SpawnPoint;
+    private GameObject m_PlayerInstance;
+
+    private void OnEnable()
     {
-        
+        EventManager.AddListener<GameStartEvent>(this);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        EventManager.RemoveListener<GameStartEvent>(this);
+    }
+
+    public void OnEvent(GameStartEvent e)
+    {
+        if (m_PlayerInstance == null)
+        {
+            m_PlayerInstance = Instantiate(PlayerPrefab, SpawnPoint.position, SpawnPoint.rotation);
+            Debug.Log("Player spawned at " + SpawnPoint.position);
+        }
+        else
+        {
+            Debug.LogWarning("Player already spawned.");
+        }
     }
 }
+

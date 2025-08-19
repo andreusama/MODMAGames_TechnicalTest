@@ -49,10 +49,6 @@ public class Sponge : WettableObject, IExplodable
 
     public void Explode()
     {
-        if (HasExploded)
-            return;
-
-        HasExploded = true;
         OnWetnessNotFullOrExploded();
         
         // Daño proporcional a la humedad (0-100)

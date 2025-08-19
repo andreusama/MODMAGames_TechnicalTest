@@ -40,6 +40,6 @@ public class Enemy : MonoBehaviour, IDamageable
         m_IsAlive = false;
         // Aquí puedes añadir lógica de muerte (animación, desactivar, etc.)
         EventManager.TriggerEvent(new EnemyDiedEvent { enemy = this });
-        gameObject.SetActive(false);
+        GameObject.Destroy(gameObject, 1f); // Destruye el enemigo después de 2 segundos
     }
 }
