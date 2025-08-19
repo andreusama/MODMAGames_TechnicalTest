@@ -11,14 +11,14 @@ public class WaterBalloon : MonoBehaviour, IExplodable
     public LayerMask TargetLayers;
     public LayerMask GroundLayers;
 
-    private bool m_HasExploded = false;
-    private bool m_HasTouchedGround = false;
-    private Coroutine m_ExplosionCoroutine;
+    protected bool m_HasExploded = false;
+    protected bool m_HasTouchedGround = false;
+    protected Coroutine m_ExplosionCoroutine;
 
     public bool HasExploded => m_HasExploded;
 
     [SerializeField, Self]
-    Rigidbody rb;
+    protected Rigidbody rb;
 
     public void Throw(Vector3 launchVelocity)
     {
@@ -29,7 +29,7 @@ public class WaterBalloon : MonoBehaviour, IExplodable
         // No se inicia la cuenta atrás aquí, solo al tocar el suelo
     }
 
-    private void OnCollisionEnter(Collision collision)
+    protected virtual void OnCollisionEnter(Collision collision)
     {
         if (m_HasTouchedGround || m_HasExploded)
             return;
@@ -42,7 +42,7 @@ public class WaterBalloon : MonoBehaviour, IExplodable
         }
     }
 
-    private IEnumerator ExplodeAfterDelay()
+    protected IEnumerator ExplodeAfterDelay()
     {
         yield return new WaitForSeconds(ExplosionDelay);
         Explode();

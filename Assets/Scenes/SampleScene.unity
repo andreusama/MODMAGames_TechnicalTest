@@ -775,7 +775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3f72f472eb0c36439756efa446b4f8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WaterBalloonPrefab: {fileID: 2866679559070895903, guid: b8e5af024c144674fa4ea86d8039a738, type: 3}
+  WaterBalloonPrefab: {fileID: 2658353451107138153, guid: 24f2a6c88c1bf2c4f9deec96cc0cdc70, type: 3}
   Damage: 25
   ExplosionDelay: 1.5
   Cooldown: 2
@@ -785,8 +785,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   MinRange: 4
-  MaxRange: 20
-  MaxHeight: 8
+  MaxRange: 22
+  MaxHeight: 10
+  m_SpawnPoint: {fileID: 455003183}
 --- !u!1 &455003182
 GameObject:
   m_ObjectHideFlags: 0
@@ -934,7 +935,7 @@ LineRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 611097608}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -981,7 +982,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.52173996
+        value: 0.21014786
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1589,8 +1590,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f833bda9aecc6848a821b72690b7560, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Segments: 32
-  ParabolicSegments: 32
+  Segments: 15
+  ParabolicSegments: 10
   Radius: 1
   m_ParabolicLineRenderer: {fileID: 611097610}
   CollisionMask:
@@ -1605,7 +1606,7 @@ LineRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1501508078}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0

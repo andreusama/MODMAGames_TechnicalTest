@@ -18,6 +18,7 @@ public class WaterBalloonSkill : Skill
     public float MaxRange = 10f;
     public float MaxHeight = 2f;
 
+    [SerializeField]
     private Transform m_SpawnPoint;
     private CircleDrawer m_CircleDrawer;
 
@@ -28,7 +29,6 @@ public class WaterBalloonSkill : Skill
     {
         base.Initialize(motor);
         InitCooldown(Cooldown);
-        m_SpawnPoint = m_PlayerMotor.transform;
         m_CircleDrawer = m_PlayerMotor.GetComponentInChildren<CircleDrawer>();
         if (m_CircleDrawer == null)
             Debug.LogWarning("CircleDrawer no encontrado en el jugador.");
