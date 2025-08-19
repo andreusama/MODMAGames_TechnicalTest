@@ -27,7 +27,7 @@ public class DashCollisionHandler : MonoBehaviour
             {
                 explodable.Explode();
             }
-            wettable.SetWetness(0f);
+            wettable.SetWetness(0);
         }
     }
 }

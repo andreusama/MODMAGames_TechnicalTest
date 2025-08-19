@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour, IDamageable
         m_IsAlive = true;
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, bool allyFire)
     {
         if (!m_IsAlive)
             return;

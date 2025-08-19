@@ -25,12 +25,26 @@ public class WaterBalloon : MonoBehaviour, IExplodable
     [SerializeField, Self]
     protected Rigidbody rb;
 
+    private CircleDrawer m_CircleDrawer;
+
     // Variables para la curva
     private Vector3 m_StartPos;
     private Vector3 m_TargetPos;
     private float m_Lifetime = 0f;
     private Vector3 m_InitialVelocity;
     private bool m_UseCurve = false;
+
+    private void Awake()
+    {
+        m_CircleDrawer = GetComponentInChildren<CircleDrawer>();
+        if (m_CircleDrawer == null)
+        {
+            var go = new GameObject("CircleDrawer");
+            go.transform.SetParent(transform);
+            go.transform.localPosition = Vector3.zero;
+            m_CircleDrawer = go.AddComponent<CircleDrawer>();
+        }
+    }
 
     /// <summary>
     /// Lanza el globo con una velocidad inicial (física) o con una curva de posición-tiempo.
@@ -75,6 +89,7 @@ public class WaterBalloon : MonoBehaviour, IExplodable
             {
                 transform.position = GroundDetector.GetGroundedPosition(pos, 0.2f, 1f, GroundLayers);
                 m_HasTouchedGround = true;
+                ShowExplosionRadius();
                 m_ExplosionCoroutine = StartCoroutine(ExplodeAfterDelay());
             }
             else
@@ -92,6 +107,7 @@ public class WaterBalloon : MonoBehaviour, IExplodable
         if (((1 << collision.gameObject.layer) & GroundLayers.value) != 0)
         {
             m_HasTouchedGround = true;
+            ShowExplosionRadius();
             m_ExplosionCoroutine = StartCoroutine(ExplodeAfterDelay());
         }
     }
@@ -102,10 +118,24 @@ public class WaterBalloon : MonoBehaviour, IExplodable
         Explode();
     }
 
+    private void ShowExplosionRadius()
+    {
+        if (m_CircleDrawer != null)
+            m_CircleDrawer.DrawCircle(transform.position, ExplosionRadius);
+    }
+
+    private void HideExplosionRadius()
+    {
+        if (m_CircleDrawer != null)
+            m_CircleDrawer.Hide();
+    }
+
     public void Explode()
     {
         if (m_HasExploded) return;
         m_HasExploded = true;
+
+        HideExplosionRadius();
 
         Collider[] hits = Physics.OverlapSphere(transform.position, ExplosionRadius, TargetLayers);
         foreach (var hit in hits)
@@ -113,17 +143,21 @@ public class WaterBalloon : MonoBehaviour, IExplodable
             var damageable = hit.GetComponent<IDamageable>();
             if (damageable != null && damageable.IsAlive)
             {
-                damageable.TakeDamage(Damage);
+                bool isAllyFire = true;
+                damageable.TakeDamage(Damage, isAllyFire);
             }
 
-            // Aplica humedad si el objeto es IWettable
             var wettable = hit.GetComponent<IWettable>();
             if (wettable != null)
             {
-                // Puedes ajustar la cantidad de humedad aplicada aquí
-                wettable.AddWetness(50f); // Ejemplo: añade 50 de humedad
+                wettable.AddWetness(50);
             }
         }
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        HideExplosionRadius();
     }
 }

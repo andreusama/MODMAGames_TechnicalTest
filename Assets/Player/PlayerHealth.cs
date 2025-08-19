@@ -16,12 +16,16 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         m_IsAlive = true;
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, bool allyFire = false)
     {
+        if (allyFire)
+            return; // Ignora el daño de fuego amigo
+
         if (!m_IsAlive)
             return;
 
         m_CurrentHealth -= amount;
+        Debug.Log("Current health is " + m_CurrentHealth);
         if (m_CurrentHealth <= 0f)
         {
             m_CurrentHealth = 0f;

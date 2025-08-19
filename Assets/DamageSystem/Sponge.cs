@@ -10,17 +10,51 @@ public class Sponge : WettableObject, IExplodable
 
     public bool HasExploded { get; private set; } = false;
 
+    private CircleDrawer m_CircleDrawer;
+    private bool m_HasShownRadius = false;
+
+    private void Awake()
+    {
+        m_CircleDrawer = GetComponentInChildren<CircleDrawer>();
+        if (m_CircleDrawer == null)
+            Debug.LogWarning("CircleDrawer no encontrado en la esponja.");
+
+    }
+
+    protected override void OnWetnessChangedVirtual(int wetness) 
+    {
+        if (wetness == 100)
+        {
+            OnWetnessFull();
+        }
+        else
+        {
+            OnWetnessNotFullOrExploded();
+        }
+    }
+
+    private void OnWetnessFull()
+    {
+        m_HasShownRadius = true;
+        if (m_CircleDrawer != null)
+            m_CircleDrawer.DrawCircle(transform.position, ExplosionRadius);
+    }
+
+    private void OnWetnessNotFullOrExploded()
+    {
+        m_HasShownRadius = false;
+        if (m_CircleDrawer != null)
+            m_CircleDrawer.Hide();
+    }
+
     public void Explode()
     {
         if (HasExploded)
             return;
 
         HasExploded = true;
-
-        // Efecto visual opcional
-        if (ExplosionEffect != null)
-            Instantiate(ExplosionEffect, transform.position, Quaternion.identity);
-
+        OnWetnessNotFullOrExploded();
+        
         // Daño proporcional a la humedad (0-100)
         float scaledDamage = MaxDamage * (Wetness / 100f);
 
@@ -31,7 +65,9 @@ public class Sponge : WettableObject, IExplodable
             var damageable = hit.GetComponent<IDamageable>();
             if (damageable != null && damageable.IsAlive)
             {
-                damageable.TakeDamage(scaledDamage);
+                Debug.Log("Damage applied");
+                bool isAllyFire = true;
+                damageable.TakeDamage(scaledDamage, isAllyFire);
             }
         }
     }
