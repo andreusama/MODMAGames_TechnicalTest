@@ -55,30 +55,16 @@ public class WaterBalloonSkill : Skill
             Debug.LogWarning("CircleDrawer no encontrado en el jugador.");
     }
 
-    public override void BindInput(InputMap actions)
+    public void OnAimingPerformed(Vector2 input)
     {
-        actions.Player.ThrowBalloon.performed += OnAimingPerformed;
-        actions.Player.ThrowBalloon.canceled += OnAimingCanceled;
-        actions.Player.ThrowBalloon.Enable();
+        Vector2 invertedInput = new Vector2(-input.x, -input.y);
+        if (invertedInput.sqrMagnitude > 0.01f)
+            m_LastAimInput = invertedInput;
+
+        UpdateAimingVisual(invertedInput);
     }
 
-    public override void UnbindInput(InputMap actions)
-    {
-        actions.Player.ThrowBalloon.performed -= OnAimingPerformed;
-        actions.Player.ThrowBalloon.canceled -= OnAimingCanceled;
-        actions.Player.ThrowBalloon.Disable();
-    }
-
-    public void OnAimingPerformed(InputAction.CallbackContext ctx)
-    {
-        Vector2 input = ctx.ReadValue<Vector2>();
-        if (input.sqrMagnitude > 0.01f)
-            m_LastAimInput = input;
-
-        UpdateAimingVisual(input);
-    }
-
-    public void OnAimingCanceled(InputAction.CallbackContext ctx)
+    public void OnAimingCanceled(Vector2 input)
     {
         if (m_LastAimInput.sqrMagnitude > 0.01f)
         {
@@ -108,7 +94,7 @@ public class WaterBalloonSkill : Skill
         if (UseAnimationCurve && VelocityCurve != null)
         {
             // Simula la parábola usando la curva
-            DrawParabolaWithCurve(m_SpawnPoint.position, target, VelocityCurve, m_FlightTime, m_CircleDrawer.ParabolicSegments);
+            m_CircleDrawer.DrawParabolaWithCurve(m_SpawnPoint.position, target, VelocityCurve, m_FlightTime, m_CircleDrawer.ParabolicSegments);
         }
         else
         {
@@ -125,31 +111,6 @@ public class WaterBalloonSkill : Skill
                 3f
             );
         }
-    }
-
-    private void DrawParabolaWithCurve(Vector3 start, Vector3 target, AnimationCurve curve, float totalFlightTime, int steps = 30)
-    {
-        if (m_CircleDrawer == null || curve == null)
-            return;
-
-        Vector3[] points = new Vector3[steps];
-        for (int i = 0; i < steps; i++)
-        {
-            float tNorm = i / (float)(steps - 1);
-            float curveT = curve.Evaluate(tNorm);
-            points[i] = ParabolicLerp(start, target, curveT);
-        }
-        m_CircleDrawer.m_ParabolicLineRenderer.positionCount = steps;
-        m_CircleDrawer.m_ParabolicLineRenderer.SetPositions(points);
-    }
-
-    private Vector3 ParabolicLerp(Vector3 start, Vector3 end, float t)
-    {
-        float height = Mathf.Max(start.y, end.y) + 3f;
-        Vector3 mid = Vector3.Lerp(start, end, t);
-        float parabola = 4 * height * t * (1 - t);
-        mid.y += parabola;
-        return mid;
     }
 
     public void ThrowWaterBalloon(Vector2 aimInput)
@@ -177,7 +138,6 @@ public class WaterBalloonSkill : Skill
             }
             else
             {
-                Debug.Log("Don't use it");
                 // Usa física normal
                 float gravity = Mathf.Abs(Physics.gravity.y);
                 float maxHeight = m_SpawnPoint.position.y + MaxHeight;
@@ -190,14 +150,10 @@ public class WaterBalloonSkill : Skill
         StartCooldown();
     }
 
-    // Añade este método auxiliar
+    // Reemplaza GetGroundedTarget por llamada a GroundDetector
     private Vector3 GetGroundedTarget(Vector3 target)
     {
-        Ray ray = new Ray(target + Vector3.up * 2f, Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, 10f))
-        {
-            target.y = hit.point.y;
-        }
-        return target;
+        // Si tienes una máscara de suelo, pásala aquí
+        return GroundDetector.GetGroundedPosition(target);
     }
 }

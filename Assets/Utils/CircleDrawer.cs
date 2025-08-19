@@ -77,6 +77,25 @@ public class CircleDrawer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Dibuja una parábola con una curva personalizada hasta el primer punto de colisión.
+    /// </summary>
+    public void DrawParabolaWithCurve(Vector3 start, Vector3 target, AnimationCurve curve, float totalFlightTime, int steps = 30)
+    {
+        if (m_ParabolicLineRenderer == null || curve == null)
+            return;
+
+        Vector3[] points = new Vector3[steps];
+        for (int i = 0; i < steps; i++)
+        {
+            float tNorm = i / (float)(steps - 1);
+            float curveT = curve.Evaluate(tNorm);
+            points[i] = ParabolicCalculator.ParabolicLerp(start, target, curveT);
+        }
+        m_ParabolicLineRenderer.positionCount = steps;
+        m_ParabolicLineRenderer.SetPositions(points);
+    }
+
     public void Hide()
     {
         m_LineRenderer.positionCount = 0;

@@ -68,22 +68,12 @@ public class WaterBalloon : MonoBehaviour, IExplodable
             float tNorm = Mathf.Clamp01(m_Lifetime / TotalFlightTime);
             float curveT = PositionCurve != null ? PositionCurve.Evaluate(tNorm) : tNorm;
 
-            // Interpolación parabólica entre start y target usando la curva
-            Vector3 pos = ParabolicLerp(m_StartPos, m_TargetPos, curveT);
+            // Usa el método estático de ParabolicCalculator
+            Vector3 pos = ParabolicCalculator.ParabolicLerp(m_StartPos, m_TargetPos, curveT);
 
-            // Comprobar si hemos llegado al suelo
             if (tNorm >= 1f)
             {
-                // Raycast hacia abajo para encontrar el suelo
-                if (Physics.Raycast(pos + Vector3.up * 0.2f, Vector3.down, out RaycastHit hit, 1f, GroundLayers))
-                {
-                    transform.position = hit.point;
-                }
-                else
-                {
-                    transform.position = pos;
-                }
-
+                transform.position = GroundDetector.GetGroundedPosition(pos, 0.2f, 1f, GroundLayers);
                 m_HasTouchedGround = true;
                 m_ExplosionCoroutine = StartCoroutine(ExplodeAfterDelay());
             }
@@ -92,17 +82,6 @@ public class WaterBalloon : MonoBehaviour, IExplodable
                 transform.position = pos;
             }
         }
-    }
-
-    // Interpolación parabólica entre dos puntos (puedes ajustar la altura máxima si quieres)
-    private Vector3 ParabolicLerp(Vector3 start, Vector3 end, float t)
-    {
-        float height = Mathf.Max(start.y, end.y) + 3f; // Altura máxima, ajustable
-        // Trayectoria parabólica simple
-        Vector3 mid = Vector3.Lerp(start, end, t);
-        float parabola = 4 * height * t * (1 - t);
-        mid.y += parabola;
-        return mid;
     }
 
     protected virtual void OnCollisionEnter(Collision collision)
@@ -135,6 +114,14 @@ public class WaterBalloon : MonoBehaviour, IExplodable
             if (damageable != null && damageable.IsAlive)
             {
                 damageable.TakeDamage(Damage);
+            }
+
+            // Aplica humedad si el objeto es IWettable
+            var wettable = hit.GetComponent<IWettable>();
+            if (wettable != null)
+            {
+                // Puedes ajustar la cantidad de humedad aplicada aquí
+                wettable.AddWetness(50f); // Ejemplo: añade 50 de humedad
             }
         }
         Destroy(gameObject);

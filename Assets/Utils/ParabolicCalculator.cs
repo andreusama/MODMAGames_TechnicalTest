@@ -53,4 +53,16 @@ public static class ParabolicCalculator
 
         return result;
     }
+
+    /// <summary>
+    /// Interpolación parabólica entre dos puntos (puedes ajustar la altura máxima si quieres)
+    /// </summary>
+    public static Vector3 ParabolicLerp(Vector3 start, Vector3 end, float t, float extraHeight = 3f)
+    {
+        float height = Mathf.Max(start.y, end.y) + extraHeight;
+        Vector3 mid = Vector3.Lerp(start, end, t);
+        float parabola = 4 * height * t * (1 - t);
+        mid.y += parabola;
+        return mid;
+    }
 }

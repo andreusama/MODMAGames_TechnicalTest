@@ -1,13 +1,8 @@
 using UnityEngine;
 
-public struct EnemyDiedEvent
+public class PlayerHealth : MonoBehaviour, IDamageable
 {
-    public Enemy enemy;
-}
-
-public class Enemy : MonoBehaviour, IDamageable
-{
-    [Header("Enemy Settings")]
+    [Header("Player Health")]
     public float MaxHealth = 100f;
 
     private float m_CurrentHealth;
@@ -26,7 +21,6 @@ public class Enemy : MonoBehaviour, IDamageable
         if (!m_IsAlive)
             return;
 
-        Debug.Log($"Enemy took {amount} damage. Current health: {m_CurrentHealth - amount}");
         m_CurrentHealth -= amount;
         if (m_CurrentHealth <= 0f)
         {
@@ -38,8 +32,7 @@ public class Enemy : MonoBehaviour, IDamageable
     private void Die()
     {
         m_IsAlive = false;
-        // Aquí puedes añadir lógica de muerte (animación, desactivar, etc.)
-        EventManager.TriggerEvent(new EnemyDiedEvent { enemy = this });
+        // Aquí puedes añadir lógica de muerte, animaciones, eventos, etc.
         gameObject.SetActive(false);
     }
 }

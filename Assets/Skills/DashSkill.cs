@@ -3,6 +3,10 @@ using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using System.Collections;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class DashSkill : Skill
 {
     [Header("Dash Settings")]
@@ -10,6 +14,23 @@ public class DashSkill : Skill
     public float DashCooldown = 1f;
     public float DashSpeed = 50f;
     public float DashDuration = 0.2f;
+
+    [Header("Dash Animation Curve")]
+    public bool UseDashCurve = false;
+
+    [SerializeField, Tooltip("Curva de velocidad para el dash (0-1 en X, velocidad relativa en Y)")]
+    public AnimationCurve DashCurve = AnimationCurve.Linear(0, 1, 1, 1);
+
+#if UNITY_EDITOR
+    // Expande o colapsa la curva según el booleano, igual que WaterBalloonSkill
+    private void OnValidate()
+    {
+        UnityEditor.SerializedObject so = new UnityEditor.SerializedObject(this);
+        var prop = so.FindProperty("DashCurve");
+        prop.isExpanded = UseDashCurve;
+        so.ApplyModifiedProperties();
+    }
+#endif
 
     private bool m_IsDashing;
     private NavMeshAgent m_Agent;
@@ -21,19 +42,7 @@ public class DashSkill : Skill
         InitCooldown(DashCooldown);
     }
 
-    public override void BindInput(InputMap actions)
-    {
-        actions.Player.Dash.performed += OnDashPerformed;
-        actions.Player.Dash.Enable();
-    }
-
-    public override void UnbindInput(InputMap actions)
-    {
-        actions.Player.Dash.performed -= OnDashPerformed;
-        actions.Player.Dash.Disable();
-    }
-
-    public void OnDashPerformed(InputAction.CallbackContext context)
+    public void Activate()
     {
         SetCooldown(DashCooldown); // Por si se cambia en runtime
         if (IsCooldownReady && !m_IsDashing)
@@ -67,7 +76,9 @@ public class DashSkill : Skill
         float elapsedTime = 0f;
         while (elapsedTime < DashDuration)
         {
-            Vector3 nextPos = Vector3.Lerp(startPosition, targetPosition, elapsedTime / DashDuration);
+            float t = Mathf.Clamp01(elapsedTime / DashDuration);
+            float curveT = UseDashCurve && DashCurve != null ? DashCurve.Evaluate(t) : t;
+            Vector3 nextPos = Vector3.Lerp(startPosition, targetPosition, curveT);
             Vector3 delta = nextPos - transform.position;
             m_Agent.Move(delta);
             elapsedTime += Time.deltaTime;
@@ -78,4 +89,6 @@ public class DashSkill : Skill
         yield return new WaitForSeconds(DashDuration);
         m_IsDashing = false;
     }
+
+    public bool IsDashing => m_IsDashing;
 }
