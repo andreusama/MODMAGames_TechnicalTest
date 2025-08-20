@@ -1,33 +1,33 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerMotor))]
 public class DashCollisionHandler : MonoBehaviour
 {
+    [Header("Efectos del dash (se aplican todos)")]
+    [SerializeField] private DashEffect[] dashEffects;
+
     private DashSkill dashSkill;
 
     private void Awake()
     {
-        // Busca la skill de dash en el SkillManager del jugador
-        var skillManager = GetComponent<SkillManager>();
+        // Si el DashHitbox es hijo, SkillManager puede estar en el padre
+        var skillManager = GetComponentInParent<SkillManager>();
         if (skillManager != null)
             dashSkill = skillManager.GetSkill<DashSkill>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("oN TRIGGER ENTERED!");
+        // Condiciones mínimas para aplicar efectos:
+        // - dashSkill existe
+        // - dash está activo
+        // - hay efectos configurados
         if (dashSkill == null || !dashSkill.IsDashing)
             return;
 
-        var wettable = other.GetComponent<IWettable>();
-        if (wettable != null && wettable.Wetness > 0)
+        foreach (var effect in dashEffects)
         {
-            var explodable = other.GetComponent<IExplodable>();
-            if (explodable != null && !explodable.HasExploded)
-            {
-                explodable.Explode();
-            }
-            wettable.SetWetness(0);
+            if (effect != null)
+                effect.ApplyEffect(other);
         }
     }
 }

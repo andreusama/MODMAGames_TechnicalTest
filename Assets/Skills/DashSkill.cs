@@ -7,6 +7,11 @@ using System.Collections;
 using UnityEditor;
 #endif
 
+/// <summary>
+/// DashSkill requiere un hitbox (Collider tipo trigger) asignado en el campo DashHitbox para que el dash tenga efectos sobre otros objetos.
+/// Si no se asigna un hitbox, el dash solo moverá al jugador, pero no infligirá daño ni interactuará con enemigos u objetos.
+/// El hitbox debe ser un GameObject hijo del jugador, estar desactivado por defecto y tener el script DashCollisionHandler.
+/// </summary>
 public class DashSkill : Skill
 {
     [Header("Dash Settings")]
@@ -21,8 +26,11 @@ public class DashSkill : Skill
     [SerializeField, Tooltip("Curva de velocidad para el dash (0-1 en X, velocidad relativa en Y)")]
     public AnimationCurve DashCurve = AnimationCurve.Linear(0, 1, 1, 1);
 
+    [Header("Dash Hitbox")]
+    [Tooltip("Referencia al collider trigger que usará el dash para hacer daño. Debe estar desactivado por defecto.")]
+    public Collider DashHitbox;
+
 #if UNITY_EDITOR
-    // Expande o colapsa la curva según el booleano, igual que WaterBalloonSkill
     private void OnValidate()
     {
         UnityEditor.SerializedObject so = new UnityEditor.SerializedObject(this);
@@ -33,6 +41,8 @@ public class DashSkill : Skill
 #endif
 
     private bool m_IsDashing;
+    public bool IsDashing => m_IsDashing;
+
     private NavMeshAgent m_Agent;
 
     public override void Initialize(PlayerMotor motor)
@@ -40,11 +50,13 @@ public class DashSkill : Skill
         base.Initialize(motor);
         m_Agent = m_PlayerMotor.GetAgent();
         InitCooldown(DashCooldown);
+        if (DashHitbox != null)
+            DashHitbox.enabled = false;
     }
 
     public void Activate()
     {
-        SetCooldown(DashCooldown); // Por si se cambia en runtime
+        SetCooldown(DashCooldown);
         if (IsCooldownReady && !m_IsDashing)
         {
             StartCoroutine(DashCoroutine());
@@ -56,6 +68,13 @@ public class DashSkill : Skill
         m_IsDashing = true;
         StartCooldown();
 
+        // Lanzar evento de inicio de dash
+        EventManager.TriggerEvent(new DashStartEvent {});
+
+        // Activar el hitbox de daño
+        if (DashHitbox != null)
+            DashHitbox.enabled = true;
+
         Vector3 startPosition = transform.position;
         Vector3 dashDir = transform.forward;
         float safeOffset = 1.1f;
@@ -65,18 +84,18 @@ public class DashSkill : Skill
         // Raycast para detectar colisiones, pero ignora objetos en la capa "Interactables" (por ejemplo, Sponges)
         if (Physics.Raycast(startPosition, dashDir, out RaycastHit hit, DashDistance))
         {
-            // Comprobamos si el objeto impactado está en la capa "Interactables"
             int interactablesLayer = LayerMask.NameToLayer("IgnoreDashImpact");
             if (hit.collider.gameObject.layer != interactablesLayer)
             {
                 targetPosition = hit.point - dashDir * safeOffset;
             }
-            // Si es Interactables (por ejemplo, Sponge), el dash atraviesa y no se acorta
         }
 
         if (Vector3.Distance(startPosition, targetPosition) < 0.01f)
         {
             m_IsDashing = false;
+            if (DashHitbox != null)
+                DashHitbox.enabled = false;
             yield break;
         }
 
@@ -95,7 +114,16 @@ public class DashSkill : Skill
 
         yield return new WaitForSeconds(DashDuration);
         m_IsDashing = false;
+
+        // Desactivar el hitbox de daño
+        if (DashHitbox != null)
+            DashHitbox.enabled = false;
+
+        // Lanzar evento de fin de dash
+        EventManager.TriggerEvent(new DashEndEvent {});
     }
 
-    public bool IsDashing => m_IsDashing;
 }
+
+public struct DashStartEvent{}
+public struct DashEndEvent{}

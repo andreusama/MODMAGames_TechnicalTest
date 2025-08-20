@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour, IDamageable
+public class PlayerHealth : MonoBehaviour, IDamageable, IEventListener<DashStartEvent>, IEventListener<DashEndEvent>
 {
     [Header("Player Health")]
     public float MaxHealth = 100f;
@@ -10,15 +10,41 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     public bool IsAlive => m_IsAlive;
 
+    private bool m_IsInvulnerable = false;
+
     private void Awake()
     {
         m_CurrentHealth = MaxHealth;
         m_IsAlive = true;
     }
 
+    private void OnEnable()
+    {
+        this.EventStartListening<DashStartEvent>();
+        this.EventStartListening<DashEndEvent>();
+    }
+
+    private void OnDisable()
+    {
+        this.EventStopListening<DashStartEvent>();
+        this.EventStopListening<DashEndEvent>();
+    }
+
+    public void OnEvent(DashStartEvent evt)
+    {
+        //Now it's only one PlayerMotor, so we can assume it's the current player
+        m_IsInvulnerable = true;
+    }
+
+    public void OnEvent(DashEndEvent evt)
+    {
+        //Now it's only one PlayerMotor, so we can assume it's the current player
+        m_IsInvulnerable = false;
+    }
+
     public void TakeDamage(float amount, bool allyFire = false)
     {
-        if (allyFire)
+        if (allyFire || m_IsInvulnerable)
             return; // Ignora el daño de fuego amigo
 
         if (!m_IsAlive)
