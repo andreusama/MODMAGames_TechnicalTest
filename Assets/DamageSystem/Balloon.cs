@@ -10,6 +10,10 @@ public class Balloon : MonoBehaviour, IExplodable
     public LayerMask TargetLayers;
     public LayerMask GroundLayers;
 
+    [Header("Parabolic Flight")]
+    public AnimationCurve PositionCurve = AnimationCurve.Linear(0, 1, 1, 1);
+    public float TotalFlightTime = 1.5f;
+
     protected bool m_HasExploded = false;
     protected bool m_HasTouchedGround = false;
     protected Coroutine m_ExplosionCoroutine;
@@ -50,7 +54,8 @@ public class Balloon : MonoBehaviour, IExplodable
         {
             m_StartPos = transform.position;
             m_TargetPos = targetPos.Value;
-            // No se asigna PositionCurve aquí, lo hace la subclase si lo necesita
+            PositionCurve = curve ?? PositionCurve;
+            TotalFlightTime = totalFlightTime;
             if (rb != null)
                 rb.isKinematic = true; // Movimiento manual
         }
@@ -67,12 +72,39 @@ public class Balloon : MonoBehaviour, IExplodable
 
     protected virtual void Update()
     {
-        // La lógica de vuelo por curva se implementa en la subclase si es necesario
+        if (!m_HasTouchedGround && m_UseCurve)
+        {
+            m_Lifetime += Time.deltaTime;
+            float tNorm = Mathf.Clamp01(m_Lifetime / TotalFlightTime);
+            float curveT = PositionCurve != null ? PositionCurve.Evaluate(tNorm) : tNorm;
+
+            Vector3 pos = ParabolicCalculator.ParabolicLerp(m_StartPos, m_TargetPos, curveT);
+
+            if (tNorm >= 1f)
+            {
+                transform.position = GroundDetector.GetGroundedPosition(pos, 0.2f, 1f, GroundLayers);
+                m_HasTouchedGround = true;
+                ShowExplosionRadius();
+                m_ExplosionCoroutine = StartCoroutine(ExplodeAfterDelay());
+            }
+            else
+            {
+                transform.position = pos;
+            }
+        }
     }
 
     protected virtual void OnCollisionEnter(Collision collision)
     {
-        // La lógica de colisión se implementa en la subclase si es necesario
+        if (m_HasTouchedGround || m_HasExploded)
+            return;
+
+        if (((1 << collision.gameObject.layer) & GroundLayers.value) != 0)
+        {
+            m_HasTouchedGround = true;
+            ShowExplosionRadius();
+            m_ExplosionCoroutine = StartCoroutine(ExplodeAfterDelay());
+        }
     }
 
     protected IEnumerator ExplodeAfterDelay()

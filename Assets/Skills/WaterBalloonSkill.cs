@@ -166,10 +166,10 @@ public class WaterBalloonSkill : Skill
         }
 
         GameObject balloonObj = GameObject.Instantiate(WaterBalloonPrefab, origin, Quaternion.identity);
-        var balloon = balloonObj.GetComponent<WaterBalloon>();
+        var balloon = balloonObj.GetComponent<Balloon>();
         if (balloon != null)
         {
-            balloon.Damage = Damage;
+            // Si necesitas pasar parámetros comunes, hazlo aquí
             balloon.ExplosionDelay = ExplosionDelay;
             balloon.ExplosionRadius = ExplosionRadius;
             balloon.TargetLayers = TargetLayers;

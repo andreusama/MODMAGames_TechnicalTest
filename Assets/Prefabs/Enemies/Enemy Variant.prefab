@@ -494,11 +494,13 @@ MonoBehaviour:
   m_Wetness: 0
   Transform: {fileID: 3886073106981038281}
   MaxScale: 5.5
-  ExplosionRadius: 2
-  ExplosionDamage: 30
-  ExplosionLayers:
+  ExplosionRadius: 10.49
+  DotsToSpawn: 12
+  DirtySpotPrefab: {fileID: 5679464411059033884, guid: 36e5c9cc55a8255489f679fed96bf09a, type: 3}
+  GroundLayers:
     serializedVersion: 2
     m_Bits: 4294967295
+  MinDotDistance: 0.3
   enemyAI: {fileID: 2849527085704296124}
   MinSpeedPercent: 0.3
 --- !u!114 &5878274409972591082
@@ -513,7 +515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3f72f472eb0c36439756efa446b4f8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WaterBalloonPrefab: {fileID: 4527607296438448130, guid: 0f663713232daad4ab65ffda04ebfe6c, type: 3}
+  WaterBalloonPrefab: {fileID: 3527009637524995492, guid: 277ae58f8b205354c86bfa524a676b1c, type: 3}
   Damage: 25
   ExplosionDelay: 1.5
   Cooldown: 2
@@ -541,6 +543,15 @@ MonoBehaviour:
       weightedMode: 0
       inWeight: 0
       outWeight: 0
+    - serializedVersion: 3
+      time: 0.3845557
+      value: 0.79639286
+      inSlope: 1.5128815
+      outSlope: 1.5128815
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.06881386
     - serializedVersion: 3
       time: 1
       value: 1

@@ -6227,6 +6227,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IntroDuration: 2
+  GameDuration: 10
+  RequiredCleanPercentage: 0.8
+  EndGameUIPrefab: {fileID: 3914770090469506645, guid: ebb14b040b42f024b8b2ece0870ca9c1, type: 3}
+  SceneGroupToLoad: {fileID: 11400000, guid: a1a8c72f407bef643b3aaf7928eab531, type: 2}
 --- !u!114 &824704242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14909,7 +14913,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5845390169971836899, guid: 77c469a630f21d046b439087ba455933, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5845390169971836899, guid: 77c469a630f21d046b439087ba455933, type: 3}
       propertyPath: TimeBetweenWaves
