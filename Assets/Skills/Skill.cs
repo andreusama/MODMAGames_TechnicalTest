@@ -11,9 +11,6 @@ public abstract class Skill : MonoBehaviour
         m_PlayerMotor = motor;
     }
 
-    public virtual void BindInput(InputMap actions) { }
-    public virtual void UnbindInput(InputMap actions) { }
-
     // Permite inicializar el cooldown desde la skill hija
     protected void InitCooldown(float cooldown)
     {

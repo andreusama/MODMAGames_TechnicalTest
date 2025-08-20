@@ -49,9 +49,14 @@ public class DashSkill : Skill
     {
         base.Initialize(motor);
         m_Agent = m_PlayerMotor.GetAgent();
-        InitCooldown(DashCooldown);
+
         if (DashHitbox != null)
             DashHitbox.enabled = false;
+    }
+
+    public void Awake()
+    {
+        InitCooldown(DashCooldown);
     }
 
     public void Activate()

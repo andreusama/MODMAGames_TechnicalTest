@@ -1,81 +1,28 @@
 using UnityEngine;
 using System.Collections;
-using KBCore.Refs;
 
-public class WaterBalloon : MonoBehaviour, IExplodable
+public class WaterBalloon : Balloon
 {
-    [Header("Explosion Settings")]
+    [Header("Water Balloon")]
     public float Damage = 25f;
-    public int WetPower = 20; 
-    public float ExplosionRadius = 2.5f;
-    public float ExplosionDelay = 1.5f;
-    public LayerMask TargetLayers;
-    public LayerMask GroundLayers;
+    public int WetPower = 20;
+    public AnimationCurve PositionCurve;
+    public float TotalFlightTime = 1.5f;
 
-    [Header("Flight Curve (optional)")]
-    public AnimationCurve PositionCurve; // Si está vacía, no se usa
-    public float TotalFlightTime = 1.5f; // Tiempo total de vuelo (solo si se usa curva)
-
-    protected bool m_HasExploded = false;
-    protected bool m_HasTouchedGround = false;
-    protected Coroutine m_ExplosionCoroutine;
-
-    public bool HasExploded => m_HasExploded;
-    public bool HasTouchedGround => m_HasTouchedGround;
-
-    [SerializeField, Self]
-    protected Rigidbody rb;
-
-    private CircleDrawer m_CircleDrawer;
-
-    // Variables para la curva
-    private Vector3 m_StartPos;
-    private Vector3 m_TargetPos;
-    private float m_Lifetime = 0f;
-    private Vector3 m_InitialVelocity;
-    private bool m_UseCurve = false;
-
-    private void Awake()
+    public override void Throw(Vector3 initialVelocity, Vector3? targetPos = null, AnimationCurve curve = null, float totalFlightTime = 1f)
     {
-        m_CircleDrawer = GetComponentInChildren<CircleDrawer>();
-        if (m_CircleDrawer == null)
-        {
-            var go = new GameObject("CircleDrawer");
-            go.transform.SetParent(transform);
-            go.transform.localPosition = Vector3.zero;
-            m_CircleDrawer = go.AddComponent<CircleDrawer>();
-        }
-    }
-
-    /// <summary>
-    /// Lanza el globo con una velocidad inicial (física) o con una curva de posición-tiempo.
-    /// </summary>
-    public void Throw(Vector3 initialVelocity, Vector3? targetPos = null, AnimationCurve curve = null, float totalFlightTime = 1f)
-    {
-        m_UseCurve = (curve != null && targetPos.HasValue);
-        m_Lifetime = 0f;
-
-        if (m_UseCurve)
-        {
-            m_StartPos = transform.position;
-            m_TargetPos = targetPos.Value;
+        if (curve != null)
             PositionCurve = curve;
+        else if (PositionCurve == null)
+            PositionCurve = AnimationCurve.Linear(0, 1, 1, 1);
+
+        if (targetPos.HasValue)
             TotalFlightTime = totalFlightTime;
-            if (rb != null)
-                rb.isKinematic = true; // Movimiento manual
-        }
-        else
-        {
-            m_InitialVelocity = initialVelocity;
-            if (rb != null)
-            {
-                rb.isKinematic = false;
-                rb.linearVelocity = m_InitialVelocity;
-            }
-        }
+
+        base.Throw(initialVelocity, targetPos, curve, totalFlightTime);
     }
 
-    protected virtual void Update()
+    protected override void Update()
     {
         if (!m_HasTouchedGround && m_UseCurve)
         {
@@ -83,7 +30,6 @@ public class WaterBalloon : MonoBehaviour, IExplodable
             float tNorm = Mathf.Clamp01(m_Lifetime / TotalFlightTime);
             float curveT = PositionCurve != null ? PositionCurve.Evaluate(tNorm) : tNorm;
 
-            // Usa el método estático de ParabolicCalculator
             Vector3 pos = ParabolicCalculator.ParabolicLerp(m_StartPos, m_TargetPos, curveT);
 
             if (tNorm >= 1f)
@@ -100,7 +46,7 @@ public class WaterBalloon : MonoBehaviour, IExplodable
         }
     }
 
-    protected virtual void OnCollisionEnter(Collision collision)
+    protected override void OnCollisionEnter(Collision collision)
     {
         if (m_HasTouchedGround || m_HasExploded)
             return;
@@ -113,25 +59,7 @@ public class WaterBalloon : MonoBehaviour, IExplodable
         }
     }
 
-    protected IEnumerator ExplodeAfterDelay()
-    {
-        yield return new WaitForSeconds(ExplosionDelay);
-        Explode();
-    }
-
-    private void ShowExplosionRadius()
-    {
-        if (m_CircleDrawer != null)
-            m_CircleDrawer.DrawCircle(transform.position, ExplosionRadius);
-    }
-
-    private void HideExplosionRadius()
-    {
-        if (m_CircleDrawer != null)
-            m_CircleDrawer.Hide();
-    }
-
-    public void Explode()
+    public override void Explode()
     {
         if (m_HasExploded) return;
         m_HasExploded = true;
@@ -161,10 +89,5 @@ public class WaterBalloon : MonoBehaviour, IExplodable
             }
         }
         Destroy(gameObject);
-    }
-
-    private void OnDestroy()
-    {
-        HideExplosionRadius();
     }
 }

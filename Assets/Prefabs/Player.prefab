@@ -300,6 +300,7 @@ MonoBehaviour:
   MaxHeight: 10
   m_FlightTime: 0.7
   m_SpawnPoint: {fileID: 7748581991796816533}
+  m_CircleDrawer: {fileID: 797318004800450169}
   UseAnimationCurve: 1
   VelocityCurve:
     serializedVersion: 2
@@ -334,6 +335,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AimingSpeedPercent: 0.4
 --- !u!114 &4044350586239497142
 MonoBehaviour:
   m_ObjectHideFlags: 0

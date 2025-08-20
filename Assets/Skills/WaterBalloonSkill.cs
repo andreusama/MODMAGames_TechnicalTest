@@ -24,7 +24,7 @@ public class WaterBalloonSkill : Skill
 
     [SerializeField]
     private Transform m_SpawnPoint;
-    private CircleDrawer m_CircleDrawer;
+    public CircleDrawer m_CircleDrawer;
 
     // Guarda el último input válido
     private Vector2 m_LastAimInput = Vector2.zero;
@@ -49,10 +49,11 @@ public class WaterBalloonSkill : Skill
     public override void Initialize(PlayerMotor motor)
     {
         base.Initialize(motor);
+    }
+
+    public void Awake()
+    {
         InitCooldown(Cooldown);
-        m_CircleDrawer = m_PlayerMotor.GetComponentInChildren<CircleDrawer>();
-        if (m_CircleDrawer == null)
-            Debug.LogWarning("CircleDrawer no encontrado en el jugador.");
     }
 
     [Header("Aiming Slowdown")]

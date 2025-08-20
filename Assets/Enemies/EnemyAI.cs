@@ -46,18 +46,6 @@ public class EnemyAI : MonoBehaviour
         if (playerTransform == null || playerHealth == null || !playerHealth.IsAlive)
             return;
 
-        if (wettable != null && agent != null)
-        {
-            if (wettable.Wetness != lastWetness)
-            {
-                float t = wettable.Wetness / 100f;
-                // Interpola entre 100% y el porcentaje mínimo
-                float percent = Mathf.Lerp(1f, MinSpeedPercent, t);
-                agent.speed = originalSpeed * percent;
-                lastWetness = wettable.Wetness;
-            }
-        }
-
         agent.SetDestination(playerTransform.position);
 
         float distance = Vector3.Distance(transform.position, playerTransform.position);
@@ -66,5 +54,16 @@ public class EnemyAI : MonoBehaviour
             playerHealth.TakeDamage(Damage);
             lastAttackTime = Time.time;
         }
+    }
+
+    public float GetOriginalSpeed()
+    {
+        return originalSpeed;
+    }
+
+    public void SetSpeed(float speed)
+    {
+        if (agent != null)
+            agent.speed = speed;
     }
 }
