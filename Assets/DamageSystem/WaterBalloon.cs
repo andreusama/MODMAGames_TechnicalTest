@@ -153,6 +153,12 @@ public class WaterBalloon : MonoBehaviour, IExplodable
             {
                 wettable.AddWetness(WetPower);
             }
+
+            var cleanable = hit.GetComponent<ICleanable>();
+            if (cleanable != null && !cleanable.IsClean)
+            {
+                cleanable.Clean();
+            }
         }
         Destroy(gameObject);
     }

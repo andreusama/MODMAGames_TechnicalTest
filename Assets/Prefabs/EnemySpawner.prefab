@@ -158,3 +158,5 @@ MonoBehaviour:
   SpawnRadius: 10
   TimeBetweenWaves: 30
   MaxWaves: 2
+  BossPrefab: {fileID: 230751398634840658, guid: aa2138759ba310e4f9766fc7ebefffb4, type: 3}
+  BossSpawnChance: 0.2

@@ -10,6 +10,11 @@ public class EnemySpawner : MonoBehaviour, IEventListener<GameStartEvent>, IEven
     public float TimeBetweenWaves = 10f;
     public int MaxWaves = 10;
 
+    [Header("Boss Settings")]
+    public GameObject BossPrefab;
+    [Range(0f, 1f)]
+    public float BossSpawnChance = 0.2f; // 20% de probabilidad por oleada
+
     private int m_CurrentWave = 0;
     private bool m_Spawning = false;
     private bool m_GameEnded = false;
@@ -72,6 +77,13 @@ public class EnemySpawner : MonoBehaviour, IEventListener<GameStartEvent>, IEven
             Vector3 spawnPos = GetRandomPointAround(transform.position, SpawnRadius);
             GameObject enemy = Instantiate(EnemyPrefab, spawnPos, Quaternion.identity);
             // Lógica extra de inicialización del enemigo aquí si es necesario
+        }
+
+        // Spawn boss at random on certain waves
+        if (BossPrefab != null && Random.value < BossSpawnChance)
+        {
+            Vector3 bossSpawnPos = GetRandomPointAround(transform.position, SpawnRadius);
+            Instantiate(BossPrefab, bossSpawnPos, Quaternion.identity);
         }
     }
 

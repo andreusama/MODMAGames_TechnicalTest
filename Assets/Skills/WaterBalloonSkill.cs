@@ -55,11 +55,24 @@ public class WaterBalloonSkill : Skill
             Debug.LogWarning("CircleDrawer no encontrado en el jugador.");
     }
 
+    [Header("Aiming Slowdown")]
+    [Range(0.1f, 1f)]
+    public float AimingSpeedPercent = 0.4f; // 40% de la velocidad original
+
+    private float? originalMoveSpeed = null;
+
     public void OnAimingPerformed(Vector2 input)
     {
         Vector2 invertedInput = new Vector2(-input.x, -input.y);
         if (invertedInput.sqrMagnitude > 0.01f)
             m_LastAimInput = invertedInput;
+
+        // Ralentiza al empezar a apuntar
+        if (originalMoveSpeed == null && m_PlayerMotor != null)
+        {
+            originalMoveSpeed = m_PlayerMotor.MoveSpeed;
+            m_PlayerMotor.MoveSpeed = originalMoveSpeed.Value * AimingSpeedPercent;
+        }
 
         UpdateAimingVisual(invertedInput);
     }
@@ -72,6 +85,13 @@ public class WaterBalloonSkill : Skill
             m_LastAimInput = Vector2.zero;
         }
         m_CircleDrawer.Hide();
+
+        // Restaura la velocidad al dejar de apuntar
+        if (originalMoveSpeed != null && m_PlayerMotor != null)
+        {
+            m_PlayerMotor.MoveSpeed = originalMoveSpeed.Value;
+            originalMoveSpeed = null;
+        }
     }
 
     public void UpdateAimingVisual(Vector2 input)

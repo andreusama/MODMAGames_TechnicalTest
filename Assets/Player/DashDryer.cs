@@ -11,8 +11,6 @@ public class DashDryer : DashEffect
             var explodable = other.GetComponent<IExplodable>();
             if (explodable != null && !explodable.HasExploded)
             {
-                Debug.Log("Exploding");
-
                 explodable.Explode();
             }
             wettable.SetWetness(0);

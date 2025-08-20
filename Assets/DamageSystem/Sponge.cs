@@ -13,8 +13,10 @@ public class Sponge : WettableObject, IExplodable
     private CircleDrawer m_CircleDrawer;
     private bool m_HasShownRadius = false;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         m_CircleDrawer = GetComponentInChildren<CircleDrawer>();
         if (m_CircleDrawer == null)
             Debug.LogWarning("CircleDrawer no encontrado en la esponja.");
@@ -61,6 +63,12 @@ public class Sponge : WettableObject, IExplodable
                 Debug.Log("Damage applied");
                 bool isAllyFire = true;
                 damageable.TakeDamage(scaledDamage, isAllyFire);
+            }
+
+            var cleanable = hit.GetComponent<ICleanable>();
+            if (cleanable != null && !cleanable.IsClean)
+            {
+                cleanable.Clean();
             }
         }
     }

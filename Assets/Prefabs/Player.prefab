@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 4044350586239497142}
   - component: {fileID: 5285678715845225847}
   - component: {fileID: 3858561076540024543}
+  - component: {fileID: 1573892223592572590}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -374,6 +375,22 @@ MonoBehaviour:
   dashEffects:
   - {fileID: 11400000, guid: 4755f264af1ad784586adcb07f20c6b3, type: 2}
   - {fileID: 11400000, guid: e54c1c08a7567fb4692233ba359e571d, type: 2}
+--- !u!114 &1573892223592572590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563671674836396128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f5b2f3707bda794cbb14a17cff6d0e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CleanRadius: 1
+  DirtySpotLayer:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!1 &1914225780017632132
 GameObject:
   m_ObjectHideFlags: 0

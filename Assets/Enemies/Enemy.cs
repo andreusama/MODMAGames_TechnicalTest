@@ -12,6 +12,10 @@ public class Enemy : MonoBehaviour, IDamageable
     public float MaxHealth = 100f;
     [SerializeField] private float destroyDelay = 1f;
 
+    [Header("Clean on Death")]
+    public float CleanRadius = 2f;
+    public LayerMask CleanableLayers = ~0; // Por defecto, todas las capas
+
     private float m_CurrentHealth;
     private bool m_IsAlive = true;
 
@@ -56,10 +60,45 @@ public class Enemy : MonoBehaviour, IDamageable
         if (!m_IsAlive) return;
         m_IsAlive = false;
 
+        // Mostrar círculo de limpieza (visual temporal)
+        ShowCleanArea();
+
+        CleanNearbyDirt();
+
         OnDied?.Invoke(this);
         EventManager.TriggerEvent(new EnemyDiedEvent { enemy = this });
 
-        // Aquí puedes añadir lógica visual, animaciones, etc.
         Destroy(gameObject, destroyDelay);
+    }
+
+    private void CleanNearbyDirt()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, CleanRadius, CleanableLayers);
+        foreach (var hit in hits)
+        {
+            var cleanable = hit.GetComponent<ICleanable>();
+            if (cleanable != null && !cleanable.IsClean)
+            {
+                cleanable.Clean();
+            }
+        }
+    }
+    private void ShowCleanArea()
+    {
+        // Instancia un CircleDrawer temporal
+        var go = new GameObject("CleanAreaDrawer");
+        go.transform.position = transform.position;
+        var drawer = go.AddComponent<CircleDrawer>();
+        drawer.Segments = 32;
+        drawer.DrawCircle(transform.position, CleanRadius);
+
+        // Destruye el círculo tras un breve tiempo
+        Destroy(go, 1.5f);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = new Color(0.2f, 0.8f, 1f, 0.3f);
+        Gizmos.DrawWireSphere(transform.position, CleanRadius);
     }
 }

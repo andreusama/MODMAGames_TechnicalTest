@@ -6,16 +6,17 @@ public class WettableObject : MonoBehaviour, IWettable
 {
     [Range(0, 100)]
     [SerializeField]
-    private int m_Wetness = 0;
-
-    public int Wetness
-    {
-        get => m_Wetness;
-        set => SetWetness(value); // Así todo el flujo de eventos y lógica se mantiene centralizado
-    }
+    protected int m_Wetness = 0;
+    public int Wetness => m_Wetness;
 
     [SerializeField, Self]
     public Transform Transform;
+
+    [Header("Wettable Scaling")]
+    public float MaxScale = 2f; // Valor por defecto, ajustable en el inspector
+
+    private Vector3 initialScale;
+
 
     /// <summary>
     /// Evento que se dispara cada vez que cambia la humedad.
@@ -26,6 +27,14 @@ public class WettableObject : MonoBehaviour, IWettable
     /// Método virtual para que las clases hijas puedan reaccionar al cambio de humedad.
     /// </summary>
     protected virtual void OnWetnessChangedVirtual(int wetness) { }
+
+    protected virtual void Awake()
+    {
+        if (Transform == null)
+            Transform = transform;
+
+        initialScale = Transform.localScale;
+    }
 
     public void AddWetness(int amount)
     {
@@ -49,8 +58,12 @@ public class WettableObject : MonoBehaviour, IWettable
 
     private void UpdateVisuals()
     {
-        // Ejemplo: cambiar escala según la humedad
         if (Transform != null)
-            Transform.localScale = Vector3.one * (2 + m_Wetness / 100f);
+        {
+            float t = m_Wetness / 100f;
+            // Interpola entre la escala inicial y el valor absoluto MaxScale
+            Vector3 targetScale = Vector3.Lerp(initialScale, Vector3.one * MaxScale, t);
+            Transform.localScale = targetScale;
+        }
     }
 }

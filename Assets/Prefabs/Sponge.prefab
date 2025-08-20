@@ -64,7 +64,7 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 2
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: b7acdd90a46bf5d4eb23b21885a75343, type: 2}
@@ -124,8 +124,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Wetness: 0
   Transform: {fileID: 7593808236874999970}
+  MaxScale: 3
   MaxDamage: 30
-  ExplosionRadius: 10
+  MaxExplosionRadius: 20
   ExplosionEffect: {fileID: 0}
   TargetLayers:
     serializedVersion: 2
