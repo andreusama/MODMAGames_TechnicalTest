@@ -21,7 +21,6 @@ public class AutoShootSkill : MonoBehaviour
     private void OnEnable()
     {
         isActive = true;
-
         StartCoroutine(AutoShootRoutine());
     }
 
@@ -54,11 +53,12 @@ public class AutoShootSkill : MonoBehaviour
 
                 Vector3 direction = new Vector3(aimInput.x, 0, aimInput.y).normalized;
                 float range = Mathf.Lerp(minRange, maxRange, aimInput.magnitude);
-                targetWorld = SkillToUse.transform.position + direction * range + Vector3.up * 5f;
+                Vector3 rayOrigin = SkillToUse.transform.position + direction * range + Vector3.up * 5f;
 
-                if (Physics.Raycast(targetWorld, Vector3.down, out RaycastHit hit, 20f, ValidGroundLayers))
+                if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, 20f, ValidGroundLayers))
                 {
                     foundValid = true;
+                    targetWorld = hit.point; // Guarda el punto de impacto real como target absoluto
                 }
                 else
                 {
@@ -72,17 +72,17 @@ public class AutoShootSkill : MonoBehaviour
             // Simula el apuntado
             SkillToUse.OnAimingPerformed(aimInput);
 
-            // Mientras apunta, actualiza la visualización cada frame
+            // Mientras apunta, actualiza la visualización cada frame con el target fijo
             float timer = 0f;
             while (timer < AimTime)
             {
-                SkillToUse.UpdateAimingVisual(lastAimInput);
+                SkillToUse.UpdateAimingVisual(lastAimInput, lastTargetWorld);
                 timer += Time.deltaTime;
                 yield return null;
             }
 
-            // Simula el disparo
-            SkillToUse.OnAimingCanceled(lastAimInput);
+            // Simula el disparo usando el target fijo
+            SkillToUse.OnAimingCanceled(lastAimInput, lastTargetWorld);
         }
     }
 
