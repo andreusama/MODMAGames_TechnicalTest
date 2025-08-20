@@ -4,7 +4,7 @@ public class Sponge : WettableObject, IExplodable
 {
     [Header("Sponge Explosion")]
     public float MaxDamage = 30f;
-    public float ExplosionRadius = 3f;
+    public float MaxExplosionRadius = 3f;
     public GameObject ExplosionEffect;
     public LayerMask TargetLayers;
 
@@ -18,44 +18,41 @@ public class Sponge : WettableObject, IExplodable
         m_CircleDrawer = GetComponentInChildren<CircleDrawer>();
         if (m_CircleDrawer == null)
             Debug.LogWarning("CircleDrawer no encontrado en la esponja.");
-
     }
 
-    protected override void OnWetnessChangedVirtual(int wetness) 
+    protected override void OnWetnessChangedVirtual(int wetness)
     {
-        if (wetness == 100)
+        UpdateExplosionRadiusVisual();
+    }
+
+    private void UpdateExplosionRadiusVisual()
+    {
+        float scaledRadius = MaxExplosionRadius * (Wetness / 100f);
+        if (scaledRadius > 0.01f)
         {
-            OnWetnessFull();
+            m_HasShownRadius = true;
+            if (m_CircleDrawer != null)
+                m_CircleDrawer.DrawCircle(transform.position, scaledRadius);
         }
         else
         {
-            OnWetnessNotFullOrExploded();
+            m_HasShownRadius = false;
+            if (m_CircleDrawer != null)
+                m_CircleDrawer.Hide();
         }
-    }
-
-    private void OnWetnessFull()
-    {
-        m_HasShownRadius = true;
-        if (m_CircleDrawer != null)
-            m_CircleDrawer.DrawCircle(transform.position, ExplosionRadius);
-    }
-
-    private void OnWetnessNotFullOrExploded()
-    {
-        m_HasShownRadius = false;
-        if (m_CircleDrawer != null)
-            m_CircleDrawer.Hide();
     }
 
     public void Explode()
     {
-        OnWetnessNotFullOrExploded();
-        
-        // Daño proporcional a la humedad (0-100)
-        float scaledDamage = MaxDamage * (Wetness / 100f);
+        UpdateExplosionRadiusVisual();
 
-        // Dañar a todos los IDamageable en el radio
-        Collider[] hits = Physics.OverlapSphere(transform.position, ExplosionRadius, TargetLayers);
+        float scaledDamage = MaxDamage * (Wetness / 100f);
+        float scaledRadius = MaxExplosionRadius * (Wetness / 100f);
+
+        if (scaledRadius <= 0.01f)
+            return; // No explota si el radio es 0
+
+        Collider[] hits = Physics.OverlapSphere(transform.position, scaledRadius, TargetLayers);
         foreach (var hit in hits)
         {
             var damageable = hit.GetComponent<IDamageable>();
@@ -67,4 +64,6 @@ public class Sponge : WettableObject, IExplodable
             }
         }
     }
+
+    
 }

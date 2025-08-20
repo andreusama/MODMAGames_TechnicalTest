@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 25
+  WetPower: 5
   ExplosionRadius: 2.5
   ExplosionDelay: 1.5
   TargetLayers:

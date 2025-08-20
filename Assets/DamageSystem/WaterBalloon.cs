@@ -6,6 +6,7 @@ public class WaterBalloon : MonoBehaviour, IExplodable
 {
     [Header("Explosion Settings")]
     public float Damage = 25f;
+    public int WetPower = 20; 
     public float ExplosionRadius = 2.5f;
     public float ExplosionDelay = 1.5f;
     public LayerMask TargetLayers;
@@ -150,7 +151,7 @@ public class WaterBalloon : MonoBehaviour, IExplodable
             var wettable = hit.GetComponent<IWettable>();
             if (wettable != null)
             {
-                wettable.AddWetness(50);
+                wettable.AddWetness(WetPower);
             }
         }
         Destroy(gameObject);
