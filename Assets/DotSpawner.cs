@@ -3,52 +3,97 @@ using UnityEngine;
 using UnityEditor;
 #endif
 using System.Collections.Generic;
-using MoreMountains.Feedbacks; // o MoreMountains.Tools si es el namespace de MMPool
-using MoreMountains.Tools; // Namespace de MMSimpleObjectPooler
 
 public class DotSpawner : MonoBehaviour
 {
+    [Header("Dot Prefab")]
     public GameObject DotPrefab;
+
+    [Header("Distribution")]
     public int MaxDots = 200;
     public float MinDistance = 0.5f;
     public int MaxAttempts = 10000;
-    public LayerMask LayoutLayer;
-    public float RaycastHeight = 10f;
+
+    [Header("Common Area Settings")]
     public Vector3 AreaCenter;
-    public Vector3 AreaSize;
+    public float RaycastHeight = 10f;
+    public LayerMask LayoutLayer;
+
+    [Header("Rectangle Area")]
+    public Vector3 AreaSize = new Vector3(10, 0, 10);
+
+    [Header("Circle Area")]
+    public bool UseCircleArea = false;
+    public float CircleRadius = 5f;
+
+    [Header("Bake Visual Settings")]
+    public float DotYOffset = 0.02f;
 
 #if UNITY_EDITOR
     [ContextMenu("Bake Dots")]
     public void BakeDots()
     {
-        float dotOffsetY = 0.02f; // Offset vertical para evitar z-fighting
+        if (DotPrefab == null)
+        {
+            Debug.LogWarning("DotPrefab no asignado.");
+            return;
+        }
 
-        // Elimina dots previos
+        // Elimina dots previos (solo editor)
         for (int i = transform.childCount - 1; i >= 0; i--)
         {
             DestroyImmediate(transform.GetChild(i).gameObject);
         }
 
-        // Usa el método utilitario centralizado
-        List<Vector3> dotPositions = DotPlacementUtils.PoissonDiskSample(
-            AreaCenter, AreaSize, MinDistance, MaxDots, MaxAttempts
-        );
+        List<Vector3> positions;
 
-        foreach (var pos in dotPositions)
+        if (UseCircleArea)
+        {
+            positions = DotPlacementUtils.PoissonDiskSampleCircle(
+                AreaCenter, CircleRadius, MinDistance, MaxDots, MaxAttempts);
+        }
+        else
+        {
+            positions = DotPlacementUtils.PoissonDiskSample(
+                AreaCenter, AreaSize, MinDistance, MaxDots, MaxAttempts);
+        }
+
+        int spawned = 0;
+        foreach (var pos in positions)
         {
             Vector3 rayOrigin = new Vector3(pos.x, AreaCenter.y + RaycastHeight, pos.z);
-            if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, RaycastHeight * 2, LayoutLayer))
+            if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, RaycastHeight * 2f, LayoutLayer))
             {
                 var dot = (GameObject)PrefabUtility.InstantiatePrefab(DotPrefab, transform);
-                dot.transform.position = hit.point + Vector3.up * dotOffsetY;
+                dot.transform.position = hit.point + Vector3.up * DotYOffset;
+                spawned++;
             }
         }
+
+        Debug.Log($"DotSpawner: Bake completado. Generados {spawned} dots ({(UseCircleArea ? "círculo" : "rectángulo")}).");
     }
 #endif
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(AreaCenter, AreaSize);
+
+        if (UseCircleArea)
+        {
+#if UNITY_EDITOR
+            // Dibuja disco en el plano (solo editor con Handles)
+            Handles.color = new Color(1f, 1f, 0f, 0.25f);
+            Handles.DrawSolidDisc(AreaCenter, Vector3.up, CircleRadius);
+            Handles.color = Color.yellow;
+            Handles.DrawWireDisc(AreaCenter, Vector3.up, CircleRadius);
+#else
+            // Fallback simple
+            Gizmos.DrawWireSphere(AreaCenter, CircleRadius);
+#endif
+        }
+        else
+        {
+            Gizmos.DrawWireCube(AreaCenter, AreaSize);
+        }
     }
 }
