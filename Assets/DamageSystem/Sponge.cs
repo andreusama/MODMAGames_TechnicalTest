@@ -70,6 +70,12 @@ public class Sponge : WettableObject, IExplodable
             {
                 cleanable.Clean();
             }
+
+            var wettable = hit.GetComponent<IWettable>();
+            if (wettable != null)
+            {
+                wettable.AddWetness(Wetness);
+            }
         }
     }
 

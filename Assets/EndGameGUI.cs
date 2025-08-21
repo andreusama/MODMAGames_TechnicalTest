@@ -8,12 +8,11 @@ public class EndGameGUI : EnGUIContent
     [SerializeField]
     private RTLTextMeshPro m_ResultText;
 
-    private SceneGroup m_SceneGroupToLoad;
+    public SceneGroup m_SceneGroupToLoad;
 
-    public void Retry(bool win, SceneGroup sceneGroup)
+    public void Initialize(bool win)
     {
         m_ResultText.text = win ? "You Win!" : "You Lose!";
-        m_SceneGroupToLoad = sceneGroup;
     }
 
     public void OnRetryButtonClicked()

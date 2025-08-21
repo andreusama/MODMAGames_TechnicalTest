@@ -23,10 +23,6 @@ public class GameController : MonoBehaviour
     [Tooltip("Porcentaje de limpieza necesario para ganar (0-1)")]
     [Range(0f, 1f)]
     public float RequiredCleanPercentage = 0.8f;
-    [Tooltip("Prefab del UI de fin de partida")]
-    public EndGameGUI EndGameUIPrefab;
-    [Tooltip("Grupo de escenas a recargar al reintentar")]
-    public SceneGroup SceneGroupToLoad;
 
     private bool m_GameStarted = false;
     private bool m_GameEnded = false;
@@ -54,7 +50,6 @@ public class GameController : MonoBehaviour
         m_GameEnded = true;
         bool win = CheckWinCondition();
         EventManager.TriggerEvent(new GameEndEvent(win));
-        ShowEndGameUI(win);
     }
 
     private IEnumerator WaitForEndCondition()
@@ -72,7 +67,8 @@ public class GameController : MonoBehaviour
     // Lógica de victoria: tras 1 minuto, ¿se ha limpiado suficiente?
     private bool CheckWinCondition()
     {
-        float cleaned = DotManager.Instance != null ? DotManager.Instance.GetDirtPercentage() : 0f;
+        float dirtiness = DotManager.Instance != null ? DotManager.Instance.GetDirtPercentage() : 0f;
+        float cleaned = 1f - (dirtiness / 100f); // Convertir a porcentaje de limpieza (0-1)
         return cleaned >= RequiredCleanPercentage;
     }
 
@@ -83,16 +79,6 @@ public class GameController : MonoBehaviour
         return false;
     }
 
-    private void ShowEndGameUI(bool win)
-    {
-        if (EndGameUIPrefab != null)
-        {
-            var ui = Instantiate(EndGameUIPrefab);
-            EnGUIManager.Instance.PushContent(ui);
-            ui.GetComponent<EndGameGUI>().Retry(win, SceneGroupToLoad);
-        }
-    }
-
     // Métodos públicos para forzar el fin del juego desde otros scripts
     public void ForceWin()
     {
@@ -101,7 +87,6 @@ public class GameController : MonoBehaviour
             StopAllCoroutines();
             m_GameEnded = true;
             EventManager.TriggerEvent(new GameEndEvent(true));
-            ShowEndGameUI(true);
         }
     }
 
@@ -112,13 +97,6 @@ public class GameController : MonoBehaviour
             StopAllCoroutines();
             m_GameEnded = true;
             EventManager.TriggerEvent(new GameEndEvent(false));
-            ShowEndGameUI(false);
         }
-    }
-
-    // Método para reintentar la partida usando SceneLoaderManager y SceneGroup
-    public void Retry()
-    {
-        SceneLoaderManager.Instance.LoadSceneGroup(SceneGroupToLoad);
     }
 }

@@ -36,7 +36,6 @@ public class WettableEnemy : WettableObject, IExplodable
     {
         base.OnWetnessChangedVirtual(wetness);
 
-        // Cambia la velocidad del EnemyAI según la humedad
         if (enemyAI != null)
         {
             float t = wetness / 100f;
@@ -44,11 +43,8 @@ public class WettableEnemy : WettableObject, IExplodable
             enemyAI.SetSpeed(originalSpeed * percent);
         }
 
-        // Explosión al llegar al máximo
         if (wetness >= 100 && !HasExploded)
-        {
             Explode();
-        }
     }
 
     public void Explode()
@@ -57,9 +53,13 @@ public class WettableEnemy : WettableObject, IExplodable
         HasExploded = true;
 
         Vector3 areaCenter = transform.position;
-        Vector3 areaSize = new Vector3(ExplosionRadius * 2, 0, ExplosionRadius * 2);
-
-        List<Vector3> dotPositions = DotPlacementUtils.PoissonDiskSample(areaCenter, areaSize, MinDotDistance, DotsToSpawn);
+        Quaternion rot = Quaternion.Euler(90f, 0f, 0f);
+        List<Vector3> dotPositions = DotPlacementUtils.PoissonDiskSample(
+            areaCenter,
+            new Vector3(ExplosionRadius * 2, 0f, ExplosionRadius * 2),
+            MinDotDistance,
+            DotsToSpawn
+        );
 
         foreach (var pos in dotPositions)
         {
@@ -67,8 +67,7 @@ public class WettableEnemy : WettableObject, IExplodable
             if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit, 5f, GroundLayers))
                 spawnPos = hit.point + Vector3.up * 0.02f;
 
-            Quaternion decalRotation = Quaternion.Euler(90f, 0f, 0f);
-            Instantiate(DirtySpotPrefab, spawnPos, decalRotation);
+            DotManager.Instance?.SpawnDotAt(spawnPos, rot);
         }
 
         Destroy(gameObject, 0.1f);
@@ -77,7 +76,7 @@ public class WettableEnemy : WettableObject, IExplodable
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = new Color(0.5f, 0.25f, 0f, 0.3f); // Marrón translúcido
+        Gizmos.color = new Color(0.5f, 0.25f, 0f, 0.3f);
         Gizmos.DrawWireSphere(transform.position, ExplosionRadius);
     }
 #endif

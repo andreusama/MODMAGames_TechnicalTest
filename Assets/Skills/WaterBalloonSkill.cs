@@ -46,30 +46,38 @@ public class WaterBalloonSkill : Skill
     }
 #endif
 
-    public override void Initialize(PlayerMotor motor)
-    {
-        base.Initialize(motor);
-    }
-
-    public void Awake()
-    {
-        InitCooldown(Cooldown);
-    }
-
     [Header("Aiming Slowdown")]
     [Range(0.1f, 1f)]
     public float AimingSpeedPercent = 0.4f; // 40% de la velocidad original
 
     private float? originalMoveSpeed = null;
+    private bool m_IsAiming = false;
+
+    public override void Initialize(PlayerMotor motor)
+    {
+        base.Initialize(motor);
+    }
+
+    private void Awake()
+    {
+        InitCooldown(Cooldown);
+    }
 
     public void OnAimingPerformed(Vector2 input)
     {
         Vector2 invertedInput = new Vector2(-input.x, -input.y);
-        if (invertedInput.sqrMagnitude > 0.01f)
-            m_LastAimInput = invertedInput;
 
-        // Ralentiza al empezar a apuntar
-        if (originalMoveSpeed == null && m_PlayerMotor != null)
+        if (invertedInput.sqrMagnitude > 0.01f)
+        {
+            m_LastAimInput = invertedInput;
+            if (!m_IsAiming)
+            {
+                m_IsAiming = true;
+                RaiseSkillStarted(); // Notifica inicio (cancelará otras skills)
+            }
+        }
+
+        if (m_IsAiming && originalMoveSpeed == null && m_PlayerMotor != null)
         {
             originalMoveSpeed = m_PlayerMotor.MoveSpeed;
             m_PlayerMotor.MoveSpeed = originalMoveSpeed.Value * AimingSpeedPercent;
@@ -80,22 +88,36 @@ public class WaterBalloonSkill : Skill
 
     public void OnAimingCanceled(Vector2 input, Vector3? fixedTarget = null)
     {
+        m_CircleDrawer?.Hide();
+
         if (m_LastAimInput.sqrMagnitude > 0.01f)
         {
             SetCooldown(Cooldown);
-            if (!IsCooldownReady)
-                return;
-
-            ThrowWaterBalloon(m_LastAimInput, fixedTarget);
-
-            StartCooldown();
-
-            m_LastAimInput = Vector2.zero;
+            if (IsCooldownReady)
+            {
+                ThrowWaterBalloon(m_LastAimInput, fixedTarget);
+                StartCooldown();
+            }
         }
-        m_CircleDrawer.Hide();
 
-        // Restaura la velocidad al dejar de apuntar
-        if (originalMoveSpeed != null && m_PlayerMotor != null)
+        ResetAimingState();
+    }
+
+    public override void Cancel()
+    {
+        // Cancelación sin disparo
+        m_CircleDrawer?.Hide();
+        ResetAimingState();
+    }
+
+    private void ResetAimingState()
+    {
+        if (!m_IsAiming && originalMoveSpeed == null) return;
+
+        m_IsAiming = false;
+        m_LastAimInput = Vector2.zero;
+
+        if (originalMoveSpeed.HasValue && m_PlayerMotor != null)
         {
             m_PlayerMotor.MoveSpeed = originalMoveSpeed.Value;
             originalMoveSpeed = null;
@@ -137,15 +159,8 @@ public class WaterBalloonSkill : Skill
         {
             float gravity = Mathf.Abs(Physics.gravity.y);
             float maxHeight = origin.y + MaxHeight;
-            Vector3 launchVelocity = ParabolicCalculator.CalculateLaunchVelocity(
-                origin, target, maxHeight, gravity
-            );
-            m_CircleDrawer.DrawParabola(
-                origin,
-                launchVelocity,
-                gravity,
-                3f
-            );
+            Vector3 launchVelocity = ParabolicCalculator.CalculateLaunchVelocity(origin, target, maxHeight, gravity);
+            m_CircleDrawer.DrawParabola(origin, launchVelocity, gravity, 3f);
         }
     }
 
@@ -165,11 +180,10 @@ public class WaterBalloonSkill : Skill
             target = GetGroundedTarget(origin + direction * range);
         }
 
-        GameObject balloonObj = GameObject.Instantiate(WaterBalloonPrefab, origin, Quaternion.identity);
+        GameObject balloonObj = Instantiate(WaterBalloonPrefab, origin, Quaternion.identity);
         var balloon = balloonObj.GetComponent<Balloon>();
         if (balloon != null)
         {
-            // Si necesitas pasar parámetros comunes, hazlo aquí
             balloon.ExplosionDelay = ExplosionDelay;
             balloon.ExplosionRadius = ExplosionRadius;
             balloon.TargetLayers = TargetLayers;
@@ -182,18 +196,14 @@ public class WaterBalloonSkill : Skill
             {
                 float gravity = Mathf.Abs(Physics.gravity.y);
                 float maxHeight = origin.y + MaxHeight;
-                Vector3 launchVelocity = ParabolicCalculator.CalculateLaunchVelocity(
-                    origin, target, maxHeight, gravity
-                );
+                Vector3 launchVelocity = ParabolicCalculator.CalculateLaunchVelocity(origin, target, maxHeight, gravity);
                 balloon.Throw(launchVelocity);
             }
         }
     }
 
-    // Reemplaza GetGroundedTarget por llamada a GroundDetector
     private Vector3 GetGroundedTarget(Vector3 target)
     {
-        // Si tienes una máscara de suelo, pásala aquí
         return GroundDetector.GetGroundedPosition(target);
     }
 }

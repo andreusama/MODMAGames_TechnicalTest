@@ -1,17 +1,19 @@
+using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public abstract class Skill : MonoBehaviour
 {
     protected PlayerMotor m_PlayerMotor;
     protected CooldownTimer m_Cooldown;
 
+    // Evento que emite la propia skill cuando entra en un estado activo (apuntar, dash, etc.)
+    public event Action<Skill> SkillStarted;
+
     public virtual void Initialize(PlayerMotor motor)
     {
         m_PlayerMotor = motor;
     }
 
-    // Permite inicializar el cooldown desde la skill hija
     protected void InitCooldown(float cooldown)
     {
         m_Cooldown = new CooldownTimer(cooldown);
@@ -28,4 +30,13 @@ public abstract class Skill : MonoBehaviour
     {
         m_Cooldown?.Start();
     }
+
+    // Llamar en la skill concreta cuando efectivamente comienza (una sola vez por activación)
+    protected void RaiseSkillStarted()
+    {
+        SkillStarted?.Invoke(this);
+    }
+
+    // Cancelación genérica (override si la skill mantiene estado)
+    public virtual void Cancel() { }
 }

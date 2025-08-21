@@ -8,17 +8,27 @@ public class OnGUIDirtyTracker : MonoBehaviour, IEventListener<DirtinessChangedE
     private void OnEnable()
     {
         this.EventStartListening<DirtinessChangedEvent>();
+
     }
 
     private void OnDisable()
     {
         this.EventStopListening<DirtinessChangedEvent>();
+
     }
 
     public void OnEvent(DirtinessChangedEvent e)
     {
         if (dirtinessText != null)
-            dirtinessText.text = $"{e.Percentage:0.0}%";
+            UpdateText(e.Percentage);
+    }
+
+    void UpdateText(float percentage)
+    {
+        if (dirtinessText != null)
+        {
+            dirtinessText.text = $"{percentage:0.0}%";
+        }
     }
 }
 

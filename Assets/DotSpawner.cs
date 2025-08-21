@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEditor;
 #endif
 using System.Collections.Generic;
+using MoreMountains.Feedbacks; // o MoreMountains.Tools si es el namespace de MMPool
+using MoreMountains.Tools; // Namespace de MMSimpleObjectPooler
 
 public class DotSpawner : MonoBehaviour
 {

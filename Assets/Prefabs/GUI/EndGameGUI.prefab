@@ -368,7 +368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CanvasGroup: {fileID: 3003720663029873056}
   m_Selection: {fileID: 0}
-  m_PauseOnOpen: 0
+  m_PauseOnOpen: 1
   m_HandleCancelEvents: 0
   m_ResetPreviousSelectedOnCancel: 0
   m_OpenFeedback: {fileID: 5773201627727765329}
@@ -389,6 +389,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_ResultText: {fileID: 3077179434393583185}
+  m_SceneGroupToLoad: {fileID: 11400000, guid: a1a8c72f407bef643b3aaf7928eab531, type: 2}
 --- !u!225 &3003720663029873056
 CanvasGroup:
   m_ObjectHideFlags: 0
