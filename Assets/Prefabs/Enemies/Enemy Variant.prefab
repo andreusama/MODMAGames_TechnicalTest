@@ -608,34 +608,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68db339cafead6b4397233179d7cbdf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WaterBalloonPrefab: {fileID: 0}
+  WaterBalloonPrefab: {fileID: 3527009637524995492, guid: 277ae58f8b205354c86bfa524a676b1c, type: 3}
   Damage: 25
-  ExplosionDelay: 1.5
+  ExplosionDelay: 0.1
   Cooldown: 2
   ScatterForce: 10
   ExplosionRadius: 2.5
   TargetLayers:
     serializedVersion: 2
-    m_Bits: 0
-  MinRange: 2
-  MaxRange: 10
+    m_Bits: 4294967295
+  MinRange: 5.22
+  MaxRange: 11.7
   MaxHeight: 2
   m_FlightTime: 2
-  m_SpawnPoint: {fileID: 0}
-  m_CircleDrawer: {fileID: 0}
-  UseAnimationCurve: 0
+  m_SpawnPoint: {fileID: 7133760046249944105}
+  m_CircleDrawer: {fileID: 6576314515553825564}
+  UseAnimationCurve: 1
   VelocityCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
+    - serializedVersion: 3
+      time: 0.49960467
+      value: 0.499407
+      inSlope: 3.6212156
+      outSlope: 3.6212156
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.045246415
     - serializedVersion: 3
       time: 1
       value: 1

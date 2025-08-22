@@ -367,17 +367,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WaterBalloonPrefab: {fileID: 4527607296438448130, guid: 0f663713232daad4ab65ffda04ebfe6c, type: 3}
   Damage: 25
-  ExplosionDelay: 1.5
-  Cooldown: 2
+  ExplosionDelay: 0.1
+  Cooldown: 1
   ScatterForce: 10
-  ExplosionRadius: 2.5
+  ExplosionRadius: 4
   TargetLayers:
     serializedVersion: 2
     m_Bits: 64
-  MinRange: 2
-  MaxRange: 10
+  MinRange: 4
+  MaxRange: 22
   MaxHeight: 10
-  m_FlightTime: 2
+  m_FlightTime: 0.7
   m_SpawnPoint: {fileID: 7748581991796816533}
   m_CircleDrawer: {fileID: 8005853742780767220}
   UseAnimationCurve: 1
