@@ -19,7 +19,11 @@ public class PlayerMotor : MonoBehaviour
     }
 
     private Vector2 m_InputVector = Vector2.zero;
+
+
     private Vector3 m_CurrentVelocity = Vector3.zero;
+    public Vector3 GetCurrentVelocity() { return m_CurrentVelocity; }
+
     private Vector3 m_SmoothVelocity = Vector3.zero;
 
     private InputMap m_InputActions;

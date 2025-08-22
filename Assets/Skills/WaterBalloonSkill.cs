@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System; // añadido para eventos
 
 public class WaterBalloonSkill : Skill
 {
@@ -52,6 +53,8 @@ public class WaterBalloonSkill : Skill
 
     private float? originalMoveSpeed = null;
     private bool m_IsAiming = false;
+    public bool IsAiming => m_IsAiming; // NUEVO: expone si está apuntando
+    public event Action OnShot;          // NUEVO: evento cuando se lanza el globo
 
     public override void Initialize(PlayerMotor motor)
     {
@@ -96,6 +99,7 @@ public class WaterBalloonSkill : Skill
             if (IsCooldownReady)
             {
                 ThrowWaterBalloon(m_LastAimInput, fixedTarget);
+                OnShot?.Invoke(); // NUEVO: notifica disparo
                 StartCooldown();
             }
         }

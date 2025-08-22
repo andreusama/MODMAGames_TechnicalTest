@@ -93,7 +93,7 @@ public class DotSpawner : MonoBehaviour
         int spawned = 0;
         foreach (var pos in positions)
         {
-            var dot = (GameObject)PrefabUtility.InstantiatePrefab(DotPrefab, transform);
+            var dot = Instantiate(DotPrefab, transform);
             dot.transform.position = CalculateSpawnPositionWithRaycast(pos);
             spawned++;
         }
