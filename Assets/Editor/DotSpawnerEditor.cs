@@ -1,14 +1,14 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(DotSpawner))]
+[CustomEditor(typeof(DirtyDotSpawner))]
 public class DotSpawnerEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
 
-        DotSpawner spawner = (DotSpawner)target;
+        DirtyDotSpawner spawner = (DirtyDotSpawner)target;
         GUILayout.Space(10);
 
         if (GUILayout.Button("Generar Dots (Bake Dots)"))
