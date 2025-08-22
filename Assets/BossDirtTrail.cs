@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class BossDirtTrail : MonoBehaviour
 {
@@ -19,7 +20,9 @@ public class BossDirtTrail : MonoBehaviour
         timer += Time.deltaTime;
         if (timer >= SpawnInterval && Vector3.Distance(transform.position, lastSpawnPos) > MinDistance)
         {
-            DotManager.Instance?.SpawnDotAt(transform.position, k_DecalRotation);
+            Vector3 spawnPos = DotSpawner.Instance.CalculateSpawnPositionWithRaycast(transform.position);
+                
+            DotManager.Instance?.SpawnDotAt(spawnPos, k_DecalRotation);
             lastSpawnPos = transform.position;
             timer = 0f;
         }

@@ -62,7 +62,7 @@ public class WettableObject : MonoBehaviour, IWettable
         {
             float t = m_Wetness / 100f;
             // Interpola entre la escala inicial y el valor absoluto MaxScale
-            Vector3 targetScale = Vector3.Lerp(initialScale, Vector3.one * MaxScale, t);
+            Vector3 targetScale = Vector3.Lerp(initialScale, initialScale + (Vector3.one * MaxScale), t);
             Transform.localScale = targetScale;
         }
     }

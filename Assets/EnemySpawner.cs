@@ -1,17 +1,19 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class EnemySpawner : MonoBehaviour, IEventListener<GameStartEvent>, IEventListener<GameEndEvent>
 {
     [Header("Spawner Settings")]
-    public GameObject EnemyPrefab;
+    public AssetReferenceGameObject EnemyPrefab; // Addressable
     public int EnemiesPerWave = 5;
     public float SpawnRadius = 10f;
     public float TimeBetweenWaves = 10f;
     public int MaxWaves = 10;
 
     [Header("Boss Settings")]
-    public GameObject BossPrefab;
+    public AssetReferenceGameObject BossPrefab; // Addressable
     [Range(0f, 1f)]
     public float BossSpawnChance = 0.2f; // 20% de probabilidad por oleada
 
@@ -56,7 +58,7 @@ public class EnemySpawner : MonoBehaviour, IEventListener<GameStartEvent>, IEven
         m_Spawning = true;
         while (m_CurrentWave < MaxWaves && !m_GameEnded)
         {
-            SpawnWave();
+            yield return SpawnWaveAsync();
             m_CurrentWave++;
             float timer = 0f;
             while (timer < TimeBetweenWaves && !m_GameEnded)
@@ -69,22 +71,59 @@ public class EnemySpawner : MonoBehaviour, IEventListener<GameStartEvent>, IEven
         m_SpawnCoroutine = null;
     }
 
-    private void SpawnWave()
+    private IEnumerator SpawnWaveAsync()
     {
-        if (m_GameEnded) return;
-        for (int i = 0; i < EnemiesPerWave; i++)
+        if (m_GameEnded) yield break;
+
+        // Enemigos normales
+        for (int i = 0; i < EnemiesPerWave && !m_GameEnded; i++)
         {
+            if (!IsValid(EnemyPrefab))
+                yield break;
+
             Vector3 spawnPos = GetRandomPointAround(transform.position, SpawnRadius);
-            GameObject enemy = Instantiate(EnemyPrefab, spawnPos, Quaternion.identity);
-            // Lógica extra de inicialización del enemigo aquí si es necesario
+
+            AsyncOperationHandle<GameObject> op = EnemyPrefab.InstantiateAsync(spawnPos, Quaternion.identity);
+            yield return op;
+
+            if (op.Status == AsyncOperationStatus.Succeeded && op.Result != null)
+            {
+                var go = op.Result;
+                EnsureAddressableAutoRelease(go);
+                // Inicialización extra del enemigo si fuese necesario
+            }
+            else
+            {
+                Debug.LogWarning($"EnemySpawner: fallo al instanciar enemigo. {op.OperationException}");
+            }
         }
 
-        // Spawn boss at random on certain waves
-        if (BossPrefab != null && Random.value < BossSpawnChance)
+        // Boss con probabilidad
+        if (!m_GameEnded && IsValid(BossPrefab) && Random.value < BossSpawnChance)
         {
             Vector3 bossSpawnPos = GetRandomPointAround(transform.position, SpawnRadius);
-            Instantiate(BossPrefab, bossSpawnPos, Quaternion.identity);
+            AsyncOperationHandle<GameObject> op = BossPrefab.InstantiateAsync(bossSpawnPos, Quaternion.identity);
+            yield return op;
+
+            if (op.Status == AsyncOperationStatus.Succeeded && op.Result != null)
+            {
+                EnsureAddressableAutoRelease(op.Result);
+            }
+            else
+            {
+                Debug.LogWarning($"EnemySpawner: fallo al instanciar boss. {op.OperationException}");
+            }
         }
+    }
+
+    private static bool IsValid(AssetReferenceGameObject aref)
+        => aref != null && aref.RuntimeKeyIsValid();
+
+    private static void EnsureAddressableAutoRelease(GameObject go)
+    {
+        var tracker = go.GetComponent<AddressableInstanceTracker>();
+        if (tracker == null) tracker = go.AddComponent<AddressableInstanceTracker>();
+        tracker.FromAddressables = true;
     }
 
     private Vector3 GetRandomPointAround(Vector3 center, float radius)

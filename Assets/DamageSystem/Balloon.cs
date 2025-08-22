@@ -1,6 +1,8 @@
 using UnityEngine;
 using KBCore.Refs;
 using System.Collections;
+using MoreMountains.Feedbacks;
+using System;
 
 public class Balloon : MonoBehaviour, IExplodable
 {
@@ -14,6 +16,16 @@ public class Balloon : MonoBehaviour, IExplodable
     public AnimationCurve PositionCurve = AnimationCurve.Linear(0, 1, 1, 1);
     public float TotalFlightTime = 1.5f;
 
+    [Header("Grounding")]
+    [Tooltip("Elevación extra sobre el suelo para evitar z-fighting y partículas bajo el suelo")]
+    [SerializeField] private float GroundClearance = 0.02f;
+
+    [Header("Feedbacks (MMFeedbacks)")]
+    [Tooltip("Feedbacks que se reproducen al tocar el suelo")]
+    [SerializeField] private MMF_Player GroundTouchFeedback;
+    [Tooltip("Feedbacks que se reproducen al explotar")]
+    [SerializeField] private MMF_Player ExplosionFeedback;
+
     protected bool m_HasExploded = false;
     protected bool m_HasTouchedGround = false;
     protected Coroutine m_ExplosionCoroutine;
@@ -21,10 +33,9 @@ public class Balloon : MonoBehaviour, IExplodable
     public bool HasExploded => m_HasExploded;
     public bool HasTouchedGround => m_HasTouchedGround;
 
-    [SerializeField, Self]
-    protected Rigidbody rb;
-
+    [SerializeField, Self] protected Rigidbody rb;
     protected CircleDrawer m_CircleDrawer;
+    protected Collider m_Collider;
 
     // Variables para la curva
     protected Vector3 m_StartPos;
@@ -33,9 +44,14 @@ public class Balloon : MonoBehaviour, IExplodable
     protected Vector3 m_InitialVelocity;
     protected bool m_UseCurve = false;
 
+    public event Action<Balloon> TouchedGround;
+    public event Action<Balloon> Exploded;
+
     protected virtual void Awake()
     {
         m_CircleDrawer = GetComponentInChildren<CircleDrawer>();
+        m_Collider = GetComponent<Collider>();
+
         if (m_CircleDrawer == null)
         {
             var go = new GameObject("CircleDrawer");
@@ -56,8 +72,7 @@ public class Balloon : MonoBehaviour, IExplodable
             m_TargetPos = targetPos.Value;
             PositionCurve = curve ?? PositionCurve;
             TotalFlightTime = totalFlightTime;
-            if (rb != null)
-                rb.isKinematic = true; // Movimiento manual
+            if (rb != null) rb.isKinematic = true; // movimiento manual
         }
         else
         {
@@ -82,10 +97,10 @@ public class Balloon : MonoBehaviour, IExplodable
 
             if (tNorm >= 1f)
             {
-                transform.position = GroundDetector.GetGroundedPosition(pos, 0.2f, 1f, GroundLayers);
-                m_HasTouchedGround = true;
-                ShowExplosionRadius();
-                m_ExplosionCoroutine = StartCoroutine(ExplodeAfterDelay());
+                Vector3 ground = GroundDetector.GetGroundedPosition(pos, 0.2f, 1f, GroundLayers);
+                float lift = GetHalfHeightWorld() + GroundClearance;
+                transform.position = ground + Vector3.up * lift;
+                HandleTouchedGround();
             }
             else
             {
@@ -96,15 +111,36 @@ public class Balloon : MonoBehaviour, IExplodable
 
     protected virtual void OnCollisionEnter(Collision collision)
     {
-        if (m_HasTouchedGround || m_HasExploded)
-            return;
+        if (m_HasTouchedGround || m_HasExploded) return;
 
         if (((1 << collision.gameObject.layer) & GroundLayers.value) != 0)
         {
-            m_HasTouchedGround = true;
-            ShowExplosionRadius();
-            m_ExplosionCoroutine = StartCoroutine(ExplodeAfterDelay());
+            HandleTouchedGround(collision);
         }
+    }
+
+    // Hook para derivadas. collision puede ser null (caso curva/Update).
+    // Implementación base: reposiciona por encima del suelo si viene por colisión.
+    protected virtual void OnTouchedGroundHook(Collision collision)
+    {
+        if (collision != null && collision.contacts.Length > 0)
+        {
+            var cp = collision.contacts[0];
+            float lift = GetHalfHeightWorld() + GroundClearance;
+            transform.position = cp.point + cp.normal * lift;
+        }
+    }
+
+    protected void HandleTouchedGround(Collision collision = null)
+    {
+        if (m_HasTouchedGround) return;
+        m_HasTouchedGround = true;
+
+        OnTouchedGroundHook(collision);
+
+        ShowExplosionRadius();
+        TriggerGroundTouchFeedbacks();
+        m_ExplosionCoroutine = StartCoroutine(ExplodeAfterDelay());
     }
 
     protected IEnumerator ExplodeAfterDelay()
@@ -127,13 +163,46 @@ public class Balloon : MonoBehaviour, IExplodable
 
     public virtual void Explode()
     {
+        if (m_HasExploded) return;
         m_HasExploded = true;
+
         HideExplosionRadius();
+        TriggerExplosionFeedbacks();
+        StartCoroutine(DestroyCoroutine());
+    }
+
+    public IEnumerator DestroyCoroutine()
+    {
+        if (ExplosionFeedback != null)
+            yield return ExplosionFeedback.IsPlaying ? new WaitUntil(() => !ExplosionFeedback.IsPlaying) : null;
+
         Destroy(gameObject);
     }
 
     protected virtual void OnDestroy()
     {
         HideExplosionRadius();
+    }
+
+    protected void TriggerGroundTouchFeedbacks()
+    {
+        if (GroundTouchFeedback != null)
+            GroundTouchFeedback.PlayFeedbacks(transform.position);
+
+        TouchedGround?.Invoke(this);
+    }
+
+    protected void TriggerExplosionFeedbacks()
+    {
+        if (ExplosionFeedback != null)
+            ExplosionFeedback.PlayFeedbacks(transform.position);
+
+        Exploded?.Invoke(this);
+    }
+
+    // Altura media en espacio mundo del collider (robusto para esfera, cápsula, caja, etc.)
+    protected float GetHalfHeightWorld()
+    {
+        return (m_Collider != null) ? m_Collider.bounds.extents.y : 0f;
     }
 }

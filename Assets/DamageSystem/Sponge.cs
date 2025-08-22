@@ -1,11 +1,13 @@
 using UnityEngine;
+using MoreMountains.Tools;
+using MoreMountains.Feedbacks;
 
 public class Sponge : WettableObject, IExplodable
 {
     [Header("Sponge Explosion")]
     public float MaxDamage = 30f;
     public float MaxExplosionRadius = 3f;
-    public GameObject ExplosionEffect;
+    public MMF_Player ExplosionFB;
     public LayerMask TargetLayers;
 
     public bool HasExploded { get; private set; } = false;
@@ -77,6 +79,8 @@ public class Sponge : WettableObject, IExplodable
                 wettable.AddWetness(Wetness);
             }
         }
+
+        ExplosionFB.PlayFeedbacks();
     }
 
     

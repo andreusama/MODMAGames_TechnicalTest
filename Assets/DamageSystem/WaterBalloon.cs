@@ -9,11 +9,6 @@ public class WaterBalloon : Balloon
 
     public override void Explode()
     {
-        if (m_HasExploded) return;
-        m_HasExploded = true;
-
-        HideExplosionRadius();
-
         Collider[] hits = Physics.OverlapSphere(transform.position, ExplosionRadius, TargetLayers);
         foreach (var hit in hits)
         {
@@ -36,6 +31,7 @@ public class WaterBalloon : Balloon
                 cleanable.Clean();
             }
         }
-        Destroy(gameObject);
+
+        base.Explode();
     }
 }

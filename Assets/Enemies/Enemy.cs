@@ -1,10 +1,7 @@
 using UnityEngine;
 using System;
-
-public struct EnemyDiedEvent
-{
-    public Enemy enemy;
-}
+using MoreMountains.Feedbacks;
+using System.Collections;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
@@ -25,6 +22,8 @@ public class Enemy : MonoBehaviour, IDamageable
     /// Se dispara cuando el enemigo muere.
     /// </summary>
     public event Action<Enemy> OnDied;
+
+    [SerializeField] MMF_Player m_DeathFeedback;
 
     private void Awake()
     {
@@ -66,9 +65,19 @@ public class Enemy : MonoBehaviour, IDamageable
         CleanNearbyDirt();
 
         OnDied?.Invoke(this);
-        EventManager.TriggerEvent(new EnemyDiedEvent { enemy = this });
 
-        Destroy(gameObject, destroyDelay);
+        StartCoroutine(DieCoroutine());
+    }
+
+    private IEnumerator DieCoroutine()
+    {
+        yield return new WaitForSeconds(destroyDelay);
+        if (m_DeathFeedback != null)
+        {
+            m_DeathFeedback.PlayFeedbacks();
+        }
+
+        Destroy(gameObject, m_DeathFeedback.TotalDuration);
     }
 
     private void CleanNearbyDirt()

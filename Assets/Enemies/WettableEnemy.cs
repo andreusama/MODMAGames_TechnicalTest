@@ -1,4 +1,7 @@
 using KBCore.Refs;
+using MoreMountains.Feedbacks;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +10,7 @@ public class WettableEnemy : WettableObject, IExplodable
     [Header("Wettable Enemy Settings")]
     public float ExplosionRadius = 2f;
     public int DotsToSpawn = 10;
+    public float DestroyDelay = 1f;
     public GameObject DirtySpotPrefab;
     public LayerMask GroundLayers = ~0;
     [Tooltip("Distancia mínima entre manchas de suciedad")]
@@ -14,33 +18,32 @@ public class WettableEnemy : WettableObject, IExplodable
 
     [Header("Wettable Slowdown")]
     [SerializeField, Self]
-    private EnemyAI enemyAI;
+    private WettableEnemyAI wettableEnemyAI;
+
+    public event Action<WettableEnemy> OnExplode;
+    [SerializeField] MMF_Player m_ExplodeFB;
 
     [Range(0.1f, 1f)]
     public float MinSpeedPercent = 0.3f; // 30% de la velocidad original cuando está completamente mojado
 
     public bool HasExploded { get; private set; } = false;
 
-    private float originalSpeed;
-
     protected override void Awake()
     {
         base.Awake();
-        if (enemyAI == null)
-            enemyAI = GetComponent<EnemyAI>();
-        if (enemyAI != null)
-            originalSpeed = enemyAI.GetOriginalSpeed();
+        if (wettableEnemyAI == null)
+            wettableEnemyAI = GetComponent<WettableEnemyAI>();
     }
 
     protected override void OnWetnessChangedVirtual(int wetness)
     {
         base.OnWetnessChangedVirtual(wetness);
 
-        if (enemyAI != null)
+        if (wettableEnemyAI != null)
         {
             float t = wetness / 100f;
             float percent = Mathf.Lerp(1f, MinSpeedPercent, t);
-            enemyAI.SetSpeed(originalSpeed * percent);
+            wettableEnemyAI.SetSpeed(percent);
         }
 
         if (wetness >= 100 && !HasExploded)
@@ -51,6 +54,8 @@ public class WettableEnemy : WettableObject, IExplodable
     {
         if (HasExploded) return;
         HasExploded = true;
+
+        OnExplode?.Invoke(this);
 
         Vector3 areaCenter = transform.position;
         Quaternion rot = Quaternion.Euler(90f, 0f, 0f);
@@ -63,15 +68,27 @@ public class WettableEnemy : WettableObject, IExplodable
 
         foreach (var pos in dotPositions)
         {
-            Vector3 spawnPos = pos + Vector3.up * 2f;
-            if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit, 5f, GroundLayers))
-                spawnPos = hit.point + Vector3.up * 0.02f;
+            Vector3 spawnPos = DotSpawner.Instance.CalculateSpawnPositionWithRaycast(pos);
 
             DotManager.Instance?.SpawnDotAt(spawnPos, rot);
         }
 
-        Destroy(gameObject, 0.1f);
+       StartCoroutine(DieCoroutine());
     }
+
+    private IEnumerator DieCoroutine()
+    {
+        //Time to show Die animation
+        yield return new WaitForSeconds(DestroyDelay);
+
+        if (m_ExplodeFB != null)
+        {
+            m_ExplodeFB.PlayFeedbacks();
+        }
+
+        Destroy(gameObject, m_ExplodeFB.TotalDuration);
+    }
+
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()

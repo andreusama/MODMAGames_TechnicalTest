@@ -52,6 +52,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaterBalloonSticky
       objectReference: {fileID: 0}
+    - target: {fileID: 5204763329678875987, guid: b8e5af024c144674fa4ea86d8039a738, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5204763329705167819, guid: b8e5af024c144674fa4ea86d8039a738, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5204763329705167819, guid: b8e5af024c144674fa4ea86d8039a738, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5204763331037311889, guid: b8e5af024c144674fa4ea86d8039a738, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.13
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8752194005799567765, guid: b8e5af024c144674fa4ea86d8039a738, type: 3}
     m_RemovedGameObjects: []
@@ -61,6 +77,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: -4406606667266067570}
   m_SourcePrefab: {fileID: 100100000, guid: b8e5af024c144674fa4ea86d8039a738, type: 3}
+--- !u!114 &4022740423188150446 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3372793828801939379, guid: b8e5af024c144674fa4ea86d8039a738, type: 3}
+  m_PrefabInstance: {fileID: 1809663132401237789}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6da43522623d4704e979466dc7650b65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4527607296438448130 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2866679559070895903, guid: b8e5af024c144674fa4ea86d8039a738, type: 3}
@@ -78,9 +105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf8680e8072eeea4cbb6dc511563f777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 25
   ExplosionRadius: 5
-  ExplosionDelay: 0.01
+  ExplosionDelay: 1
   TargetLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -94,9 +120,25 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   TotalFlightTime: 1.5
+  GroundClearance: 0.02
+  GroundTouchFeedback: {fileID: 4022740423188150446}
+  ExplosionFeedback: {fileID: 9047622310252238483}
   rb: {fileID: 5571998056883209681}
+  Damage: 25
+  WetPower: 20
 --- !u!54 &5571998056883209681 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 6074935548543613644, guid: b8e5af024c144674fa4ea86d8039a738, type: 3}
   m_PrefabInstance: {fileID: 1809663132401237789}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9047622310252238483 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7247043359076690318, guid: b8e5af024c144674fa4ea86d8039a738, type: 3}
+  m_PrefabInstance: {fileID: 1809663132401237789}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6da43522623d4704e979466dc7650b65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

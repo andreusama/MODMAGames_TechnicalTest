@@ -3,15 +3,11 @@ using UnityEngine;
 public class DirtBalloon : Balloon
 {
     [Header("Dirt Balloon")]
-    public GameObject DirtySpotPrefab; // Mantenido (puede servir como fallback si se desea)
+    public GameObject DirtySpotPrefab; // fallback si se desea
     public int DotsToSpawn = 5;
 
     public override void Explode()
     {
-        if (HasExploded) return;
-        m_HasExploded = true;
-
-        // Ahora usa el DotManager (pool + fallback)
         for (int i = 0; i < DotsToSpawn; i++)
         {
             Vector2 randomCircle = Random.insideUnitCircle * ExplosionRadius;
@@ -20,29 +16,19 @@ public class DirtBalloon : Balloon
             DotManager.Instance?.SpawnDotAt(spawnPos, rot);
         }
 
-        Destroy(gameObject);
+        base.Explode();
     }
 
-    protected override void OnCollisionEnter(Collision collision)
+    protected override void OnTouchedGroundHook(Collision collision)
     {
-        if (m_HasTouchedGround || m_HasExploded)
-            return;
-
-        if (((1 << collision.gameObject.layer) & GroundLayers.value) != 0)
+        if (rb != null)
         {
-            m_HasTouchedGround = true;
-
-            if (rb != null)
-            {
-                rb.isKinematic = true;
-                rb.linearVelocity = Vector3.zero;
-                rb.angularVelocity = Vector3.zero;
-            }
-
-            if (collision.contacts.Length > 0)
-                transform.position = collision.contacts[0].point;
-
-            m_ExplosionCoroutine = StartCoroutine(ExplodeAfterDelay());
+            rb.isKinematic = true;
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
         }
+
+        // Además del comportamiento base (reposiciona con normal)
+        base.OnTouchedGroundHook(collision);
     }
 }

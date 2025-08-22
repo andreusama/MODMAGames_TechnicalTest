@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 public class DotSpawner : MonoBehaviour
 {
+    public static DotSpawner Instance { get; private set; }
+
     [Header("Dot Prefab")]
     public GameObject DotPrefab;
 
@@ -28,6 +30,16 @@ public class DotSpawner : MonoBehaviour
 
     [Header("Bake Visual Settings")]
     public float DotYOffset = 0.02f;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
 
 #if UNITY_EDITOR
     [ContextMenu("Bake Dots")]
@@ -58,22 +70,36 @@ public class DotSpawner : MonoBehaviour
                 AreaCenter, AreaSize, MinDistance, MaxDots, MaxAttempts);
         }
 
-        int spawned = 0;
-        foreach (var pos in positions)
-        {
-            Vector3 rayOrigin = new Vector3(pos.x, AreaCenter.y + RaycastHeight, pos.z);
-            if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, RaycastHeight * 2f, LayoutLayer))
-            {
-                var dot = (GameObject)PrefabUtility.InstantiatePrefab(DotPrefab, transform);
-                dot.transform.position = hit.point + Vector3.up * DotYOffset;
-                spawned++;
-            }
-        }
+        int spawned = SpawnDot(positions);
 
         Debug.Log($"DotSpawner: Bake completado. Generados {spawned} dots ({(UseCircleArea ? "círculo" : "rectángulo")}).");
     }
 #endif
 
+    public Vector3 CalculateSpawnPositionWithRaycast(Vector3 originalPos)
+    {
+        Vector3 rayOrigin = new Vector3(originalPos.x, AreaCenter.y + RaycastHeight, originalPos.z);
+        if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, RaycastHeight * 2f, LayoutLayer))
+        {
+            return hit.point + Vector3.up * DotYOffset;
+        }
+        else
+        {
+            return Vector3.positiveInfinity; // Indica fallo
+        }
+    }
+    public int SpawnDot(List<Vector3> positions)
+    {
+        int spawned = 0;
+        foreach (var pos in positions)
+        {
+            var dot = (GameObject)PrefabUtility.InstantiatePrefab(DotPrefab, transform);
+            dot.transform.position = CalculateSpawnPositionWithRaycast(pos);
+            spawned++;
+        }
+
+        return spawned;
+    }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;

@@ -153,10 +153,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b94e1e51e863ea4087b732e4de596b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyPrefab: {fileID: 3488665708410927644, guid: b91aa245b2f8e894c91f72b9f0afdff7, type: 3}
+  EnemyPrefab:
+    m_AssetGUID: b91aa245b2f8e894c91f72b9f0afdff7
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
   EnemiesPerWave: 12
   SpawnRadius: 10
-  TimeBetweenWaves: 30
-  MaxWaves: 2
-  BossPrefab: {fileID: 230751398634840658, guid: aa2138759ba310e4f9766fc7ebefffb4, type: 3}
+  TimeBetweenWaves: 3
+  MaxWaves: 15
+  BossPrefab:
+    m_AssetGUID: aa2138759ba310e4f9766fc7ebefffb4
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
   BossSpawnChance: 0.2
