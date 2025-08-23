@@ -228,6 +228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17424e2cc8e371540b7879fc60ebfb8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Config: {fileID: 11400000, guid: 3d98008848c12a648900ccdaf5ba8336, type: 2}
   MoveSpeed: 13
   SmoothTime: 0.35
   SlideFriction: 0.75
@@ -246,7 +247,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DashDistance: 10
   DashCooldown: 0.7
-  DashSpeed: 50
   DashDuration: 0.2
   UseDashCurve: 1
   DashCurve:
@@ -335,7 +335,6 @@ MonoBehaviour:
   m_AnimParamIsAiming: IsAiming
   m_AnimTriggerShoot: Shoot
   m_AnimTriggerDash: Dash
-  RunSpeedThreshold: 0.1
   ShootLockTime: 0.35
 --- !u!114 &6161034944610703723
 MonoBehaviour:
@@ -349,11 +348,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68db339cafead6b4397233179d7cbdf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Config: {fileID: 11400000, guid: 650106be082b69e40862682ae5fe2be2, type: 2}
   WaterBalloonPrefab: {fileID: 4527607296438448130, guid: 0f663713232daad4ab65ffda04ebfe6c, type: 3}
-  Damage: 25
   ExplosionDelay: 0.1
   Cooldown: 1
-  ScatterForce: 10
   ExplosionRadius: 4
   TargetLayers:
     serializedVersion: 2
@@ -473,7 +471,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7585063641804254702, guid: 63a9ad2d5c7a19d4e8bea67e6f40a59f, type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8463430911794710745, guid: 63a9ad2d5c7a19d4e8bea67e6f40a59f, type: 3}
       propertyPath: m_LocalPosition.x

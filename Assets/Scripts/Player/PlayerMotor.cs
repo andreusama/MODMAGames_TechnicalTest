@@ -6,10 +6,13 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(NavMeshAgent))]
 public class PlayerMotor : MonoBehaviour
 {
+    [Header("Config")]
+    [SerializeField] private PlayerMotorConfig m_Config;
+
     [Header("Movement Settings")]
-    public float MoveSpeed = 6f;
-    public float SmoothTime = 0.2f;
-    public float SlideFriction = 0.9f;
+    public float MoveSpeed;
+    public float SmoothTime;
+    public float SlideFriction;
 
     [SerializeField, Self]
     private NavMeshAgent m_Agent;
@@ -20,7 +23,6 @@ public class PlayerMotor : MonoBehaviour
 
     private Vector2 m_InputVector = Vector2.zero;
 
-
     private Vector3 m_CurrentVelocity = Vector3.zero;
     public Vector3 GetCurrentVelocity() { return m_CurrentVelocity; }
 
@@ -30,12 +32,25 @@ public class PlayerMotor : MonoBehaviour
 
     private void Awake()
     {
+        if (m_Config == null)
+        {
+            Debug.LogWarning($"{name}: PlayerMotorConfig no asignado. Deshabilitando PlayerMotor para evitar interacción del jugador.");
+            enabled = false;
+            return;
+        }
+
+        MoveSpeed = m_Config.MoveSpeed;
+        SmoothTime = m_Config.SmoothTime;
+        SlideFriction = m_Config.SlideFriction;
+
         m_Agent.updateRotation = false;
         m_InputActions = new InputMap();
     }
 
     private void OnEnable()
     {
+        if (!enabled) return;
+
         m_InputActions.Player.Move.Enable();
         m_InputActions.Player.Move.performed += OnMovePerformed;
         m_InputActions.Player.Move.canceled += OnMoveCanceled;

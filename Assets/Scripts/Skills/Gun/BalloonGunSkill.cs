@@ -4,21 +4,24 @@ using System; // added for events
 
 public class BalloonGunSkill : Skill
 {
+    [Header("Config")]
+    [SerializeField] private BalloonGunConfiguration m_Config;
+
     [Header("Water Balloon Settings")]
     public GameObject WaterBalloonPrefab;
-    public float ExplosionDelay = 1.5f;
-    public float Cooldown = 2f;
-    public float ExplosionRadius = 2.5f;
+    public float ExplosionDelay;
+    public float Cooldown;
+    public float ExplosionRadius;
     public LayerMask TargetLayers;
 
     [Header("Aiming Settings")]
-    public float MinRange = 2f;
-    public float MaxRange = 10f;
-    public float MaxHeight = 2f;
+    public float MinRange;
+    public float MaxRange;
+    public float MaxHeight;
 
     [Header("Flight Settings")]
     [SerializeField]
-    private float m_FlightTime = 2f;
+    private float m_FlightTime;
 
     [SerializeField]
     private Transform m_SpawnPoint;
@@ -46,7 +49,7 @@ public class BalloonGunSkill : Skill
 
     [Header("Aiming Slowdown")]
     [Range(0.1f, 1f)]
-    public float AimingSpeedPercent = 0.4f; // 40% of original speed
+    public float AimingSpeedPercent; // from config
 
     private float? m_OriginalMoveSpeed = null;
     private bool m_IsAiming = false;
@@ -60,11 +63,36 @@ public class BalloonGunSkill : Skill
 
     private void Awake()
     {
+        if (m_Config == null)
+        {
+            Debug.LogWarning($"{name}: BalloonGunConfiguration no asignado. Deshabilitando habilidad para evitar interacción del jugador.");
+            enabled = false;
+            return;
+        }
+
+        // Cargar configuración
+        WaterBalloonPrefab = m_Config.WaterBalloonPrefab;
+        ExplosionDelay = m_Config.ExplosionDelay;
+        Cooldown = m_Config.Cooldown;
+        ExplosionRadius = m_Config.ExplosionRadius;
+        TargetLayers = m_Config.TargetLayers;
+
+        MinRange = m_Config.MinRange;
+        MaxRange = m_Config.MaxRange;
+        MaxHeight = m_Config.MaxHeight;
+        AimingSpeedPercent = m_Config.AimingSpeedPercent;
+
+        m_FlightTime = m_Config.FlightTime;
+        UseAnimationCurve = m_Config.UseAnimationCurve;
+        VelocityCurve = m_Config.VelocityCurve;
+
         InitCooldown(Cooldown);
     }
 
     public void OnAimingPerformed(Vector2 input)
     {
+        if (!enabled) return;
+
         Vector2 invertedInput = new Vector2(-input.x, -input.y);
 
         if (invertedInput.sqrMagnitude > 0.01f)
@@ -88,6 +116,8 @@ public class BalloonGunSkill : Skill
 
     public void OnAimingCanceled(Vector2 input, Vector3? fixedTarget = null)
     {
+        if (!enabled) return;
+
         CircleDrawer?.Hide();
 
         if (m_LastAimInput.sqrMagnitude > 0.01f)
@@ -127,7 +157,7 @@ public class BalloonGunSkill : Skill
 
     public void UpdateAimingVisual(Vector2 input, Vector3? fixedTarget = null)
     {
-        if (CircleDrawer == null)
+        if (!enabled || CircleDrawer == null)
             return;
 
         if (input.sqrMagnitude < 0.01f)
@@ -167,6 +197,8 @@ public class BalloonGunSkill : Skill
 
     public void ThrowWaterBalloon(Vector2 aimInput, Vector3? fixedTarget = null)
     {
+        if (!enabled) return;
+
         Vector3 origin = m_SpawnPoint.position;
         Vector3 target;
 

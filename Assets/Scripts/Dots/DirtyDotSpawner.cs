@@ -85,7 +85,7 @@ public class DirtyDotSpawner : MonoBehaviour
         }
         else
         {
-            return Vector3.positiveInfinity; // Indica fallo
+            return new Vector3(originalPos.x, AreaCenter.y + DotYOffset, originalPos.z);
         }
     }
     public int SpawnDot(List<Vector3> positions)

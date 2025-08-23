@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 89d11c3cd707b6c40967f7a11bc048e7, type: 3}
-  m_Name: BalloonGunConfig_LVL1
+  m_Name: DirtyBalloonConfig_LVL1
   m_EditorClassIdentifier: 
-  WaterBalloonPrefab: {fileID: 4527607296438448130, guid: 0f663713232daad4ab65ffda04ebfe6c, type: 3}
+  WaterBalloonPrefab: {fileID: 3527009637524995492, guid: 277ae58f8b205354c86bfa524a676b1c, type: 3}
   ExplosionDelay: 0.1
-  Cooldown: 0.1
-  ExplosionRadius: 4
+  Cooldown: 2
+  ExplosionRadius: 2.5
   TargetLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  MinRange: 2
-  MaxRange: 22
-  MaxHeight: 12
+  MinRange: 7
+  MaxRange: 10
+  MaxHeight: 2
   AimingSpeedPercent: 0.4
-  FlightTime: 0.7
+  FlightTime: 2
   UseAnimationCurve: 1
   VelocityCurve:
     serializedVersion: 2
@@ -37,15 +37,6 @@ MonoBehaviour:
       weightedMode: 0
       inWeight: 0
       outWeight: 0
-    - serializedVersion: 3
-      time: 0.50019675
-      value: 0.50029504
-      inSlope: 3.199916
-      outSlope: 3.199916
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.0462348
     - serializedVersion: 3
       time: 1
       value: 1

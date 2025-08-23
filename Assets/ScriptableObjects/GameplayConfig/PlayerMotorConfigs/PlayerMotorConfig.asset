@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 768810fc4de15fb4f92a2416354cf979, type: 3}
   m_Name: PlayerMotorConfig
   m_EditorClassIdentifier: 
-  MoveSpeed: 30
-  SmoothTime: 1
-  SlideFriction: 0.9
+  MoveSpeed: 14
+  SmoothTime: 0.35
+  SlideFriction: 0.75
