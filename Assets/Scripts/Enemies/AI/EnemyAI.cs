@@ -8,10 +8,6 @@ public class EnemyAI : MonoBehaviour
     public float AttackRange = 1.5f;
     public float AttackCooldown = 1f;
 
-    [Header("Wettable Slowdown")]
-    [Range(0.1f, 1f)]
-    public float MinSpeedPercent = 0.3f; // 30% of original speed when fully wet
-
     [Header("Animation")]
     [SerializeField, Child] private Animator m_Animator;
     [SerializeField] private string m_AnimParamIsRunning = "IsRunning";
@@ -26,8 +22,6 @@ public class EnemyAI : MonoBehaviour
     private Transform m_PlayerTransform;
     private float m_LastAttackTime = -999f;
 
-    private IWettable m_Wettable;
-    private int m_LastWetness = -1;
     private float m_OriginalSpeed;
 
     [SerializeField, Self]
@@ -39,7 +33,6 @@ public class EnemyAI : MonoBehaviour
         m_Agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
         m_Agent.avoidancePriority = 99;
 
-        m_Wettable = GetComponent<IWettable>();
         if (m_Agent != null)
             m_OriginalSpeed = m_Agent.speed;
 

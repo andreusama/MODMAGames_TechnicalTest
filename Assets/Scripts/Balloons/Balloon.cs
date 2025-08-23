@@ -28,7 +28,6 @@ public class Balloon : MonoBehaviour, IExplodable
 
     protected bool m_HasExploded = false;
     protected bool m_HasTouchedGround = false;
-    protected Coroutine m_ExplosionCoroutine;
 
     public bool HasExploded => m_HasExploded;
     public bool HasTouchedGround => m_HasTouchedGround;
@@ -41,7 +40,6 @@ public class Balloon : MonoBehaviour, IExplodable
     protected Vector3 m_StartPos;
     protected Vector3 m_TargetPos;
     protected float m_Lifetime = 0f;
-    protected Vector3 m_InitialVelocity;
     protected bool m_UseCurve = false;
 
     public event Action<Balloon> TouchedGround;
@@ -76,11 +74,10 @@ public class Balloon : MonoBehaviour, IExplodable
         }
         else
         {
-            m_InitialVelocity = initialVelocity;
             if (m_Rigidbody != null)
             {
                 m_Rigidbody.isKinematic = false;
-                m_Rigidbody.linearVelocity = m_InitialVelocity;
+                m_Rigidbody.linearVelocity = initialVelocity;
             }
         }
     }
@@ -140,7 +137,7 @@ public class Balloon : MonoBehaviour, IExplodable
 
         ShowExplosionRadius();
         TriggerGroundTouchFeedbacks();
-        m_ExplosionCoroutine = StartCoroutine(ExplodeAfterDelay());
+        StartCoroutine(ExplodeAfterDelay());
     }
 
     protected IEnumerator ExplodeAfterDelay()

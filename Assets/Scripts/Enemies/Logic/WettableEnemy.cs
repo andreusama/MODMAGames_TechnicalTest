@@ -11,8 +11,6 @@ public class WettableEnemy : WettableObject, IExplodable
     public float ExplosionRadius = 2f;
     public int DotsToSpawn = 10;
     public float DestroyDelay = 1f;
-    public GameObject DirtySpotPrefab;
-    public LayerMask GroundLayers = ~0;
     [Tooltip("Minimum distance between dirt dots")]
     public float MinDotDistance = 0.3f;
 
@@ -69,7 +67,6 @@ public class WettableEnemy : WettableObject, IExplodable
         foreach (var pos in dotPositions)
         {
             Vector3 spawnPos = DirtyDotSpawner.Instance.CalculateSpawnPositionWithRaycast(pos);
-
             DirtyDotManager.Instance?.SpawnDotAt(spawnPos, rot);
         }
 

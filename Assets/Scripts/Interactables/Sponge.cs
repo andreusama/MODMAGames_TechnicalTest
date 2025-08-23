@@ -13,7 +13,6 @@ public class Sponge : WettableObject, IExplodable
     public bool HasExploded { get; private set; } = false;
 
     private CircleDrawer m_CircleDrawer;
-    private bool m_HasShownRadius = false;
 
     protected override void Awake()
     {
@@ -34,13 +33,11 @@ public class Sponge : WettableObject, IExplodable
         float scaledRadius = MaxExplosionRadius * (Wetness / 100f);
         if (scaledRadius > 0.01f)
         {
-            m_HasShownRadius = true;
             if (m_CircleDrawer != null)
                 m_CircleDrawer.DrawCircle(transform.position, scaledRadius);
         }
         else
         {
-            m_HasShownRadius = false;
             if (m_CircleDrawer != null)
                 m_CircleDrawer.Hide();
         }

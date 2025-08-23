@@ -14,8 +14,6 @@ public class WettableEnemyAI : MonoBehaviour
 
     private NavMeshAgent m_Agent;
 
-    private IWettable m_Wettable;
-    private int m_LastWetness = -1;
     private float m_OriginalSpeed;
 
     [SerializeField, Self]
@@ -32,7 +30,6 @@ public class WettableEnemyAI : MonoBehaviour
         if (m_Agent != null)
             m_OriginalSpeed = m_Agent.speed;
 
-        m_Wettable = GetComponent<IWettable>();
         if (m_WettableObject != null)
             m_WettableObject.OnExplode += HandleEnemyExploded;
     }
@@ -50,7 +47,6 @@ public class WettableEnemyAI : MonoBehaviour
 
     private void Update()
     {
-        // If dead, do nothing else
         if (m_State == EnemyState.Die)
             return;
 
@@ -59,8 +55,6 @@ public class WettableEnemyAI : MonoBehaviour
             if (m_Agent != null) m_Agent.isStopped = true;
             return;
         }
-
-        float distance = Vector3.Distance(transform.position, m_PlayerTransform.position);
 
         if (m_Agent != null && m_Agent.enabled)
         {

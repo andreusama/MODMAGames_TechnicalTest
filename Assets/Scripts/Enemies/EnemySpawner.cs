@@ -18,7 +18,6 @@ public class EnemySpawner : MonoBehaviour, IEventListener<GameStartEvent>, IEven
     public float BossSpawnChance = 0.2f; // 20% chance per wave
 
     private int m_CurrentWave = 0;
-    private bool m_Spawning = false;
     private bool m_GameEnded = false;
     private Coroutine m_SpawnCoroutine;
 
@@ -50,12 +49,10 @@ public class EnemySpawner : MonoBehaviour, IEventListener<GameStartEvent>, IEven
             StopCoroutine(m_SpawnCoroutine);
             m_SpawnCoroutine = null;
         }
-        m_Spawning = false;
     }
 
     private IEnumerator SpawnWaves()
     {
-        m_Spawning = true;
         while (m_CurrentWave < MaxWaves && !m_GameEnded)
         {
             yield return SpawnWaveAsync();
@@ -67,7 +64,6 @@ public class EnemySpawner : MonoBehaviour, IEventListener<GameStartEvent>, IEven
                 yield return null;
             }
         }
-        m_Spawning = false;
         m_SpawnCoroutine = null;
     }
 
@@ -75,7 +71,6 @@ public class EnemySpawner : MonoBehaviour, IEventListener<GameStartEvent>, IEven
     {
         if (m_GameEnded) yield break;
 
-        // Normal enemies
         for (int i = 0; i < EnemiesPerWave && !m_GameEnded; i++)
         {
             if (!IsValid(EnemyPrefab))

@@ -3,7 +3,6 @@ using UnityEngine;
 public class DirtBalloonSticky : Balloon
 {
     [Header("Dirt Balloon")]
-    public GameObject DirtySpotPrefab; // fallback if desired
     public int DotsToSpawn = 5;
 
     public override void Explode()

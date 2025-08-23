@@ -1,16 +1,13 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using System; // added for events
 
 public class BalloonGunSkill : Skill
 {
     [Header("Water Balloon Settings")]
     public GameObject WaterBalloonPrefab;
-    public float Damage = 25f;
     public float ExplosionDelay = 1.5f;
     public float Cooldown = 2f;
-    public float ScatterForce = 10f;
     public float ExplosionRadius = 2.5f;
     public LayerMask TargetLayers;
 

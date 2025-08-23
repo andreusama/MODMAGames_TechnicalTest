@@ -24,7 +24,6 @@ public class GameController : MonoBehaviour
     [Range(0f, 1f)]
     public float RequiredCleanPercentage = 0.8f;
 
-    private bool m_GameStarted = false;
     private bool m_GameEnded = false;
     private float m_ElapsedTime = 0f;
 
@@ -40,7 +39,6 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(IntroDuration);
 
         // 2. Game start
-        m_GameStarted = true;
         EventManager.TriggerEvent(new GameStartEvent());
 
         // 3. Wait for end condition (win/lose)

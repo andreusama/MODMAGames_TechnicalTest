@@ -15,8 +15,6 @@ public class PlayerAnimator : MonoBehaviour, IEventListener<DashStartEvent>, IEv
     [SerializeField] private string m_AnimTriggerDash = "Dash";
 
     [Header("Tuning")]
-    [Tooltip("Minimum speed (m/s) to consider running.")]
-    public float RunSpeedThreshold = 0.1f;
     [Tooltip("Time to keep in SHOOT state before re-evaluating (seconds).")]
     public float ShootLockTime = 0.35f;
 
@@ -24,9 +22,7 @@ public class PlayerAnimator : MonoBehaviour, IEventListener<DashStartEvent>, IEv
     private PlayerState m_State = PlayerState.Idle;
 
     private BalloonGunSkill m_WaterBalloon;
-    private DashSkill m_Dash;
 
-    private Vector3 m_LastPos;
     private float m_ShootUnlockTime;
 
     private void Awake()
@@ -38,7 +34,6 @@ public class PlayerAnimator : MonoBehaviour, IEventListener<DashStartEvent>, IEv
         if (m_SkillManager != null)
         {
             m_WaterBalloon = m_SkillManager.GetSkill<BalloonGunSkill>();
-            m_Dash = m_SkillManager.GetSkill<DashSkill>();
         }
     }
 
@@ -62,7 +57,6 @@ public class PlayerAnimator : MonoBehaviour, IEventListener<DashStartEvent>, IEv
 
     private void Start()
     {
-        m_LastPos = transform.position;
         SetState(PlayerState.Idle);
     }
 

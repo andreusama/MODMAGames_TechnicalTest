@@ -7,7 +7,6 @@ public class DashSkill : Skill
     [Header("Dash Settings")]
     public float DashDistance = 5f;
     public float DashCooldown = 1f;
-    public float DashSpeed = 50f;
     public float DashDuration = 0.2f;
 
     [Header("Dash Animation Curve")]

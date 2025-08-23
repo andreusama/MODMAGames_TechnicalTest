@@ -250,6 +250,18 @@ PrefabInstance:
       propertyPath: stopAction
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7933193308633192117, guid: 0b7b8b985fed17c4f955f30efc9aa67a, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8013567044908610734, guid: 0b7b8b985fed17c4f955f30efc9aa67a, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8013567044908610734, guid: 0b7b8b985fed17c4f955f30efc9aa67a, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8013567046687537611, guid: 0b7b8b985fed17c4f955f30efc9aa67a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -296,7 +308,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8013567046687537654, guid: 0b7b8b985fed17c4f955f30efc9aa67a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
