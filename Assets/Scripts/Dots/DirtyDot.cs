@@ -22,14 +22,14 @@ public class DirtyDot : MonoBehaviour, ICleanable
     }
 
     /// <summary>
-    /// Resetea el estado al reutilizar desde el pool.
-    /// Llama esto ANTES de usarla si aún no se ha activado, o justo tras posicionarla.
+    /// Resets state when reused from pool.
+    /// Call this BEFORE using it if it hasn't been activated yet, or right after positioning it.
     /// </summary>
     public void ResetState()
     {
         IsClean = false;
         if (!gameObject.activeSelf)
             gameObject.SetActive(true);
-        // Aquí podrías resetear materiales, tamaño, etc.
+        // You could reset materials, size, etc. here if needed.
     }
 }

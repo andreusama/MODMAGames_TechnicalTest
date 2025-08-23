@@ -7,44 +7,44 @@ public class AutoShootSkill : MonoBehaviour
 {
     [Header("Auto Shoot Settings")]
     [SerializeField, Self]
-    private BalloonGunSkill SkillToUse;
+    private BalloonGunSkill m_SkillToUse;
     public float MinInterval = 2f;
     public float MaxInterval = 4f;
-    public float AimTime = 0.5f; // Tiempo que mantiene el "apuntado" antes de disparar
-    public LayerMask ValidGroundLayers = ~0; // Capas válidas para disparar (ajusta en el inspector)
+    public float AimTime = 0.5f; // Time to keep "aiming" before shooting
+    public LayerMask ValidGroundLayers = ~0; // Valid layers to shoot at (tune in inspector)
 
-    private bool isActive = false;
+    private bool m_IsActive = false;
 
-    private Vector2 lastAimInput;
-    private Vector3 lastTargetWorld;
+    private Vector2 m_LastAimInput;
+    private Vector3 m_LastTargetWorld;
 
     private void OnEnable()
     {
-        isActive = true;
+        m_IsActive = true;
         StartCoroutine(AutoShootRoutine());
     }
 
     private void OnDisable()
     {
-        isActive = false;
+        m_IsActive = false;
         StopAllCoroutines();
     }
 
     private IEnumerator AutoShootRoutine()
     {
-        while (isActive)
+        while (m_IsActive)
         {
             float wait = Random.Range(MinInterval, MaxInterval);
             yield return new WaitForSeconds(wait);
 
-            float minRange = SkillToUse.MinRange;
-            float maxRange = SkillToUse.MaxRange;
+            float minRange = m_SkillToUse.MinRange;
+            float maxRange = m_SkillToUse.MaxRange;
 
             Vector2 aimInput = Vector2.zero;
             Vector3 targetWorld = Vector3.zero;
             bool foundValid = false;
 
-            // Bucle infinito hasta encontrar un punto válido
+            // Loop until finding a valid point
             while (!foundValid)
             {
                 Vector2 randomDir = Random.insideUnitCircle.normalized;
@@ -53,49 +53,49 @@ public class AutoShootSkill : MonoBehaviour
 
                 Vector3 direction = new Vector3(aimInput.x, 0, aimInput.y).normalized;
                 float range = Mathf.Lerp(minRange, maxRange, aimInput.magnitude);
-                Vector3 rayOrigin = SkillToUse.transform.position + direction * range + Vector3.up * 5f;
+                Vector3 rayOrigin = m_SkillToUse.transform.position + direction * range + Vector3.up * 5f;
 
                 if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, 20f, ValidGroundLayers))
                 {
                     foundValid = true;
-                    targetWorld = hit.point; // Guarda el punto de impacto real como target absoluto
+                    targetWorld = hit.point; // Store real impact point as absolute target
                 }
                 else
                 {
-                    yield return null; // Espera un frame antes de volver a intentar
+                    yield return null; // Wait one frame before trying again
                 }
             }
 
-            lastAimInput = aimInput;
-            lastTargetWorld = targetWorld;
+            m_LastAimInput = aimInput;
+            m_LastTargetWorld = targetWorld;
 
-            // Simula el apuntado
-            SkillToUse.OnAimingPerformed(aimInput);
+            // Simulate aiming
+            m_SkillToUse.OnAimingPerformed(aimInput);
 
-            // Mientras apunta, actualiza la visualización cada frame con el target fijo
+            // While aiming, update visuals every frame with a fixed target
             float timer = 0f;
             while (timer < AimTime)
             {
-                SkillToUse.UpdateAimingVisual(lastAimInput, lastTargetWorld);
+                m_SkillToUse.UpdateAimingVisual(m_LastAimInput, m_LastTargetWorld);
                 timer += Time.deltaTime;
                 yield return null;
             }
 
-            // Simula el disparo usando el target fijo
-            SkillToUse.OnAimingCanceled(lastAimInput, lastTargetWorld);
+            // Simulate shooting using the fixed target
+            m_SkillToUse.OnAimingCanceled(m_LastAimInput, m_LastTargetWorld);
         }
     }
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
-        if (SkillToUse == null)
-            SkillToUse = GetComponent<BalloonGunSkill>();
+        if (m_SkillToUse == null)
+            m_SkillToUse = GetComponent<BalloonGunSkill>();
 
-        if (SkillToUse != null)
+        if (m_SkillToUse != null)
         {
-            DrawCircleGizmo(transform.position, SkillToUse.MaxRange, new Color(1f, 0f, 0f, 0.7f));
-            DrawCircleGizmo(transform.position, SkillToUse.MinRange, new Color(1f, 0f, 0f, 0.3f));
+            DrawCircleGizmo(transform.position, m_SkillToUse.MaxRange, new Color(1f, 0f, 0f, 0.7f));
+            DrawCircleGizmo(transform.position, m_SkillToUse.MinRange, new Color(1f, 0f, 0f, 0.3f));
         }
     }
 

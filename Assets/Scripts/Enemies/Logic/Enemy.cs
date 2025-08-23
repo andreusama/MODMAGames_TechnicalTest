@@ -7,11 +7,11 @@ public class Enemy : MonoBehaviour, IDamageable
 {
     [Header("Enemy Settings")]
     public float MaxHealth = 100f;
-    [SerializeField] private float destroyDelay = 1f;
+    [SerializeField] private float m_DestroyDelay = 1f;
 
     [Header("Clean on Death")]
     public float CleanRadius = 2f;
-    public LayerMask CleanableLayers = ~0; // Por defecto, todas las capas
+    public LayerMask CleanableLayers = ~0; // By default, all layers
 
     private float m_CurrentHealth;
     private bool m_IsAlive = true;
@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public bool IsAlive => m_IsAlive;
 
     /// <summary>
-    /// Se dispara cuando el enemigo muere.
+    /// Fired when the enemy dies.
     /// </summary>
     public event Action<Enemy> OnDied;
 
@@ -32,10 +32,10 @@ public class Enemy : MonoBehaviour, IDamageable
     }
 
     /// <summary>
-    /// Aplica daño al enemigo.
+    /// Applies damage to the enemy.
     /// </summary>
-    /// <param name="amount">Cantidad de daño.</param>
-    /// <param name="allyFire">Si el daño es fuego amigo.</param>
+    /// <param name="amount">Damage amount.</param>
+    /// <param name="allyFire">Whether damage is friendly fire.</param>
     public void TakeDamage(float amount, bool allyFire)
     {
         if (!m_IsAlive || amount <= 0f)
@@ -52,14 +52,14 @@ public class Enemy : MonoBehaviour, IDamageable
     }
 
     /// <summary>
-    /// Lógica de muerte del enemigo.
+    /// Enemy death logic.
     /// </summary>
     private void Die()
     {
         if (!m_IsAlive) return;
         m_IsAlive = false;
 
-        // Mostrar círculo de limpieza (visual temporal)
+        // Show cleaning circle (temporary visual)
         ShowCleanArea();
 
         CleanNearbyDirt();
@@ -71,7 +71,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private IEnumerator DieCoroutine()
     {
-        yield return new WaitForSeconds(destroyDelay);
+        yield return new WaitForSeconds(m_DestroyDelay);
         if (m_DeathFeedback != null)
         {
             m_DeathFeedback.PlayFeedbacks();
@@ -94,14 +94,14 @@ public class Enemy : MonoBehaviour, IDamageable
     }
     private void ShowCleanArea()
     {
-        // Instancia un CircleDrawer temporal
+        // Instantiate a temporary CircleDrawer
         var go = new GameObject("CleanAreaDrawer");
         go.transform.position = transform.position;
         var drawer = go.AddComponent<CircleDrawer>();
         drawer.Segments = 32;
         drawer.DrawCircle(transform.position, CleanRadius);
 
-        // Destruye el círculo tras un breve tiempo
+        // Destroy the circle after a short time
         Destroy(go, 1.5f);
     }
 

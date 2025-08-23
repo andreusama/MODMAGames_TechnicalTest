@@ -14,7 +14,7 @@ public class GameLoader : MonoBehaviour
 
     private IEnumerator LoadSampleSceneGroup()
     {
-        // Lanza la carga de la escena (no aditiva, con pantalla de carga y liberando memoria)
+        // Start scene loading (non-additive, with loading screen and memory release)
         SceneLoaderManager.Instance.LoadSceneGroup(SampleSceneGroup, additive: false, loadingScene: true, releaseMemory: true);
 
         yield break;

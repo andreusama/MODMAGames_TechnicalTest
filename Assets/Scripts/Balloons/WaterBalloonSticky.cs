@@ -4,14 +4,14 @@ public class WaterBalloonSticky : WaterBalloon
 {
     protected override void OnTouchedGroundHook(Collision collision)
     {
-        if (rb != null)
+        if (m_Rigidbody != null)
         {
-            rb.isKinematic = true;
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
+            m_Rigidbody.isKinematic = true;
+            m_Rigidbody.linearVelocity = Vector3.zero;
+            m_Rigidbody.angularVelocity = Vector3.zero;
         }
 
-        // Además del comportamiento base (reposiciona con normal)
+        // In addition to base behavior (reposition with normal)
         base.OnTouchedGroundHook(collision);
     }
 }

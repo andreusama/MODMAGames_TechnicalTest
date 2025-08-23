@@ -12,7 +12,7 @@ public class BakedObjectPoolerEditor : Editor
         var pooler = (BakedSimpleObjectPooler)target;
 
         EditorGUILayout.Space();
-        if (GUILayout.Button("Auto-fill BakedObjects con hijos"))
+        if (GUILayout.Button("Auto-fill BakedObjects with children"))
         {
             pooler.BakedObjects.Clear();
             for (int i = 0; i < pooler.transform.childCount; i++)
@@ -30,7 +30,7 @@ public class BakedObjectPoolerEditor : Editor
             }
             else
             {
-                Debug.LogWarning("Solo en Play Mode.");
+                Debug.LogWarning("Play Mode only.");
             }
         }
     }

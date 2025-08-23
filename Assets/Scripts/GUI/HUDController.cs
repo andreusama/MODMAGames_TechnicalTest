@@ -3,7 +3,7 @@ using UnityEngine;
 public class HUDController : MonoBehaviour, IEventListener<GameEndEvent>
 {
     [Header("UI Prefabs")]
-    [SerializeField] private EndGameGUI endGameUIPrefab;
+    [SerializeField] private EndGameGUI m_EndGameUIPrefab;
 
     private void OnEnable()
     {
@@ -17,14 +17,14 @@ public class HUDController : MonoBehaviour, IEventListener<GameEndEvent>
 
     public void OnEvent(GameEndEvent e)
     {
-        if (endGameUIPrefab != null)
+        if (m_EndGameUIPrefab != null)
         {
-            var ui = Instantiate(endGameUIPrefab, transform);
+            var ui = Instantiate(m_EndGameUIPrefab, transform);
             ui.Initialize(e.Win);
         }
         else
         {
-            Debug.LogWarning("EndGameUIPrefab no asignado en HUDController.");
+            Debug.LogWarning("EndGameUIPrefab not assigned in HUDController.");
         }
     }
 }

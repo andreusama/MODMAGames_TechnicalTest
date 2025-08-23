@@ -3,7 +3,7 @@ using TMPro;
 
 public class DirtyTrackerGUI : MonoBehaviour, IEventListener<DirtinessChangedEvent>
 {
-    [SerializeField] private TMPro.TextMeshProUGUI dirtinessText;
+    [SerializeField] private TMPro.TextMeshProUGUI m_DirtinessText;
 
     private void OnEnable()
     {
@@ -19,15 +19,15 @@ public class DirtyTrackerGUI : MonoBehaviour, IEventListener<DirtinessChangedEve
 
     public void OnEvent(DirtinessChangedEvent e)
     {
-        if (dirtinessText != null)
+        if (m_DirtinessText != null)
             UpdateText(e.Percentage);
     }
 
     void UpdateText(float percentage)
     {
-        if (dirtinessText != null)
+        if (m_DirtinessText != null)
         {
-            dirtinessText.text = $"{percentage:0.0}%";
+            m_DirtinessText.text = $"{percentage:0.0}%";
         }
     }
 }

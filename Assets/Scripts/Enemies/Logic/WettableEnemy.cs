@@ -13,37 +13,37 @@ public class WettableEnemy : WettableObject, IExplodable
     public float DestroyDelay = 1f;
     public GameObject DirtySpotPrefab;
     public LayerMask GroundLayers = ~0;
-    [Tooltip("Distancia mínima entre manchas de suciedad")]
+    [Tooltip("Minimum distance between dirt dots")]
     public float MinDotDistance = 0.3f;
 
     [Header("Wettable Slowdown")]
     [SerializeField, Self]
-    private WettableEnemyAI wettableEnemyAI;
+    private WettableEnemyAI m_WettableEnemyAI;
 
     public event Action<WettableEnemy> OnExplode;
     [SerializeField] MMF_Player m_ExplodeFB;
 
     [Range(0.1f, 1f)]
-    public float MinSpeedPercent = 0.3f; // 30% de la velocidad original cuando está completamente mojado
+    public float MinSpeedPercent = 0.3f; // 30% of original speed when fully wet
 
     public bool HasExploded { get; private set; } = false;
 
     protected override void Awake()
     {
         base.Awake();
-        if (wettableEnemyAI == null)
-            wettableEnemyAI = GetComponent<WettableEnemyAI>();
+        if (m_WettableEnemyAI == null)
+            m_WettableEnemyAI = GetComponent<WettableEnemyAI>();
     }
 
     protected override void OnWetnessChangedVirtual(int wetness)
     {
         base.OnWetnessChangedVirtual(wetness);
 
-        if (wettableEnemyAI != null)
+        if (m_WettableEnemyAI != null)
         {
             float t = wetness / 100f;
             float percent = Mathf.Lerp(1f, MinSpeedPercent, t);
-            wettableEnemyAI.SetSpeed(percent);
+            m_WettableEnemyAI.SetSpeed(percent);
         }
 
         if (wetness >= 100 && !HasExploded)
@@ -73,12 +73,12 @@ public class WettableEnemy : WettableObject, IExplodable
             DirtyDotManager.Instance?.SpawnDotAt(spawnPos, rot);
         }
 
-       StartCoroutine(DieCoroutine());
+        StartCoroutine(DieCoroutine());
     }
 
     private IEnumerator DieCoroutine()
     {
-        //Time to show Die animation
+        // Time to show Die animation
         yield return new WaitForSeconds(DestroyDelay);
 
         if (m_ExplodeFB != null)
@@ -88,7 +88,6 @@ public class WettableEnemy : WettableObject, IExplodable
 
         Destroy(gameObject, m_ExplodeFB.TotalDuration);
     }
-
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()

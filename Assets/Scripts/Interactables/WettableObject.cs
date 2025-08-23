@@ -13,18 +13,18 @@ public class WettableObject : MonoBehaviour, IWettable
     public Transform Transform;
 
     [Header("Wettable Scaling")]
-    public float MaxScale = 2f; // Valor por defecto, ajustable en el inspector
+    public float MaxScale = 2f; // Default value, adjustable in inspector
 
-    private Vector3 initialScale;
+    private Vector3 m_InitialScale;
 
 
     /// <summary>
-    /// Evento que se dispara cada vez que cambia la humedad.
+    /// Event fired whenever wetness changes.
     /// </summary>
     public event Action<int> OnWetnessChanged;
 
     /// <summary>
-    /// Método virtual para que las clases hijas puedan reaccionar al cambio de humedad.
+    /// Virtual method to react to wetness changes in derived classes.
     /// </summary>
     protected virtual void OnWetnessChangedVirtual(int wetness) { }
 
@@ -33,7 +33,7 @@ public class WettableObject : MonoBehaviour, IWettable
         if (Transform == null)
             Transform = transform;
 
-        initialScale = Transform.localScale;
+        m_InitialScale = Transform.localScale;
     }
 
     public void AddWetness(int amount)
@@ -61,8 +61,8 @@ public class WettableObject : MonoBehaviour, IWettable
         if (Transform != null)
         {
             float t = m_Wetness / 100f;
-            // Interpola entre la escala inicial y el valor absoluto MaxScale
-            Vector3 targetScale = Vector3.Lerp(initialScale, initialScale + (Vector3.one * MaxScale), t);
+            // Interpolate between initial scale and absolute MaxScale
+            Vector3 targetScale = Vector3.Lerp(m_InitialScale, m_InitialScale + (Vector3.one * MaxScale), t);
             Transform.localScale = targetScale;
         }
     }

@@ -7,8 +7,8 @@ public class CircleDrawer : MonoBehaviour
     public int ParabolicSegments = 32;
     public float Radius = 1f;
     private LineRenderer m_LineRenderer;
-    public LineRenderer m_ParabolicLineRenderer;
-    public LayerMask CollisionMask = ~0; // Por defecto, colisiona con todo
+    public LineRenderer ParabolicLineRenderer;
+    public LayerMask CollisionMask = ~0; // By default, collides with everything
 
     private void Awake()
     {
@@ -19,15 +19,15 @@ public class CircleDrawer : MonoBehaviour
     }
 
     /// <summary>
-    /// Dibuja un círculo en el punto de colisión más cercano bajo el centro, o en el centro si no hay colisión.
+    /// Draws a circle at the closest collision point below the center, or at the center if no collision.
     /// </summary>
     public void DrawCircle(Vector3 center, float radius)
     {
-        // Lanza un rayo hacia abajo desde el centro para encontrar la altura de la superficie
+        // Cast a ray downward from the center to find surface height
         Vector3 circleCenter = center;
         if (Physics.Raycast(center + Vector3.up * 2f, Vector3.down, out RaycastHit hit, 10f, CollisionMask))
         {
-            circleCenter.y = hit.point.y + 0.1f; // Ligeramente por encima de la superficie
+            circleCenter.y = hit.point.y + 0.1f; // Slightly above surface
         }
 
         m_LineRenderer.positionCount = Segments;
@@ -41,16 +41,16 @@ public class CircleDrawer : MonoBehaviour
     }
 
     /// <summary>
-    /// Dibuja una parábola hasta el primer punto de colisión.
+    /// Draws a parabola until the first collision point.
     /// </summary>
     public void DrawParabola(Vector3 start, Vector3 initialVelocity, float gravity, float maxTime, int steps = 30)
     {
-        if (m_ParabolicLineRenderer == null)
+        if (ParabolicLineRenderer == null)
             return;
 
         Vector3 prevPos = start;
-        m_ParabolicLineRenderer.positionCount = 0;
-        m_ParabolicLineRenderer.loop = false;
+        ParabolicLineRenderer.positionCount = 0;
+        ParabolicLineRenderer.loop = false;
 
         int pointIndex = 0;
         for (int i = 0; i < ParabolicSegments; i++)
@@ -58,17 +58,17 @@ public class CircleDrawer : MonoBehaviour
             float t = (i / (float)(ParabolicSegments - 1)) * maxTime;
             Vector3 pos = start + initialVelocity * t + 0.5f * Physics.gravity * t * t;
 
-            // Añade el punto a la línea
-            if (m_ParabolicLineRenderer.positionCount <= pointIndex)
-                m_ParabolicLineRenderer.positionCount = pointIndex + 1;
-            m_ParabolicLineRenderer.SetPosition(pointIndex, pos);
+            // Add point to line
+            if (ParabolicLineRenderer.positionCount <= pointIndex)
+                ParabolicLineRenderer.positionCount = pointIndex + 1;
+            ParabolicLineRenderer.SetPosition(pointIndex, pos);
 
-            // Comprueba colisión entre prevPos y pos
+            // Check collision between prevPos and pos
             if (Physics.Linecast(prevPos, pos, out RaycastHit hit, CollisionMask))
             {
-                // Ajusta el último punto a la superficie de colisión
-                m_ParabolicLineRenderer.SetPosition(pointIndex, hit.point);
-                m_ParabolicLineRenderer.positionCount = pointIndex + 1;
+                // Adjust last point to collision surface
+                ParabolicLineRenderer.SetPosition(pointIndex, hit.point);
+                ParabolicLineRenderer.positionCount = pointIndex + 1;
                 break;
             }
 
@@ -78,11 +78,11 @@ public class CircleDrawer : MonoBehaviour
     }
 
     /// <summary>
-    /// Dibuja una parábola con una curva personalizada hasta el primer punto de colisión.
+    /// Draws a parabola using a custom curve until the first collision point.
     /// </summary>
     public void DrawParabolaWithCurve(Vector3 start, Vector3 target, AnimationCurve curve, float totalFlightTime, int steps = 30)
     {
-        if (m_ParabolicLineRenderer == null || curve == null)
+        if (ParabolicLineRenderer == null || curve == null)
             return;
 
         Vector3[] points = new Vector3[steps];
@@ -92,16 +92,16 @@ public class CircleDrawer : MonoBehaviour
             float curveT = curve.Evaluate(tNorm);
             points[i] = ParabolicCalculator.ParabolicLerp(start, target, curveT);
         }
-        m_ParabolicLineRenderer.positionCount = steps;
-        m_ParabolicLineRenderer.SetPositions(points);
+        ParabolicLineRenderer.positionCount = steps;
+        ParabolicLineRenderer.SetPositions(points);
     }
 
     public void Hide()
     {
         m_LineRenderer.positionCount = 0;
-        if (m_ParabolicLineRenderer != null)
+        if (ParabolicLineRenderer != null)
         {
-            m_ParabolicLineRenderer.positionCount = 0;
+            ParabolicLineRenderer.positionCount = 0;
         }
     }
 }

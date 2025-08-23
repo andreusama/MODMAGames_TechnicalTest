@@ -6,7 +6,7 @@ public abstract class Skill : MonoBehaviour
     protected PlayerMotor m_PlayerMotor;
     protected CooldownTimer m_Cooldown;
 
-    // Evento que emite la propia skill cuando entra en un estado activo (apuntar, dash, etc.)
+    // Event fired by the skill when it enters an active state (aiming, dash, etc.)
     public event Action<Skill> SkillStarted;
 
     public virtual void Initialize(PlayerMotor motor)
@@ -31,12 +31,12 @@ public abstract class Skill : MonoBehaviour
         m_Cooldown?.Start();
     }
 
-    // Llamar en la skill concreta cuando efectivamente comienza (una sola vez por activación)
+    // Call in the concrete skill when it actually starts (once per activation)
     protected void RaiseSkillStarted()
     {
         SkillStarted?.Invoke(this);
     }
 
-    // Cancelación genérica (override si la skill mantiene estado)
+    // Generic cancel (override if the skill maintains state)
     public virtual void Cancel() { }
 }

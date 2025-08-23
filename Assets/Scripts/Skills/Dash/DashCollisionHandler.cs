@@ -2,29 +2,29 @@ using UnityEngine;
 
 public class DashCollisionHandler : MonoBehaviour
 {
-    [Header("Efectos del dash (se aplican todos)")]
-    [SerializeField] private DashEffect[] dashEffects;
+    [Header("Dash effects (all applied)")]
+    [SerializeField] private DashEffect[] m_DashEffects;
 
-    private DashSkill dashSkill;
+    private DashSkill m_DashSkill;
 
     private void Awake()
     {
-        // Si el DashHitbox es hijo, SkillManager puede estar en el padre
+        // If DashHitbox is a child, SkillManager may be in the parent
         var skillManager = GetComponentInParent<SkillManager>();
         if (skillManager != null)
-            dashSkill = skillManager.GetSkill<DashSkill>();
+            m_DashSkill = skillManager.GetSkill<DashSkill>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // Condiciones mínimas para aplicar efectos:
-        // - dashSkill existe
-        // - dash está activo
-        // - hay efectos configurados
-        if (dashSkill == null || !dashSkill.IsDashing)
+        // Minimum conditions to apply effects:
+        // - m_DashSkill exists
+        // - dash is active
+        // - effects are configured
+        if (m_DashSkill == null || !m_DashSkill.IsDashing)
             return;
 
-        foreach (var effect in dashEffects)
+        foreach (var effect in m_DashEffects)
         {
             if (effect != null)
                 effect.ApplyEffect(other);

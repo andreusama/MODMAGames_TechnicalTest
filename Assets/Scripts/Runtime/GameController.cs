@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections;
 using Game.Framework;
-using EnGUI; // Asegúrate de tener este using para SceneGroup y SceneLoaderManager
+using EnGUI; // Ensure this using exists for SceneGroup and SceneLoaderManager
 
 /// <summary>
-/// Estructuras de eventos para el ciclo de juego
+/// Game cycle event structures
 /// </summary>
 public struct GameIntroEvent { }
 public struct GameStartEvent { }
@@ -16,11 +16,11 @@ public struct GameEndEvent
 
 public class GameController : MonoBehaviour
 {
-    [Header("Configuración")]
+    [Header("Settings")]
     public float IntroDuration = 2f;
-    [Tooltip("Duración de la partida en segundos")]
+    [Tooltip("Game duration in seconds")]
     public float GameDuration = 60f;
-    [Tooltip("Porcentaje de limpieza necesario para ganar (0-1)")]
+    [Tooltip("Clean percentage required to win (0-1)")]
     [Range(0f, 1f)]
     public float RequiredCleanPercentage = 0.8f;
 
@@ -35,18 +35,18 @@ public class GameController : MonoBehaviour
 
     private IEnumerator GameLoop()
     {
-        // 1. Introducción
+        // 1. Intro
         EventManager.TriggerEvent(new GameIntroEvent());
         yield return new WaitForSeconds(IntroDuration);
 
-        // 2. Inicio del juego
+        // 2. Game start
         m_GameStarted = true;
         EventManager.TriggerEvent(new GameStartEvent());
 
-        // 3. Esperar a condición de fin (win/lose)
+        // 3. Wait for end condition (win/lose)
         yield return StartCoroutine(WaitForEndCondition());
 
-        // 4. Fin del juego
+        // 4. Game end
         m_GameEnded = true;
         bool win = CheckWinCondition();
         EventManager.TriggerEvent(new GameEndEvent(win));
@@ -64,22 +64,22 @@ public class GameController : MonoBehaviour
         }
     }
 
-    // Lógica de victoria: tras 1 minuto, ¿se ha limpiado suficiente?
+    // Win logic: after time has passed, was enough cleaning done?
     private bool CheckWinCondition()
     {
         float dirtiness = DirtyDotManager.Instance != null ? DirtyDotManager.Instance.GetDirtPercentage() : 0f;
-        float cleaned = 1f - (dirtiness / 100f); // Convertir a porcentaje de limpieza (0-1)
+        float cleaned = 1f - (dirtiness / 100f); // Convert to clean percentage (0-1)
         return cleaned >= RequiredCleanPercentage;
     }
 
-    // Lógica de derrota: puedes personalizarla si hay otras condiciones
+    // Lose logic: customize if there are more conditions
     private bool CheckLoseCondition()
     {
-        // Ejemplo: si el jugador muere, etc.
+        // Example: if player died, etc.
         return false;
     }
 
-    // Métodos públicos para forzar el fin del juego desde otros scripts
+    // Public methods to force game end from other scripts
     public void ForceWin()
     {
         if (!m_GameEnded)

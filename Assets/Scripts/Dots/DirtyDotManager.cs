@@ -7,14 +7,14 @@ public class DirtyDotManager : MonoBehaviour
     public static DirtyDotManager Instance { get; private set; }
 
     [Header("Pooling")]
-    [Tooltip("Pool de dots (BakedSimpleObjectPooler).")]
-    public BakedSimpleObjectPooler dotPooler;
+    [Tooltip("Dot pool (BakedSimpleObjectPooler).")]
+    public BakedSimpleObjectPooler DotPooler;
 
-    [Tooltip("Prefab para instanciar cuando el pool está lleno.")]
+    [Tooltip("Prefab to instantiate when pool is exhausted.")]
     public GameObject FallbackDotPrefab;
 
-    private readonly HashSet<DirtyDot> allDots = new HashSet<DirtyDot>();
-    private int initialDotCount = 0;
+    private readonly HashSet<DirtyDot> m_AllDots = new HashSet<DirtyDot>();
+    private int m_InitialDotCount = 0;
 
     private void Awake()
     {
@@ -26,13 +26,13 @@ public class DirtyDotManager : MonoBehaviour
         Instance = this;
     }
 
-    #region Registro
+    #region Registration
     public void RegisterDot(DirtyDot dot)
     {
         if (dot == null) return;
-        if (allDots.Add(dot))
+        if (m_AllDots.Add(dot))
         {
-            initialDotCount = Mathf.Max(initialDotCount, allDots.Count);
+            m_InitialDotCount = Mathf.Max(m_InitialDotCount, m_AllDots.Count);
             TriggerDirtinessChanged();
         }
     }
@@ -40,29 +40,29 @@ public class DirtyDotManager : MonoBehaviour
     public void UnregisterDot(DirtyDot dot)
     {
         if (dot == null) return;
-        if (allDots.Remove(dot))
+        if (m_AllDots.Remove(dot))
         {
             TriggerDirtinessChanged();
         }
     }
     #endregion
 
-    #region Métricas
+    #region Metrics
     public float GetDirtPercentage()
     {
-        if (initialDotCount == 0) return 0f;
+        if (m_InitialDotCount == 0) return 0f;
         int dirtyCount = 0;
-        foreach (var dot in allDots)
+        foreach (var dot in m_AllDots)
             if (!dot.IsClean) dirtyCount++;
-        return (dirtyCount / (float)initialDotCount) * 100f;
+        return (dirtyCount / (float)m_InitialDotCount) * 100f;
     }
 
-    public int GetTotalDots() => initialDotCount;
+    public int GetTotalDots() => m_InitialDotCount;
 
     public int GetDirtyDots()
     {
         int dirtyCount = 0;
-        foreach (var dot in allDots)
+        foreach (var dot in m_AllDots)
             if (!dot.IsClean) dirtyCount++;
         return dirtyCount;
     }
@@ -74,17 +74,17 @@ public class DirtyDotManager : MonoBehaviour
     }
     #endregion
 
-    #region Spawning público
+    #region Public Spawning
     /// <summary>
-    /// Spawnea (o reutiliza) un dot en la posición/rotación dadas. Devuelve la referencia si se consiguió.
-    /// Fallback: instancia si el pool está lleno.
+    /// Spawns (or reuses) a dot at the given position/rotation. Returns the reference if succeeded.
+    /// Fallback: instantiates if pool is full.
     /// </summary>
     public DirtyDot SpawnDotAt(Vector3 position, Quaternion rotation)
     {
         GameObject dotGO = null;
 
-        if (dotPooler != null)
-            dotGO = dotPooler.GetPooledGameObject();
+        if (DotPooler != null)
+            dotGO = DotPooler.GetPooledGameObject();
 
         if (dotGO == null)
         {
@@ -102,7 +102,7 @@ public class DirtyDotManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Utilidad para generar varios dots en un radio (por ejemplo explosiones).
+    /// Utility to spawn multiple dots in a radius (e.g., explosions).
     /// </summary>
     public void SpawnRandomDotsInCircle(Vector3 center, float radius, int count, float yOffset = 0.02f)
     {

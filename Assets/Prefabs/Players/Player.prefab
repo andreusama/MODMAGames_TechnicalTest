@@ -20,7 +20,6 @@ GameObject:
   - component: {fileID: 2612534734359323342}
   - component: {fileID: 4044350586239497142}
   - component: {fileID: 5285678715845225847}
-  - component: {fileID: 3858561076540024543}
   - component: {fileID: 1573892223592572590}
   - component: {fileID: 4450000480554802256}
   - component: {fileID: 6161034944610703723}
@@ -287,7 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f5b059db80add94ea399b3a395afb78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillManager: {fileID: 1185287032095576755}
+  m_SkillManager: {fileID: 1185287032095576755}
 --- !u!114 &5285678715845225847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,21 +300,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 10000
---- !u!114 &3858561076540024543
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1563671674836396128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 092b0cfb2aab61b488ef071b8c0dbf77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dashEffects:
-  - {fileID: 11400000, guid: 4755f264af1ad784586adcb07f20c6b3, type: 2}
-  - {fileID: 11400000, guid: e54c1c08a7567fb4692233ba359e571d, type: 2}
 --- !u!114 &1573892223592572590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,7 +312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f5b2f3707bda794cbb14a17cff6d0e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CleanRadius: 1
+  CleanRadius: 3
   DirtySpotLayer:
     serializedVersion: 2
     m_Bits: 2048
@@ -347,10 +331,10 @@ MonoBehaviour:
   m_Motor: {fileID: 7346660142300454559}
   m_SkillManager: {fileID: 1185287032095576755}
   m_Animator: {fileID: 9102383627765533782}
-  AnimParamIsRunning: IsRunning
-  AnimParamIsAiming: IsAiming
-  AnimTriggerShoot: Shoot
-  AnimTriggerDash: Dash
+  m_AnimParamIsRunning: IsRunning
+  m_AnimParamIsAiming: IsAiming
+  m_AnimTriggerShoot: Shoot
+  m_AnimTriggerDash: Dash
   RunSpeedThreshold: 0.1
   ShootLockTime: 0.35
 --- !u!114 &6161034944610703723
@@ -373,13 +357,13 @@ MonoBehaviour:
   ExplosionRadius: 4
   TargetLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 4294967295
   MinRange: 4
   MaxRange: 22
   MaxHeight: 10
   m_FlightTime: 0.7
   m_SpawnPoint: {fileID: 7748581991796816533}
-  m_CircleDrawer: {fileID: 8005853742780767220}
+  CircleDrawer: {fileID: 8005853742780767220}
   UseAnimationCurve: 1
   VelocityCurve:
     serializedVersion: 2
@@ -467,13 +451,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: DashCollider
       objectReference: {fileID: 0}
+    - target: {fileID: 3384480114612216654, guid: 63a9ad2d5c7a19d4e8bea67e6f40a59f, type: 3}
+      propertyPath: m_DashEffects.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3384480114612216654, guid: 63a9ad2d5c7a19d4e8bea67e6f40a59f, type: 3}
+      propertyPath: 'm_DashEffects.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 4755f264af1ad784586adcb07f20c6b3, type: 2}
+    - target: {fileID: 3384480114612216654, guid: 63a9ad2d5c7a19d4e8bea67e6f40a59f, type: 3}
+      propertyPath: 'm_DashEffects.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: e54c1c08a7567fb4692233ba359e571d, type: 2}
     - target: {fileID: 7585063641804254702, guid: 63a9ad2d5c7a19d4e8bea67e6f40a59f, type: 3}
       propertyPath: m_Radius
-      value: 1.85
+      value: 1.63
       objectReference: {fileID: 0}
     - target: {fileID: 7585063641804254702, guid: 63a9ad2d5c7a19d4e8bea67e6f40a59f, type: 3}
       propertyPath: m_Center.y
       value: 0.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 7585063641804254702, guid: 63a9ad2d5c7a19d4e8bea67e6f40a59f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8463430911794710745, guid: 63a9ad2d5c7a19d4e8bea67e6f40a59f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -518,7 +518,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1032943101995198586, guid: 63a9ad2d5c7a19d4e8bea67e6f40a59f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8685908335889694575}
   m_SourcePrefab: {fileID: 100100000, guid: 63a9ad2d5c7a19d4e8bea67e6f40a59f, type: 3}
 --- !u!136 &707453748429085755 stripped
 CapsuleCollider:
@@ -530,6 +533,38 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8463430911794710745, guid: 63a9ad2d5c7a19d4e8bea67e6f40a59f, type: 3}
   m_PrefabInstance: {fileID: 6958886463787987413}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7982399550281636271 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1032943101995198586, guid: 63a9ad2d5c7a19d4e8bea67e6f40a59f, type: 3}
+  m_PrefabInstance: {fileID: 6958886463787987413}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &8685908335889694575
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7982399550281636271}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &8235581071918237534
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class DashSkill : Skill
 
     [Header("Dash Animation Curve")]
     public bool UseDashCurve = false;
-    [SerializeField, Tooltip("Curva de velocidad para el dash (0-1 en X, velocidad relativa en Y)")]
+    [SerializeField, Tooltip("Speed curve for dash (X: 0-1, Y: relative speed)")]
     public AnimationCurve DashCurve = AnimationCurve.Linear(0, 1, 1, 1);
 
     [Header("Dash Hitbox")]
@@ -42,7 +42,7 @@ public class DashSkill : Skill
         SetCooldown(DashCooldown);
         if (IsCooldownReady && !m_IsDashing)
         {
-            RaiseSkillStarted(); // Notifica inicio para cancelar otras skills
+            RaiseSkillStarted(); // Notify start to cancel other skills
             m_DashCoroutine = StartCoroutine(DashCoroutine());
         }
     }

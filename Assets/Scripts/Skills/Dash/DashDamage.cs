@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DashDamage", menuName = "Skills/Dash Effects/Dash Damage", order = 1)]
 public class DashDamage : DashEffect
 {
-    [Header("Daño infligido por el dash")]
+    [Header("Damage dealt by dash")]
     public float Damage = 50f;
 
     public override void ApplyEffect(Collider other)

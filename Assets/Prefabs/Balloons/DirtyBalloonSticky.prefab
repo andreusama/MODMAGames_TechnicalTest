@@ -184,10 +184,10 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   TotalFlightTime: 1.5
-  GroundClearance: 0.02
-  GroundTouchFeedback: {fileID: 4176133543402648840}
-  ExplosionFeedback: {fileID: 8334090069234916149}
-  rb: {fileID: 4860660509911844983}
+  m_GroundClearance: 0.02
+  m_GroundTouchFeedback: {fileID: 4176133543402648840}
+  m_ExplosionFeedback: {fileID: 8334090069234916149}
+  m_Rigidbody: {fileID: 4860660509911844983}
   DirtySpotPrefab: {fileID: 5679464411059033884, guid: 36e5c9cc55a8255489f679fed96bf09a, type: 3}
   DotsToSpawn: 5
 --- !u!114 &4176133543402648840 stripped

@@ -3,7 +3,7 @@ using Game.Framework;
 
 public class PlayerSpawner : MonoBehaviour, IEventListener<GameStartEvent>
 {
-    [Header("Configuración")]
+    [Header("Settings")]
     public GameObject PlayerPrefab;
     public Transform SpawnPoint;
     private GameObject m_PlayerInstance;

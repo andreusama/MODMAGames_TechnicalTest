@@ -5,14 +5,14 @@ public class AddressableInstanceTracker : MonoBehaviour
 {
     [HideInInspector] public bool FromAddressables;
 
-    private bool _released;
+    private bool m_Released;
 
     private void OnDestroy()
     {
-        // Libera la instancia creada por Addressables para evitar pérdidas de referencia.
-        if (!_released && FromAddressables)
+        // Releases the instance created by Addressables to avoid leaks.
+        if (!m_Released && FromAddressables)
         {
-            _released = true;
+            m_Released = true;
             Addressables.ReleaseInstance(gameObject);
         }
     }

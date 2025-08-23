@@ -3,7 +3,7 @@ using UnityEngine;
 public static class ParabolicCalculator
 {
     /// <summary>
-    /// Calcula la velocidad inicial para lanzar un proyectil desde 'origin' hacia 'target' con una altura máxima deseada.
+    /// Calculates the initial velocity to launch a projectile from 'origin' to 'target' with a desired maximum height.
     /// </summary>
     public static Vector3 CalculateLaunchVelocity(Vector3 origin, Vector3 target, float maxHeight, float gravity)
     {
@@ -20,7 +20,7 @@ public static class ParabolicCalculator
         return velocityXZ + velocityY;
     }
 
-    // Método adicional para calcular el objetivo y la velocidad de lanzamiento basada en la entrada del joystick
+    // Additional method to calculate the target and launch velocity from joystick input
     public static Vector3 CalculateTargetAndLaunchVelocity(Transform spawnPoint, Vector2 joystickInput, float minRange, float maxRange, Rigidbody balloonRigidbody)
     {
         Vector3 direction = new Vector3(joystickInput.x, 0, joystickInput.y).normalized;
@@ -28,13 +28,13 @@ public static class ParabolicCalculator
         Vector3 target = spawnPoint.position + direction * range;
 
         float gravity = Mathf.Abs(Physics.gravity.y);
-        float maxHeight = spawnPoint.position.y + 2f; // Puedes ajustar la altura máxima
+        float maxHeight = spawnPoint.position.y + 2f; // You can adjust max height
 
         Vector3 launchVelocity = CalculateLaunchVelocity(spawnPoint.position, target, maxHeight, gravity);
 
         balloonRigidbody.linearVelocity = launchVelocity;
 
-        return target; // Retorna el objetivo calculado
+        return target; // Return calculated target
     }
 
     public static Vector3 CalculateLaunchVelocityByTime(Vector3 start, Vector3 target, float flightTime, float gravity)
@@ -55,7 +55,7 @@ public static class ParabolicCalculator
     }
 
     /// <summary>
-    /// Interpolación parabólica entre dos puntos (puedes ajustar la altura máxima si quieres)
+    /// Parabolic interpolation between two points (you can adjust extra height if needed)
     /// </summary>
     public static Vector3 ParabolicLerp(Vector3 start, Vector3 end, float t, float extraHeight = 3f)
     {

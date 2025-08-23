@@ -21,7 +21,7 @@ public class Sponge : WettableObject, IExplodable
 
         m_CircleDrawer = GetComponentInChildren<CircleDrawer>();
         if (m_CircleDrawer == null)
-            Debug.LogWarning("CircleDrawer no encontrado en la esponja.");
+            Debug.LogWarning("CircleDrawer not found in Sponge.");
     }
 
     protected override void OnWetnessChangedVirtual(int wetness)
@@ -54,7 +54,7 @@ public class Sponge : WettableObject, IExplodable
         float scaledRadius = MaxExplosionRadius * (Wetness / 100f);
 
         if (scaledRadius <= 0.01f)
-            return; // No explota si el radio es 0
+            return; // Won't explode if radius is ~0
 
         Collider[] hits = Physics.OverlapSphere(transform.position, scaledRadius, TargetLayers);
         foreach (var hit in hits)
@@ -82,6 +82,4 @@ public class Sponge : WettableObject, IExplodable
 
         ExplosionFB.PlayFeedbacks();
     }
-
-    
 }

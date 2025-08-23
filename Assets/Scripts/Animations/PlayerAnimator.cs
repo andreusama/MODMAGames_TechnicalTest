@@ -9,15 +9,15 @@ public class PlayerAnimator : MonoBehaviour, IEventListener<DashStartEvent>, IEv
 
     [Header("Animation")]
     [SerializeField, Child] private Animator m_Animator;
-    [SerializeField] private string AnimParamIsRunning = "IsRunning";
-    [SerializeField] private string AnimParamIsAiming = "IsAiming";
-    [SerializeField] private string AnimTriggerShoot = "Shoot";
-    [SerializeField] private string AnimTriggerDash = "Dash";
+    [SerializeField] private string m_AnimParamIsRunning = "IsRunning";
+    [SerializeField] private string m_AnimParamIsAiming = "IsAiming";
+    [SerializeField] private string m_AnimTriggerShoot = "Shoot";
+    [SerializeField] private string m_AnimTriggerDash = "Dash";
 
     [Header("Tuning")]
-    [Tooltip("Velocidad mínima (m/s) para considerar que está corriendo.")]
+    [Tooltip("Minimum speed (m/s) to consider running.")]
     public float RunSpeedThreshold = 0.1f;
-    [Tooltip("Tiempo durante el que se mantiene en estado SHOOT antes de reevaluar (segundos).")]
+    [Tooltip("Time to keep in SHOOT state before re-evaluating (seconds).")]
     public float ShootLockTime = 0.35f;
 
     private enum PlayerState { Idle, Running, Aiming, Shoot, Dash }
@@ -68,20 +68,20 @@ public class PlayerAnimator : MonoBehaviour, IEventListener<DashStartEvent>, IEv
 
     private void Update()
     {
-        // Si estamos en DASH, dejamos que la animación lo gestione hasta que termine
+        // If we are DASHING, let the animation handle it until it finishes
         if (m_State == PlayerState.Dash) return;
 
-        // Bloque corto para la animación de disparo
+        // Short lock for shoot animation
         if (m_State == PlayerState.Shoot && Time.time < m_ShootUnlockTime) return;
 
-        // Estado AIMING tiene prioridad sobre locomoción
+        // AIMING state has priority over locomotion
         if (m_WaterBalloon != null && m_WaterBalloon.IsAiming)
         {
             SetState(PlayerState.Aiming);
             return;
         }
 
-        // Determina velocidad por desplazamiento real (independiente del input)
+        // Determine speed from actual displacement (independent from input)
         Vector3 move = m_Motor.GetCurrentVelocity();
         if (move.sqrMagnitude > 0.001f)
             SetState(PlayerState.Running);
@@ -102,7 +102,7 @@ public class PlayerAnimator : MonoBehaviour, IEventListener<DashStartEvent>, IEv
 
     public void OnEvent(DashEndEvent evt)
     {
-        // Al terminar el dash, reevaluamos inmediatamente en Update
+        // When dash finishes, re-evaluate immediately in Update
         if (m_State == PlayerState.Dash)
             SetState(PlayerState.Idle);
     }
@@ -117,45 +117,45 @@ public class PlayerAnimator : MonoBehaviour, IEventListener<DashStartEvent>, IEv
             case PlayerState.Idle:
                 if (m_Animator != null)
                 {
-                    m_Animator.SetBool(AnimParamIsRunning, false);
-                    m_Animator.SetBool(AnimParamIsAiming, false);
+                    m_Animator.SetBool(m_AnimParamIsRunning, false);
+                    m_Animator.SetBool(m_AnimParamIsAiming, false);
                 }
                 break;
 
             case PlayerState.Running:
                 if (m_Animator != null)
                 {
-                    m_Animator.SetBool(AnimParamIsRunning, true);
-                    m_Animator.SetBool(AnimParamIsAiming, false);
+                    m_Animator.SetBool(m_AnimParamIsRunning, true);
+                    m_Animator.SetBool(m_AnimParamIsAiming, false);
                 }
                 break;
 
             case PlayerState.Aiming:
                 if (m_Animator != null)
                 {
-                    m_Animator.SetBool(AnimParamIsRunning, false);
-                    m_Animator.SetBool(AnimParamIsAiming, true);
+                    m_Animator.SetBool(m_AnimParamIsRunning, false);
+                    m_Animator.SetBool(m_AnimParamIsAiming, true);
                 }
                 break;
 
             case PlayerState.Shoot:
                 if (m_Animator != null)
                 {
-                    // Normalmente tras SHOOT volverá por Has Exit Time al estado previo
-                    m_Animator.SetBool(AnimParamIsRunning, false);
-                    m_Animator.SetBool(AnimParamIsAiming, false);
-                    if (!string.IsNullOrEmpty(AnimTriggerShoot))
-                        m_Animator.SetTrigger(AnimTriggerShoot);
+                    // Usually after SHOOT it will return via Has Exit Time to the previous state
+                    m_Animator.SetBool(m_AnimParamIsRunning, false);
+                    m_Animator.SetBool(m_AnimParamIsAiming, false);
+                    if (!string.IsNullOrEmpty(m_AnimTriggerShoot))
+                        m_Animator.SetTrigger(m_AnimTriggerShoot);
                 }
                 break;
 
             case PlayerState.Dash:
                 if (m_Animator != null)
                 {
-                    m_Animator.SetBool(AnimParamIsRunning, false);
-                    m_Animator.SetBool(AnimParamIsAiming, false);
-                    if (!string.IsNullOrEmpty(AnimTriggerDash))
-                        m_Animator.SetTrigger(AnimTriggerDash);
+                    m_Animator.SetBool(m_AnimParamIsRunning, false);
+                    m_Animator.SetBool(m_AnimParamIsAiming, false);
+                    if (!string.IsNullOrEmpty(m_AnimTriggerDash))
+                        m_Animator.SetTrigger(m_AnimTriggerDash);
                 }
                 break;
         }

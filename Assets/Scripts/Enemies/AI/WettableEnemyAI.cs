@@ -6,35 +6,35 @@ public class WettableEnemyAI : MonoBehaviour
 {
     [Header("Animation")]
     [SerializeField, Child] private Animator m_Animator;
-    [SerializeField] private string AnimParamIsRunning = "IsRunning";
-    [SerializeField] private string AnimTriggerDie = "Die";
+    [SerializeField] private string m_AnimParamIsRunning = "IsRunning";
+    [SerializeField] private string m_AnimTriggerDie = "Die";
 
     private enum EnemyState { Run, Die }
     private EnemyState m_State = EnemyState.Run;
 
-    private NavMeshAgent agent;
+    private NavMeshAgent m_Agent;
 
-    private IWettable wettable;
-    private int lastWetness = -1;
-    private float originalSpeed;
+    private IWettable m_Wettable;
+    private int m_LastWetness = -1;
+    private float m_OriginalSpeed;
 
     [SerializeField, Self]
-    private WettableEnemy wettableObject; // Para escuchar OnDied
+    private WettableEnemy m_WettableObject; // To listen for OnExplode
 
-    private Transform playerTransform;
+    private Transform m_PlayerTransform;
 
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
-        agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
-        agent.avoidancePriority = 99;
+        m_Agent = GetComponent<NavMeshAgent>();
+        m_Agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+        m_Agent.avoidancePriority = 99;
 
-        if (agent != null)
-            originalSpeed = agent.speed;
+        if (m_Agent != null)
+            m_OriginalSpeed = m_Agent.speed;
 
-        wettable = GetComponent<IWettable>();
-        if (wettableObject != null)
-            wettableObject.OnExplode += HandleEnemyExploded;
+        m_Wettable = GetComponent<IWettable>();
+        if (m_WettableObject != null)
+            m_WettableObject.OnExplode += HandleEnemyExploded;
     }
 
     private void Start()
@@ -44,46 +44,46 @@ public class WettableEnemyAI : MonoBehaviour
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
-            playerTransform = playerObj.transform;
+            m_PlayerTransform = playerObj.transform;
         }
     }
 
     private void Update()
     {
-        // Si murió, no hacer nada más
+        // If dead, do nothing else
         if (m_State == EnemyState.Die)
             return;
 
-        if (playerTransform == null)
+        if (m_PlayerTransform == null)
         {
-            if (agent != null) agent.isStopped = true;
+            if (m_Agent != null) m_Agent.isStopped = true;
             return;
         }
 
-        float distance = Vector3.Distance(transform.position, playerTransform.position);
+        float distance = Vector3.Distance(transform.position, m_PlayerTransform.position);
 
-        if (agent != null && agent.enabled)
+        if (m_Agent != null && m_Agent.enabled)
         {
-            agent.isStopped = false;
-            agent.SetDestination(playerTransform.position);
+            m_Agent.isStopped = false;
+            m_Agent.SetDestination(m_PlayerTransform.position);
         }
     }
 
     private void OnDestroy()
     {
-        if (wettableObject != null)
-            wettableObject.OnExplode -= HandleEnemyExploded;
+        if (m_WettableObject != null)
+            m_WettableObject.OnExplode -= HandleEnemyExploded;
     }
 
     public float GetOriginalSpeed()
     {
-        return originalSpeed;
+        return m_OriginalSpeed;
     }
 
     public void SetSpeed(float speed)
     {
-        if (agent != null)
-            agent.speed = originalSpeed * speed;
+        if (m_Agent != null)
+            m_Agent.speed = m_OriginalSpeed * speed;
     }
 
     private void HandleEnemyExploded(WettableEnemy e)
@@ -99,22 +99,22 @@ public class WettableEnemyAI : MonoBehaviour
         switch (m_State)
         {
             case EnemyState.Run:
-                if (agent != null && agent.enabled) agent.isStopped = false;
-                if (m_Animator != null) m_Animator.SetBool(AnimParamIsRunning, true);
+                if (m_Agent != null && m_Agent.enabled) m_Agent.isStopped = false;
+                if (m_Animator != null) m_Animator.SetBool(m_AnimParamIsRunning, true);
                 break;
 
             case EnemyState.Die:
-                if (agent != null)
+                if (m_Agent != null)
                 {
-                    agent.isStopped = true;
-                    agent.ResetPath();
-                    agent.enabled = false;
+                    m_Agent.isStopped = true;
+                    m_Agent.ResetPath();
+                    m_Agent.enabled = false;
                 }
                 if (m_Animator != null)
                 {
-                    m_Animator.SetBool(AnimParamIsRunning, false);
-                    if (!string.IsNullOrEmpty(AnimTriggerDie))
-                        m_Animator.SetTrigger(AnimTriggerDie);
+                    m_Animator.SetBool(m_AnimParamIsRunning, false);
+                    if (!string.IsNullOrEmpty(m_AnimTriggerDie))
+                        m_Animator.SetTrigger(m_AnimTriggerDie);
                 }
                 break;
         }

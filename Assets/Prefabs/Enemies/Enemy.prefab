@@ -335,7 +335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 10
-  destroyDelay: 1
+  m_DestroyDelay: 1
   CleanRadius: 4.27
   CleanableLayers:
     serializedVersion: 2
@@ -380,10 +380,10 @@ MonoBehaviour:
   AttackCooldown: 1
   MinSpeedPercent: 0.3
   m_Animator: {fileID: 5330704940399809103}
-  AnimParamIsRunning: IsRunning
-  AnimTriggerAttack: Attack
-  AnimTriggerDie: Die
-  enemy: {fileID: 7414412769536684406}
+  m_AnimParamIsRunning: IsRunning
+  m_AnimTriggerAttack: Attack
+  m_AnimTriggerDie: Die
+  m_Enemy: {fileID: 7414412769536684406}
 --- !u!114 &4774387697092545665
 MonoBehaviour:
   m_ObjectHideFlags: 0

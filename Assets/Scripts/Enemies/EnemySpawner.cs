@@ -15,7 +15,7 @@ public class EnemySpawner : MonoBehaviour, IEventListener<GameStartEvent>, IEven
     [Header("Boss Settings")]
     public AssetReferenceGameObject BossPrefab; // Addressable
     [Range(0f, 1f)]
-    public float BossSpawnChance = 0.2f; // 20% de probabilidad por oleada
+    public float BossSpawnChance = 0.2f; // 20% chance per wave
 
     private int m_CurrentWave = 0;
     private bool m_Spawning = false;
@@ -75,7 +75,7 @@ public class EnemySpawner : MonoBehaviour, IEventListener<GameStartEvent>, IEven
     {
         if (m_GameEnded) yield break;
 
-        // Enemigos normales
+        // Normal enemies
         for (int i = 0; i < EnemiesPerWave && !m_GameEnded; i++)
         {
             if (!IsValid(EnemyPrefab))
@@ -90,15 +90,15 @@ public class EnemySpawner : MonoBehaviour, IEventListener<GameStartEvent>, IEven
             {
                 var go = op.Result;
                 EnsureAddressableAutoRelease(go);
-                // Inicialización extra del enemigo si fuese necesario
+                // Additional enemy initialization if necessary
             }
             else
             {
-                Debug.LogWarning($"EnemySpawner: fallo al instanciar enemigo. {op.OperationException}");
+                Debug.LogWarning($"EnemySpawner: failed to instantiate enemy. {op.OperationException}");
             }
         }
 
-        // Boss con probabilidad
+        // Boss with probability
         if (!m_GameEnded && IsValid(BossPrefab) && Random.value < BossSpawnChance)
         {
             Vector3 bossSpawnPos = GetRandomPointAround(transform.position, SpawnRadius);
@@ -111,7 +111,7 @@ public class EnemySpawner : MonoBehaviour, IEventListener<GameStartEvent>, IEven
             }
             else
             {
-                Debug.LogWarning($"EnemySpawner: fallo al instanciar boss. {op.OperationException}");
+                Debug.LogWarning($"EnemySpawner: failed to instantiate boss. {op.OperationException}");
             }
         }
     }

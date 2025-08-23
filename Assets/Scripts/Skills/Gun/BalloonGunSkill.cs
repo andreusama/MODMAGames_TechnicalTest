@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System; // añadido para eventos
+using System; // added for events
 
 public class BalloonGunSkill : Skill
 {
@@ -25,19 +25,19 @@ public class BalloonGunSkill : Skill
 
     [SerializeField]
     private Transform m_SpawnPoint;
-    public CircleDrawer m_CircleDrawer;
+    public CircleDrawer CircleDrawer;
 
-    // Guarda el último input válido
+    // Stores last valid input
     private Vector2 m_LastAimInput = Vector2.zero;
 
     [Header("Curve Settings")]
     public bool UseAnimationCurve = false;
 
-    [SerializeField, Tooltip("Curva de posición-tiempo para el vuelo del globo")]
+    [SerializeField, Tooltip("Position-time curve for balloon flight")]
     public AnimationCurve VelocityCurve = AnimationCurve.Linear(0, 1, 1, 1);
 
 #if UNITY_EDITOR
-    // Oculta el campo en el inspector si UseAnimationCurve es false
+    // Hide field in inspector if UseAnimationCurve is false
     private void OnValidate()
     {
         UnityEditor.SerializedObject so = new UnityEditor.SerializedObject(this);
@@ -49,12 +49,12 @@ public class BalloonGunSkill : Skill
 
     [Header("Aiming Slowdown")]
     [Range(0.1f, 1f)]
-    public float AimingSpeedPercent = 0.4f; // 40% de la velocidad original
+    public float AimingSpeedPercent = 0.4f; // 40% of original speed
 
-    private float? originalMoveSpeed = null;
+    private float? m_OriginalMoveSpeed = null;
     private bool m_IsAiming = false;
-    public bool IsAiming => m_IsAiming; // NUEVO: expone si está apuntando
-    public event Action OnShot;          // NUEVO: evento cuando se lanza el globo
+    public bool IsAiming => m_IsAiming; // exposes if aiming
+    public event Action OnShot;          // event when the balloon is thrown
 
     public override void Initialize(PlayerMotor motor)
     {
@@ -76,14 +76,14 @@ public class BalloonGunSkill : Skill
             if (!m_IsAiming)
             {
                 m_IsAiming = true;
-                RaiseSkillStarted(); // Notifica inicio (cancelará otras skills)
+                RaiseSkillStarted(); // Notify start (will cancel other skills)
             }
         }
 
-        if (m_IsAiming && originalMoveSpeed == null && m_PlayerMotor != null)
+        if (m_IsAiming && m_OriginalMoveSpeed == null && m_PlayerMotor != null)
         {
-            originalMoveSpeed = m_PlayerMotor.MoveSpeed;
-            m_PlayerMotor.MoveSpeed = originalMoveSpeed.Value * AimingSpeedPercent;
+            m_OriginalMoveSpeed = m_PlayerMotor.MoveSpeed;
+            m_PlayerMotor.MoveSpeed = m_OriginalMoveSpeed.Value * AimingSpeedPercent;
         }
 
         UpdateAimingVisual(invertedInput);
@@ -91,7 +91,7 @@ public class BalloonGunSkill : Skill
 
     public void OnAimingCanceled(Vector2 input, Vector3? fixedTarget = null)
     {
-        m_CircleDrawer?.Hide();
+        CircleDrawer?.Hide();
 
         if (m_LastAimInput.sqrMagnitude > 0.01f)
         {
@@ -99,7 +99,7 @@ public class BalloonGunSkill : Skill
             if (IsCooldownReady)
             {
                 ThrowWaterBalloon(m_LastAimInput, fixedTarget);
-                OnShot?.Invoke(); // NUEVO: notifica disparo
+                OnShot?.Invoke(); // notify shot
                 StartCooldown();
             }
         }
@@ -109,33 +109,33 @@ public class BalloonGunSkill : Skill
 
     public override void Cancel()
     {
-        // Cancelación sin disparo
-        m_CircleDrawer?.Hide();
+        // Cancel without shooting
+        CircleDrawer?.Hide();
         ResetAimingState();
     }
 
     private void ResetAimingState()
     {
-        if (!m_IsAiming && originalMoveSpeed == null) return;
+        if (!m_IsAiming && m_OriginalMoveSpeed == null) return;
 
         m_IsAiming = false;
         m_LastAimInput = Vector2.zero;
 
-        if (originalMoveSpeed.HasValue && m_PlayerMotor != null)
+        if (m_OriginalMoveSpeed.HasValue && m_PlayerMotor != null)
         {
-            m_PlayerMotor.MoveSpeed = originalMoveSpeed.Value;
-            originalMoveSpeed = null;
+            m_PlayerMotor.MoveSpeed = m_OriginalMoveSpeed.Value;
+            m_OriginalMoveSpeed = null;
         }
     }
 
     public void UpdateAimingVisual(Vector2 input, Vector3? fixedTarget = null)
     {
-        if (m_CircleDrawer == null)
+        if (CircleDrawer == null)
             return;
 
         if (input.sqrMagnitude < 0.01f)
         {
-            m_CircleDrawer.Hide();
+            CircleDrawer.Hide();
             return;
         }
 
@@ -153,18 +153,18 @@ public class BalloonGunSkill : Skill
             target = GetGroundedTarget(origin + direction * range);
         }
 
-        m_CircleDrawer.DrawCircle(target, ExplosionRadius);
+        CircleDrawer.DrawCircle(target, ExplosionRadius);
 
         if (UseAnimationCurve && VelocityCurve != null)
         {
-            m_CircleDrawer.DrawParabolaWithCurve(origin, target, VelocityCurve, m_FlightTime, m_CircleDrawer.ParabolicSegments);
+            CircleDrawer.DrawParabolaWithCurve(origin, target, VelocityCurve, m_FlightTime, CircleDrawer.ParabolicSegments);
         }
         else
         {
             float gravity = Mathf.Abs(Physics.gravity.y);
             float maxHeight = origin.y + MaxHeight;
             Vector3 launchVelocity = ParabolicCalculator.CalculateLaunchVelocity(origin, target, maxHeight, gravity);
-            m_CircleDrawer.DrawParabola(origin, launchVelocity, gravity, 3f);
+            CircleDrawer.DrawParabola(origin, launchVelocity, gravity, 3f);
         }
     }
 

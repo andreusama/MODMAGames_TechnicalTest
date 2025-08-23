@@ -29,7 +29,7 @@ public class SkillManager : MonoBehaviour
 
     private void OnSkillStarted(Skill started)
     {
-        // Cancela todas las demás
+        // Cancel all others
         foreach (var s in Skills)
         {
             if (s != null && s != started)

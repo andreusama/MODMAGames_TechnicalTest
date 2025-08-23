@@ -68,10 +68,10 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   TotalFlightTime: 1.5
-  GroundClearance: 0.02
-  GroundTouchFeedback: {fileID: 3372793828801939379}
-  ExplosionFeedback: {fileID: 7247043359076690318}
-  rb: {fileID: 6074935548543613644}
+  m_GroundClearance: 0.02
+  m_GroundTouchFeedback: {fileID: 3372793828801939379}
+  m_ExplosionFeedback: {fileID: 7247043359076690318}
+  m_Rigidbody: {fileID: 6074935548543613644}
   Damage: 25
   WetPower: 5
 --- !u!54 &6074935548543613644

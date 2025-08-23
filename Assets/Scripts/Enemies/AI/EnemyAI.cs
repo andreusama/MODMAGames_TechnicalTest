@@ -10,42 +10,41 @@ public class EnemyAI : MonoBehaviour
 
     [Header("Wettable Slowdown")]
     [Range(0.1f, 1f)]
-    public float MinSpeedPercent = 0.3f; // 30% de la velocidad original cuando está completamente mojado
+    public float MinSpeedPercent = 0.3f; // 30% of original speed when fully wet
 
     [Header("Animation")]
     [SerializeField, Child] private Animator m_Animator;
-    [SerializeField] private string AnimParamIsRunning = "IsRunning";
-    [SerializeField] private string AnimTriggerAttack = "Attack";
-    [SerializeField] private string AnimTriggerDie = "Die";
+    [SerializeField] private string m_AnimParamIsRunning = "IsRunning";
+    [SerializeField] private string m_AnimTriggerAttack = "Attack";
+    [SerializeField] private string m_AnimTriggerDie = "Die";
 
     private enum EnemyState { Run, Attack, Die }
     private EnemyState m_State = EnemyState.Run;
 
-    private NavMeshAgent agent;
-    private PlayerHealth playerHealth;
-    private Transform playerTransform;
-    private float lastAttackTime = -999f;
+    private NavMeshAgent m_Agent;
+    private PlayerHealth m_PlayerHealth;
+    private Transform m_PlayerTransform;
+    private float m_LastAttackTime = -999f;
 
-    private IWettable wettable;
-    private int lastWetness = -1;
-    private float originalSpeed;
+    private IWettable m_Wettable;
+    private int m_LastWetness = -1;
+    private float m_OriginalSpeed;
 
     [SerializeField, Self]
-    private Enemy enemy; // Para escuchar OnDied
+    private Enemy m_Enemy; // To listen for OnDied
 
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
-        agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
-        agent.avoidancePriority = 99;
+        m_Agent = GetComponent<NavMeshAgent>();
+        m_Agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+        m_Agent.avoidancePriority = 99;
 
-        wettable = GetComponent<IWettable>();
-        if (agent != null)
-            originalSpeed = agent.speed;
+        m_Wettable = GetComponent<IWettable>();
+        if (m_Agent != null)
+            m_OriginalSpeed = m_Agent.speed;
 
-        
-        if (enemy != null)
-            enemy.OnDied += HandleEnemyDied;
+        if (m_Enemy != null)
+            m_Enemy.OnDied += HandleEnemyDied;
     }
 
     private void Start()
@@ -53,76 +52,76 @@ public class EnemyAI : MonoBehaviour
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
-            playerTransform = playerObj.transform;
-            playerHealth = playerObj.GetComponent<PlayerHealth>();
+            m_PlayerTransform = playerObj.transform;
+            m_PlayerHealth = playerObj.GetComponent<PlayerHealth>();
         }
 
-        // Estado inicial
+        // Initial state
         SetState(EnemyState.Run);
     }
 
     private void OnDestroy()
     {
-        if (enemy != null)
-            enemy.OnDied -= HandleEnemyDied;
+        if (m_Enemy != null)
+            m_Enemy.OnDied -= HandleEnemyDied;
     }
 
     private void Update()
     {
-        // Si murió, no hacer nada más
+        // If dead, do nothing else
         if (m_State == EnemyState.Die)
             return;
 
-        if (playerTransform == null || playerHealth == null || !playerHealth.IsAlive)
+        if (m_PlayerTransform == null || m_PlayerHealth == null || !m_PlayerHealth.IsAlive)
         {
-            if (agent != null) agent.isStopped = true;
-            if (m_Animator != null) m_Animator.SetBool(AnimParamIsRunning, false);
+            if (m_Agent != null) m_Agent.isStopped = true;
+            if (m_Animator != null) m_Animator.SetBool(m_AnimParamIsRunning, false);
             return;
         }
 
-        float distance = Vector3.Distance(transform.position, playerTransform.position);
+        float distance = Vector3.Distance(transform.position, m_PlayerTransform.position);
 
         if (distance <= AttackRange)
         {
             SetState(EnemyState.Attack);
 
-            // Orienta hacia el jugador
-            Vector3 dir = playerTransform.position - transform.position;
+            // Face the player
+            Vector3 dir = m_PlayerTransform.position - transform.position;
             dir.y = 0f;
             if (dir.sqrMagnitude > 0.001f)
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10f * Time.deltaTime);
 
-            // Aplica daño por cooldown (puedes mover esto a un evento de animación si prefieres sincronizar el impacto)
-            if (Time.time >= lastAttackTime + AttackCooldown)
+            // Apply damage on cooldown (you can move this to an animation event to sync the impact)
+            if (Time.time >= m_LastAttackTime + AttackCooldown)
             {
-                playerHealth.TakeDamage(Damage);
-                lastAttackTime = Time.time;
+                m_PlayerHealth.TakeDamage(Damage);
+                m_LastAttackTime = Time.time;
 
-                // Dispara trigger de ataque (si no usas evento de anim, el daño ya se aplicó arriba)
-                if (m_Animator != null && !string.IsNullOrEmpty(AnimTriggerAttack))
-                    m_Animator.SetTrigger(AnimTriggerAttack);
+                // Trigger attack (if not using animation event, damage already applied above)
+                if (m_Animator != null && !string.IsNullOrEmpty(m_AnimTriggerAttack))
+                    m_Animator.SetTrigger(m_AnimTriggerAttack);
             }
         }
         else
         {
             SetState(EnemyState.Run);
-            if (agent != null && agent.enabled)
+            if (m_Agent != null && m_Agent.enabled)
             {
-                agent.isStopped = false;
-                agent.SetDestination(playerTransform.position);
+                m_Agent.isStopped = false;
+                m_Agent.SetDestination(m_PlayerTransform.position);
             }
         }
     }
 
     public float GetOriginalSpeed()
     {
-        return originalSpeed;
+        return m_OriginalSpeed;
     }
 
     public void SetSpeed(float speed)
     {
-        if (agent != null)
-            agent.speed = speed;
+        if (m_Agent != null)
+            m_Agent.speed = speed;
     }
 
     private void HandleEnemyDied(Enemy e)
@@ -138,27 +137,27 @@ public class EnemyAI : MonoBehaviour
         switch (m_State)
         {
             case EnemyState.Run:
-                if (agent != null && agent.enabled) agent.isStopped = false;
-                if (m_Animator != null) m_Animator.SetBool(AnimParamIsRunning, true);
+                if (m_Agent != null && m_Agent.enabled) m_Agent.isStopped = false;
+                if (m_Animator != null) m_Animator.SetBool(m_AnimParamIsRunning, true);
                 break;
 
             case EnemyState.Attack:
-                if (agent != null) agent.isStopped = true;
-                if (m_Animator != null) m_Animator.SetBool(AnimParamIsRunning, false);
+                if (m_Agent != null) m_Agent.isStopped = true;
+                if (m_Animator != null) m_Animator.SetBool(m_AnimParamIsRunning, false);
                 break;
 
             case EnemyState.Die:
-                if (agent != null)
+                if (m_Agent != null)
                 {
-                    agent.isStopped = true;
-                    agent.ResetPath();
-                    agent.enabled = false;
+                    m_Agent.isStopped = true;
+                    m_Agent.ResetPath();
+                    m_Agent.enabled = false;
                 }
                 if (m_Animator != null)
                 {
-                    m_Animator.SetBool(AnimParamIsRunning, false);
-                    if (!string.IsNullOrEmpty(AnimTriggerDie))
-                        m_Animator.SetTrigger(AnimTriggerDie);
+                    m_Animator.SetBool(m_AnimParamIsRunning, false);
+                    if (!string.IsNullOrEmpty(m_AnimTriggerDie))
+                        m_Animator.SetTrigger(m_AnimTriggerDie);
                 }
                 break;
         }

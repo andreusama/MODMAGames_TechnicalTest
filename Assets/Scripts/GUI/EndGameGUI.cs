@@ -8,7 +8,7 @@ public class EndGameGUI : EnGUIContent
     [SerializeField]
     private RTLTextMeshPro m_ResultText;
 
-    public SceneGroup m_SceneGroupToLoad;
+    public SceneGroup SceneGroupToLoad;
 
     public void Initialize(bool win)
     {
@@ -17,9 +17,9 @@ public class EndGameGUI : EnGUIContent
 
     public void OnRetryButtonClicked()
     {
-        if (m_SceneGroupToLoad != null)
+        if (SceneGroupToLoad != null)
         {
-            SceneLoaderManager.Instance.LoadSceneGroup(m_SceneGroupToLoad);
+            SceneLoaderManager.Instance.LoadSceneGroup(SceneGroupToLoad);
         }
         else
         {

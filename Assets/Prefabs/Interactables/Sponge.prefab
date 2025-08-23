@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6499842593680632890}
   - component: {fileID: 8031675544036493100}
   - component: {fileID: 8327548515870322549}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sponge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,7 +143,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4949902457200475603}
   - component: {fileID: 1556211539350076926}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ExplosionFB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,6 +352,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: CircleDrawer
       objectReference: {fileID: 0}
+    - target: {fileID: 278440266320925732, guid: 783d2e9c29a30d146aef1c72ffc5c77f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3797579744754368579, guid: 783d2e9c29a30d146aef1c72ffc5c77f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 9005608127123805876, guid: 783d2e9c29a30d146aef1c72ffc5c77f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -410,6 +418,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7593808236874999970}
     m_Modifications:
+    - target: {fileID: 5965513215084489263, guid: d7e74a286c5e7504bbc2929642fd132d, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5965513215125306510, guid: d7e74a286c5e7504bbc2929642fd132d, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -467,8 +479,24 @@ PrefabInstance:
       value: ExplodeSpongeFB
       objectReference: {fileID: 0}
     - target: {fileID: 5965513215125306547, guid: d7e74a286c5e7504bbc2929642fd132d, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5965513215125306547, guid: d7e74a286c5e7504bbc2929642fd132d, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5965513216392561052, guid: d7e74a286c5e7504bbc2929642fd132d, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5965513216451220080, guid: d7e74a286c5e7504bbc2929642fd132d, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5965513216500625903, guid: d7e74a286c5e7504bbc2929642fd132d, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6045087599233684464, guid: d7e74a286c5e7504bbc2929642fd132d, type: 3}
       propertyPath: stopAction

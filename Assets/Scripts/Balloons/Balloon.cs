@@ -17,14 +17,14 @@ public class Balloon : MonoBehaviour, IExplodable
     public float TotalFlightTime = 1.5f;
 
     [Header("Grounding")]
-    [Tooltip("Elevación extra sobre el suelo para evitar z-fighting y partículas bajo el suelo")]
-    [SerializeField] private float GroundClearance = 0.02f;
+    [Tooltip("Extra elevation above ground to avoid z-fighting and particles under the floor")]
+    [SerializeField] private float m_GroundClearance = 0.02f;
 
     [Header("Feedbacks (MMFeedbacks)")]
-    [Tooltip("Feedbacks que se reproducen al tocar el suelo")]
-    [SerializeField] private MMF_Player GroundTouchFeedback;
-    [Tooltip("Feedbacks que se reproducen al explotar")]
-    [SerializeField] private MMF_Player ExplosionFeedback;
+    [Tooltip("Feedbacks played on ground touch")]
+    [SerializeField] private MMF_Player m_GroundTouchFeedback;
+    [Tooltip("Feedbacks played on explosion")]
+    [SerializeField] private MMF_Player m_ExplosionFeedback;
 
     protected bool m_HasExploded = false;
     protected bool m_HasTouchedGround = false;
@@ -33,11 +33,11 @@ public class Balloon : MonoBehaviour, IExplodable
     public bool HasExploded => m_HasExploded;
     public bool HasTouchedGround => m_HasTouchedGround;
 
-    [SerializeField, Self] protected Rigidbody rb;
+    [SerializeField, Self] protected Rigidbody m_Rigidbody;
     protected CircleDrawer m_CircleDrawer;
     protected Collider m_Collider;
 
-    // Variables para la curva
+    // Curve variables
     protected Vector3 m_StartPos;
     protected Vector3 m_TargetPos;
     protected float m_Lifetime = 0f;
@@ -72,15 +72,15 @@ public class Balloon : MonoBehaviour, IExplodable
             m_TargetPos = targetPos.Value;
             PositionCurve = curve ?? PositionCurve;
             TotalFlightTime = totalFlightTime;
-            if (rb != null) rb.isKinematic = true; // movimiento manual
+            if (m_Rigidbody != null) m_Rigidbody.isKinematic = true; // manual movement
         }
         else
         {
             m_InitialVelocity = initialVelocity;
-            if (rb != null)
+            if (m_Rigidbody != null)
             {
-                rb.isKinematic = false;
-                rb.linearVelocity = m_InitialVelocity;
+                m_Rigidbody.isKinematic = false;
+                m_Rigidbody.linearVelocity = m_InitialVelocity;
             }
         }
     }
@@ -98,7 +98,7 @@ public class Balloon : MonoBehaviour, IExplodable
             if (tNorm >= 1f)
             {
                 Vector3 ground = GroundDetector.GetGroundedPosition(pos, 0.2f, 1f, GroundLayers);
-                float lift = GetHalfHeightWorld() + GroundClearance;
+                float lift = GetHalfHeightWorld() + m_GroundClearance;
                 transform.position = ground + Vector3.up * lift;
                 HandleTouchedGround();
             }
@@ -119,14 +119,14 @@ public class Balloon : MonoBehaviour, IExplodable
         }
     }
 
-    // Hook para derivadas. collision puede ser null (caso curva/Update).
-    // Implementación base: reposiciona por encima del suelo si viene por colisión.
+    // Hook for derived classes. collision can be null (curve/Update case).
+    // Base implementation: reposition above ground if coming from collision.
     protected virtual void OnTouchedGroundHook(Collision collision)
     {
         if (collision != null && collision.contacts.Length > 0)
         {
             var cp = collision.contacts[0];
-            float lift = GetHalfHeightWorld() + GroundClearance;
+            float lift = GetHalfHeightWorld() + m_GroundClearance;
             transform.position = cp.point + cp.normal * lift;
         }
     }
@@ -173,8 +173,8 @@ public class Balloon : MonoBehaviour, IExplodable
 
     public IEnumerator DestroyCoroutine()
     {
-        if (ExplosionFeedback != null)
-            yield return ExplosionFeedback.IsPlaying ? new WaitUntil(() => !ExplosionFeedback.IsPlaying) : null;
+        if (m_ExplosionFeedback != null)
+            yield return m_ExplosionFeedback.IsPlaying ? new WaitUntil(() => !m_ExplosionFeedback.IsPlaying) : null;
 
         Destroy(gameObject);
     }
@@ -186,21 +186,21 @@ public class Balloon : MonoBehaviour, IExplodable
 
     protected void TriggerGroundTouchFeedbacks()
     {
-        if (GroundTouchFeedback != null)
-            GroundTouchFeedback.PlayFeedbacks(transform.position);
+        if (m_GroundTouchFeedback != null)
+            m_GroundTouchFeedback.PlayFeedbacks(transform.position);
 
         TouchedGround?.Invoke(this);
     }
 
     protected void TriggerExplosionFeedbacks()
     {
-        if (ExplosionFeedback != null)
-            ExplosionFeedback.PlayFeedbacks(transform.position);
+        if (m_ExplosionFeedback != null)
+            m_ExplosionFeedback.PlayFeedbacks(transform.position);
 
         Exploded?.Invoke(this);
     }
 
-    // Altura media en espacio mundo del collider (robusto para esfera, cápsula, caja, etc.)
+    // World half height from collider (robust for sphere, capsule, box, etc.)
     protected float GetHalfHeightWorld()
     {
         return (m_Collider != null) ? m_Collider.bounds.extents.y : 0f;

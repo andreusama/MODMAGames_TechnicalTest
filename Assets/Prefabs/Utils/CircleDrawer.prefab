@@ -156,7 +156,7 @@ MonoBehaviour:
   Segments: 15
   ParabolicSegments: 10
   Radius: 1
-  m_ParabolicLineRenderer: {fileID: 5384691215865716530}
+  ParabolicLineRenderer: {fileID: 5384691215865716530}
   CollisionMask:
     serializedVersion: 2
     m_Bits: 64

@@ -119,11 +119,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  TotalFlightTime: 1.5
-  GroundClearance: 0.02
-  GroundTouchFeedback: {fileID: 4022740423188150446}
-  ExplosionFeedback: {fileID: 9047622310252238483}
-  rb: {fileID: 5571998056883209681}
+  TotalFlightTime: 0.7
+  m_GroundClearance: 0.02
+  m_GroundTouchFeedback: {fileID: 4022740423188150446}
+  m_ExplosionFeedback: {fileID: 9047622310252238483}
+  m_Rigidbody: {fileID: 5571998056883209681}
   Damage: 25
   WetPower: 20
 --- !u!54 &5571998056883209681 stripped

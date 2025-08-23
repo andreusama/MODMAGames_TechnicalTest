@@ -3,32 +3,32 @@ using UnityEngine;
 using MoreMountains.Tools;
 
 /// <summary>
-/// Pool híbrido:
-/// - Puede adoptar objetos ya bakeados como hijos (incluso si no están en la lista).
-/// - Puede completar hasta un tamaño objetivo instanciando el prefab si faltan.
-/// - Puede expandirse dinámicamente si PoolCanExpand = true.
-/// Requiere el código de MMSimpleObjectPooler en el proyecto (hereda de él).
+/// Hybrid pool:
+/// - Can adopt already baked children as pool members (even if not listed).
+/// - Can fill up to a target size instantiating the prefab if missing.
+/// - Can expand dynamically if PoolCanExpand = true.
+/// Requires MMSimpleObjectPooler code in the project (inherits from it).
 /// </summary>
 public class BakedSimpleObjectPooler : MMSimpleObjectPooler
 {
     [Header("Baked Injection")]
-    [Tooltip("Si está activo, adoptará los hijos ya existentes como parte del pool.")]
+    [Tooltip("If active, it will adopt existing children as part of the pool.")]
     public bool UseBakedChildren = true;
 
-    [Tooltip("Lista opcional explícita. Si está vacía y UseBakedChildren está activo, usará TODOS los hijos.")]
+    [Tooltip("Optional explicit list. If empty and UseBakedChildren is active, will use ALL children.")]
     public List<GameObject> BakedObjects = new List<GameObject>();
 
-    [Tooltip("Asegura que el pool tenga al menos este número tras inyectar (instancia si faltan). 0 = ignora.")]
+    [Tooltip("Ensures the pool has at least this number after injection (instantiates if missing). 0 = ignore.")]
     public int MinimumPoolSize = 0;
 
-    [Tooltip("Forzar desactivar (SetActive false) a todos los bakeados al inyectarlos.")]
+    [Tooltip("Force deactivate (SetActive false) all baked objects when injecting.")]
     public bool DeactivateOnInjection = true;
 
-    protected bool _injected = false;
+    protected bool m_Injected = false;
 
     public override void FillObjectPool()
     {
-        // Crea / reutiliza waiting pool
+        // Create / reuse waiting pool
         if (_objectPool == null)
         {
             CreateWaitingPool();
@@ -39,14 +39,14 @@ public class BakedSimpleObjectPooler : MMSimpleObjectPooler
         else
             _objectPool.PooledGameObjects.Clear();
 
-        // 1. Inyecta objetos bakeados
+        // 1. Inject baked children
         if (UseBakedChildren)
         {
             InjectBakedChildren();
         }
 
-        // 2. Instancia hasta PoolSize (comportamiento MMSimpleObjectPooler estándar)
-        //    Solo si PoolSize > ya inyectados y hay prefab.
+        // 2. Instantiate up to PoolSize (standard MMSimpleObjectPooler behavior)
+        //    Only if PoolSize > injected and prefab exists.
         int target = PoolSize;
         if (MinimumPoolSize > target)
             target = MinimumPoolSize;
@@ -64,11 +64,11 @@ public class BakedSimpleObjectPooler : MMSimpleObjectPooler
     }
 
     /// <summary>
-    /// Devuelve un objeto inactivo; si no hay y se puede expandir, crea uno.
+    /// Returns an inactive object; if none and expansion allowed, creates one.
     /// </summary>
     public override GameObject GetPooledGameObject()
     {
-        // Busca libre
+        // Find free
         for (int i = 0; i < _objectPool.PooledGameObjects.Count; i++)
         {
             var obj = _objectPool.PooledGameObjects[i];
@@ -76,7 +76,7 @@ public class BakedSimpleObjectPooler : MMSimpleObjectPooler
                 return obj;
         }
 
-        // Expansión
+        // Expand
         if (PoolCanExpand && GameObjectToPool != null)
         {
             return CreateOne(true);
@@ -87,7 +87,7 @@ public class BakedSimpleObjectPooler : MMSimpleObjectPooler
 
     protected void InjectBakedChildren()
     {
-        if (_injected) return;
+        if (m_Injected) return;
 
         List<GameObject> source = BakedObjects.Count > 0 ? BakedObjects : CollectAllChildren();
         foreach (var go in source)
@@ -98,7 +98,7 @@ public class BakedSimpleObjectPooler : MMSimpleObjectPooler
             go.transform.SetParent(_waitingPool.transform);
             _objectPool.PooledGameObjects.Add(go);
         }
-        _injected = true;
+        m_Injected = true;
     }
 
     protected List<GameObject> CollectAllChildren()
@@ -112,7 +112,7 @@ public class BakedSimpleObjectPooler : MMSimpleObjectPooler
     }
 
     /// <summary>
-    /// Crea una instancia del prefab y la añade al pool.
+    /// Creates an instance of the prefab and adds it to the pool.
     /// </summary>
     protected GameObject CreateOne(bool expanding)
     {

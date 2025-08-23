@@ -4,14 +4,14 @@ using GameUtils;
 [System.Serializable]
 public class SkillEntry : ITableEntry
 {
-    [SerializeField] private string id;
-    [SerializeField] private Skill skill;
+    [SerializeField] private string m_Id;
+    [SerializeField] private Skill m_Skill;
 
     public string ID
     {
-        get => id;
-        set => id = value;
+        get => m_Id;
+        set => m_Id = value;
     }
 
-    public Skill Skill => skill;
+    public Skill Skill => m_Skill;
 }

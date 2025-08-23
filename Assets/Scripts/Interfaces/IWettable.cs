@@ -1,14 +1,14 @@
 public interface IWettable
 {
     /// <summary>
-    /// Nivel de humedad del objeto (0 = seco, 100 = completamente mojado).
+    /// Wetness level (0 = dry, 100 = fully wet).
     /// </summary>
-    int Wetness { get;}
+    int Wetness { get; }
 
     /// <summary>
-    /// Añade humedad al objeto (clamp entre 0 y 100).
+    /// Adds wetness to the object (clamped between 0 and 100).
     /// </summary>
-    /// <param name="amount">Cantidad de humedad a añadir.</param>
+    /// <param name="amount">Wetness amount to add.</param>
     void AddWetness(int amount);
     void RemoveWetness(int amount);
     void SetWetness(int value);

@@ -4,7 +4,7 @@ using UnityEngine;
 public static class DotPlacementUtils
 {
     /// <summary>
-    /// Distribución simple estilo Poisson (rechazo) en rectángulo (size.x ancho, size.z profundidad).
+    /// Simple Poisson-style (rejection) distribution in a rectangle (size.x width, size.z depth).
     /// </summary>
     public static List<Vector3> PoissonDiskSample(
         Vector3 center,
@@ -31,7 +31,7 @@ public static class DotPlacementUtils
     }
 
     /// <summary>
-    /// Distribución simple estilo Poisson (rechazo) en círculo (radio en el plano XZ).
+    /// Simple Poisson-style (rejection) distribution in a circle (radius on XZ plane).
     /// </summary>
     public static List<Vector3> PoissonDiskSampleCircle(
         Vector3 center,
@@ -44,7 +44,7 @@ public static class DotPlacementUtils
         int attempts = 0;
         while (points.Count < maxCount && attempts < maxAttempts)
         {
-            // Generación uniforme en disco: r = sqrt(u) * R
+            // Uniform generation in disk: r = sqrt(u) * R
             float u = Random.value;
             float r = Mathf.Sqrt(u) * radius;
             float angle = Random.Range(0f, Mathf.PI * 2f);

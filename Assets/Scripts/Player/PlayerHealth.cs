@@ -32,20 +32,20 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IEventListener<DashStart
 
     public void OnEvent(DashStartEvent evt)
     {
-        //Now it's only one PlayerMotor, so we can assume it's the current player
+        // Now there is only one PlayerMotor, so we can assume it's the current player
         m_IsInvulnerable = true;
     }
 
     public void OnEvent(DashEndEvent evt)
     {
-        //Now it's only one PlayerMotor, so we can assume it's the current player
+        // Now there is only one PlayerMotor, so we can assume it's the current player
         m_IsInvulnerable = false;
     }
 
     public void TakeDamage(float amount, bool allyFire = false)
     {
         if (allyFire || m_IsInvulnerable)
-            return; // Ignora el daño de fuego amigo
+            return; // Ignore friendly fire damage
 
         if (!m_IsAlive)
             return;
@@ -62,7 +62,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IEventListener<DashStart
     private void Die()
     {
         m_IsAlive = false;
-        // Aquí puedes añadir lógica de muerte, animaciones, eventos, etc.
+        // Add death logic here: animations, events, etc.
         gameObject.SetActive(false);
     }
 }
