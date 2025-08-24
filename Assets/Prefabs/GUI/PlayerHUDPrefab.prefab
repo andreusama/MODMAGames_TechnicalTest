@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 5677920853217213748}
   - component: {fileID: 7057483640334465919}
   - component: {fileID: 2310811906903268548}
+  - component: {fileID: 7965824380444774133}
   m_Layer: 5
   m_Name: BalloonMovementBakground (1)
   m_TagString: Untagged
@@ -150,6 +151,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7965824380444774133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389363744071303793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ControlPath: <Keyboard>/w
 --- !u!1 &676727328413120536
 GameObject:
   m_ObjectHideFlags: 0
@@ -2066,7 +2080,6 @@ GameObject:
   - component: {fileID: 5703069806478125721}
   - component: {fileID: 1347547586669006584}
   - component: {fileID: 1182754419848276694}
-  - component: {fileID: 5959725398858827404}
   m_Layer: 5
   m_Name: DashSprite
   m_TagString: Untagged
@@ -2131,19 +2144,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5959725398858827404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5589215006079100001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ControlPath: <Keyboard>/w
 --- !u!1 &5641553761496626367
 GameObject:
   m_ObjectHideFlags: 0
