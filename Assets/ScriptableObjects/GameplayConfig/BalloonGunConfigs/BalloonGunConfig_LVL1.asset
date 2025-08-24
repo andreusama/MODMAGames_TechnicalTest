@@ -15,12 +15,12 @@ MonoBehaviour:
   WaterBalloonPrefab: {fileID: 4527607296438448130, guid: 0f663713232daad4ab65ffda04ebfe6c, type: 3}
   ExplosionDelay: 0.1
   Cooldown: 0.1
-  ExplosionRadius: 4
+  ExplosionRadius: 6
   TargetLayers:
     serializedVersion: 2
     m_Bits: 4294967295
   MinRange: 2
-  MaxRange: 22
+  MaxRange: 20
   MaxHeight: 12
   AimingSpeedPercent: 0.4
   FlightTime: 0.7

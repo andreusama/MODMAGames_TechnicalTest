@@ -18,4 +18,8 @@ public class DashConfig : ScriptableObject
 
     [Tooltip("Layer name used to ignore dash impact clamping.")]
     public string IgnoreLayerName = "IgnoreDashImpact";
+
+    [Header("Hitbox")]
+    [Tooltip("Radius to apply to the dash collider (Sphere/Capsule) if present.")]
+    public float HitboxRadius = 0.5f;
 }

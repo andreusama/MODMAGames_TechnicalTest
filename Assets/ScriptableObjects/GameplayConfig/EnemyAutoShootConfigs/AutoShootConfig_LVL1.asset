@@ -17,4 +17,4 @@ MonoBehaviour:
   AimTime: 0.5
   ValidGroundLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 64

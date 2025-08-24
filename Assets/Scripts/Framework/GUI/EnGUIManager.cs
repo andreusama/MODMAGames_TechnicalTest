@@ -76,6 +76,8 @@ namespace EnGUI
 
         [SerializeField, Child] private ScreenFader m_ScreenFader;
 
+        public ScreenFader ScreenFader => m_ScreenFader;
+
         private Stack<EnGUIContent> m_Content;
         private Queue<IRequest> m_Requests;
 

@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Segments: 15
-  ParabolicSegments: 10
+  ParabolicSegments: 20
   Radius: 1
   ParabolicLineRenderer: {fileID: 5384691215865716530}
   CollisionMask:

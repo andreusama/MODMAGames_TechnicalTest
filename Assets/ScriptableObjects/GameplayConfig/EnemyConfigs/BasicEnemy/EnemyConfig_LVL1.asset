@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6cb3384b47de52469de098ddea0a58b, type: 3}
   m_Name: EnemyConfig_LVL1
   m_EditorClassIdentifier: 
-  MaxHealth: 100
+  MaxHealth: 10
   DestroyDelay: 1
   CleanRadius: 2
   CleanableLayers:
     serializedVersion: 2
     m_Bits: 2048
-  AddAIIfMissing: 0
-  AIConfig: {fileID: 0}

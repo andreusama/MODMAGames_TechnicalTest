@@ -6,7 +6,7 @@ using EnGUI; // Ensure this using exists for SceneGroup and SceneLoaderManager
 /// <summary>
 /// Game cycle event structures
 /// </summary>
-public struct GameIntroEvent { }
+public struct GameSpawnPlayer { }
 public struct GameStartEvent { }
 public struct GameEndEvent
 {
@@ -24,8 +24,13 @@ public struct GameSecondTickEvent
     public float Progress01;      // 0..1 (elapsed/GameDuration)
 }
 
+
 public class GameController : MonoBehaviour
 {
+    public static GameController Instance { get; private set; }
+
+    public SceneGroup SceneGroupToLoad;
+
     [Header("Settings")]
     public float IntroDuration = 2f;
     [Tooltip("Game duration in seconds")]
@@ -40,6 +45,23 @@ public class GameController : MonoBehaviour
     // Last whole second sent as tick (-1 means none sent yet)
     private int m_LastTickSecond = -1;
 
+    public bool SpawnedPlayer = false;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+    }
+
     private void Start()
     {
         StartCoroutine(GameLoop());
@@ -47,10 +69,16 @@ public class GameController : MonoBehaviour
 
     private IEnumerator GameLoop()
     {
+        Time.timeScale = 1f;
+        if (EnGUIManager.Instance.ScreenFader != null)
+            yield return EnGUIManager.Instance.FadeOut<IFader>(0.1f);
         // 1) Intro
-        EventManager.TriggerEvent(new GameIntroEvent());
-        yield return new WaitForSeconds(IntroDuration);
+        EventManager.TriggerEvent(new GameSpawnPlayer());
+        
+        yield return new WaitUntil(() => SpawnedPlayer);
 
+        if (EnGUIManager.Instance.ScreenFader != null)
+            yield return EnGUIManager.Instance.FadeIn<IFader>(1f);
         // 2) Game start
         EventManager.TriggerEvent(new GameStartEvent());
 
@@ -59,6 +87,8 @@ public class GameController : MonoBehaviour
 
         // 3) Wait for end condition (win/lose)
         yield return StartCoroutine(WaitForEndCondition());
+
+        Time.timeScale = 0f;
 
         // 4) Game end
         m_GameEnded = true;
@@ -137,5 +167,22 @@ public class GameController : MonoBehaviour
             m_GameEnded = true;
             EventManager.TriggerEvent(new GameEndEvent(false));
         }
+    }
+
+    public void LoadNextSecene()
+    {
+        StartCoroutine(ReloadCoroutine());
+    }
+
+    public IEnumerator ReloadCoroutine()
+    {
+        if (EnGUIManager.Instance.ScreenFader != null)
+            yield return EnGUIManager.Instance.FadeOut<IFader>(1f);
+
+        EnGUIManager.Instance.RemoveAllContents();
+        yield return new WaitUntil(() => EnGUIManager.Instance.IsEmpty);
+
+        SceneLoaderManager.Instance.LoadSceneGroup(SceneGroupToLoad);
+
     }
 }

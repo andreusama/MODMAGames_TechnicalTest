@@ -21,6 +21,8 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public bool IsAlive => m_IsAlive;
 
+    [SerializeField] private CircleDrawer m_Drawer;
+
     /// <summary>
     /// Fired when the enemy dies.
     /// </summary>
@@ -87,6 +89,9 @@ public class Enemy : MonoBehaviour, IDamageable
     private IEnumerator DieCoroutine()
     {
         yield return new WaitForSeconds(m_DestroyDelay);
+
+        m_Drawer.Hide();
+
         if (m_DeathFeedback != null)
         {
             m_DeathFeedback.PlayFeedbacks();
@@ -109,15 +114,7 @@ public class Enemy : MonoBehaviour, IDamageable
     }
     private void ShowCleanArea()
     {
-        // Instantiate a temporary CircleDrawer
-        var go = new GameObject("CleanAreaDrawer");
-        go.transform.position = transform.position;
-        var drawer = go.AddComponent<CircleDrawer>();
-        drawer.Segments = 32;
-        drawer.DrawCircle(transform.position, CleanRadius);
-
-        // Destroy the circle after a short time
-        Destroy(go, 1.5f);
+        m_Drawer.DrawCircle(transform.position, CleanRadius);
     }
 
     private void OnDrawGizmosSelected()

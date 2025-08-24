@@ -2,6 +2,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.AI;
 
 static class ConfigEditorUtil
 {
@@ -153,7 +154,7 @@ public class BalloonGunConfigurationEditor : Editor
     }
 }
 
-// DashConfig -> DashSkill
+// DashConfig -> DashSkill (+ DashCollisionHandler + Hitbox radius)
 [CustomEditor(typeof(DashConfig))]
 public class DashConfigEditor : Editor
 {
@@ -200,7 +201,40 @@ public class DashConfigEditor : Editor
                 skill.DashDuration = cfg.DashDuration;
                 skill.UseDashCurve = cfg.UseDashCurve;
                 skill.DashCurve = cfg.DashCurve;
-                // SafeOffset/IgnoreLayerName se leen en tiempo de dash (raycast), no hace falta tocar nada más
+
+                // Update hitbox radius on Skill's assigned collider (Sphere/Capsule)
+                if (skill.DashHitbox != null)
+                {
+                    if (skill.DashHitbox is SphereCollider s)
+                    {
+                        s.radius = cfg.HitboxRadius;
+                        ConfigEditorUtil.MarkDirty(s);
+                    }
+                    else if (skill.DashHitbox is CapsuleCollider c)
+                    {
+                        c.radius = cfg.HitboxRadius;
+                        ConfigEditorUtil.MarkDirty(c);
+                    }
+                }
+
+                // If there's a DashCollisionHandler, also try to update its collider radius
+                var handler = skill.GetComponentInChildren<DashCollisionHandler>(true);
+                if (handler != null)
+                {
+                    var sphere = handler.GetComponent<SphereCollider>();
+                    if (sphere != null)
+                    {
+                        sphere.radius = cfg.HitboxRadius;
+                        ConfigEditorUtil.MarkDirty(sphere);
+                    }
+                    var capsule = handler.GetComponent<CapsuleCollider>();
+                    if (capsule != null)
+                    {
+                        capsule.radius = cfg.HitboxRadius;
+                        ConfigEditorUtil.MarkDirty(capsule);
+                    }
+                }
+
                 ConfigEditorUtil.MarkDirty(skill);
             }
         }
@@ -208,7 +242,7 @@ public class DashConfigEditor : Editor
     }
 }
 
-// EnemyBaseConfig -> EnemyAI
+// EnemyBaseConfig -> EnemyAI (+ NavMeshAgent speed)
 [CustomEditor(typeof(EnemyBaseConfig))]
 public class EnemyBaseConfigEditor : Editor
 {
@@ -253,6 +287,15 @@ public class EnemyBaseConfigEditor : Editor
                 ai.Damage = cfg.Damage;
                 ai.AttackRange = cfg.AttackRange;
                 ai.AttackCooldown = cfg.AttackCooldown;
+
+                // Apply movement speed if agent exists
+                var agent = ai.GetComponent<NavMeshAgent>();
+                if (agent != null)
+                {
+                    agent.speed = cfg.MoveSpeed;
+                    ConfigEditorUtil.MarkDirty(agent);
+                }
+
                 ConfigEditorUtil.MarkDirty(ai);
             }
         }
@@ -304,10 +347,10 @@ public class EnemyConfigEditor : Editor
             {
                 e.CleanableLayers = cfg.CleanableLayers;
                 e.CleanRadius = cfg.CleanRadius;
-                // Al morir usa m_DestroyDelay y MaxHealth actuales:
+                // Keep health/destroy values in sync
                 SetPrivateFloat(e, "m_DestroyDelay", cfg.DestroyDelay);
                 SetPrivateFloat(e, "m_CurrentHealth", Mathf.Min(GetPrivateFloat(e, "m_CurrentHealth"), cfg.MaxHealth));
-                SetPrivateFloat(e, "m_IsAlive", 1f); // noop: solo por coherencia
+                SetPrivateFloat(e, "m_IsAlive", 1f); // noop
                 e.GetType().GetField("MaxHealth").SetValue(e, cfg.MaxHealth);
                 ConfigEditorUtil.MarkDirty(e);
             }
@@ -328,7 +371,7 @@ public class EnemyConfigEditor : Editor
     }
 }
 
-// WettableEnemyConfig -> WettableEnemy
+// WettableEnemyConfig -> WettableEnemy (+ WettableEnemyAI NavMeshAgent speed)
 [CustomEditor(typeof(WettableEnemyConfig))]
 public class WettableEnemyConfigEditor : Editor
 {
@@ -376,6 +419,18 @@ public class WettableEnemyConfigEditor : Editor
                 obj.MinDotDistance = cfg.MinDotDistance;
                 obj.ExplosionRadius = cfg.ExplosionRadius;
                 ConfigEditorUtil.MarkDirty(obj);
+
+                // Apply movement speed on WettableEnemyAI's agent if present
+                var ai = obj.GetComponent<WettableEnemyAI>();
+                if (ai != null)
+                {
+                    var agent = ai.GetComponent<NavMeshAgent>();
+                    if (agent != null)
+                    {
+                        agent.speed = cfg.MoveSpeed;
+                        ConfigEditorUtil.MarkDirty(agent);
+                    }
+                }
             }
         }
         ConfigEditorUtil.MarkSceneDirty();

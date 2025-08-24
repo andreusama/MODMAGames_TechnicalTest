@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class PlayerSpawner : MonoBehaviour, IEventListener<GameStartEvent>
+public class PlayerSpawner : MonoBehaviour, IEventListener<GameSpawnPlayer>
 {
     [Header("Settings")]
     public AssetReferenceGameObject PlayerReference; // Addressable
@@ -12,15 +12,15 @@ public class PlayerSpawner : MonoBehaviour, IEventListener<GameStartEvent>
 
     private void OnEnable()
     {
-        EventManager.AddListener<GameStartEvent>(this);
+        EventManager.AddListener<GameSpawnPlayer>(this);
     }
 
     private void OnDisable()
     {
-        EventManager.RemoveListener<GameStartEvent>(this);
+        EventManager.RemoveListener<GameSpawnPlayer>(this);
     }
 
-    public void OnEvent(GameStartEvent e)
+    public void OnEvent(GameSpawnPlayer e)
     {
         if (m_PlayerInstance == null)
         {
@@ -63,6 +63,8 @@ public class PlayerSpawner : MonoBehaviour, IEventListener<GameStartEvent>
             {
                 HUDController.Instance.CreateHUD(healthComponent);
             }
+
+            GameController.Instance.SpawnedPlayer = true;
         }
         else
         {

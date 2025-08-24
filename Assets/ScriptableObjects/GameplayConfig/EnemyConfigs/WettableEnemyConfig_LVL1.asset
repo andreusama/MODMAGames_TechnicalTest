@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 645015e2a4795974eb574a6f68ee7373, type: 3}
   m_Name: WettableEnemyConfig_LVL1
   m_EditorClassIdentifier: 
-  ExplosionRadius: 2
-  DotsToSpawn: 10
+  ExplosionRadius: 10
+  DotsToSpawn: 15
   DestroyDelay: 1
   MinDotDistance: 0.3
   MinSpeedPercent: 0.3
-  AddAIIfMissing: 0
+  MoveSpeed: 2.5

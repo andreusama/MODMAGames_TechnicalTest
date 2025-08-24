@@ -15,15 +15,15 @@ MonoBehaviour:
   WaterBalloonPrefab: {fileID: 3527009637524995492, guid: 277ae58f8b205354c86bfa524a676b1c, type: 3}
   ExplosionDelay: 0.1
   Cooldown: 2
-  ExplosionRadius: 2.5
+  ExplosionRadius: 3.5
   TargetLayers:
     serializedVersion: 2
     m_Bits: 4294967295
   MinRange: 7
-  MaxRange: 10
-  MaxHeight: 2
+  MaxRange: 15
+  MaxHeight: 1
   AimingSpeedPercent: 0.4
-  FlightTime: 2
+  FlightTime: 0.7
   UseAnimationCurve: 1
   VelocityCurve:
     serializedVersion: 2
@@ -31,8 +31,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0

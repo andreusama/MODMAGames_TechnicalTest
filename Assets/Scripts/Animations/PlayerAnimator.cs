@@ -15,15 +15,15 @@ public class PlayerAnimator : MonoBehaviour, IEventListener<DashStartEvent>, IEv
     [SerializeField] private string m_AnimTriggerDash = "Dash";
 
     [Header("Tuning")]
-    [Tooltip("Time to keep in SHOOT state before re-evaluating (seconds).")]
+    [Tooltip("Time to keep in SHOOT state before re-evaluating (seconds). (Does not block locomotion)")]
     public float ShootLockTime = 0.35f;
 
-    private enum PlayerState { Idle, Running, Aiming, Shoot, Dash }
-    private PlayerState m_State = PlayerState.Idle;
+    private enum LocomotionState { Idle, Running, Dash }
+    private LocomotionState m_Locomotion = LocomotionState.Idle;
 
     private BalloonGunSkill m_WaterBalloon;
 
-    private float m_ShootUnlockTime;
+    [SerializeField] private ParticleSystem m_RunParticles;
 
     private void Awake()
     {
@@ -57,101 +57,98 @@ public class PlayerAnimator : MonoBehaviour, IEventListener<DashStartEvent>, IEv
 
     private void Start()
     {
-        SetState(PlayerState.Idle);
+        ApplyLocomotion(LocomotionState.Idle);
+        ApplyAiming(false);
     }
 
     private void Update()
     {
-        // If we are DASHING, let the animation handle it until it finishes
-        if (m_State == PlayerState.Dash) return;
-
-        // Short lock for shoot animation
-        if (m_State == PlayerState.Shoot && Time.time < m_ShootUnlockTime) return;
-
-        // AIMING state has priority over locomotion
-        if (m_WaterBalloon != null && m_WaterBalloon.IsAiming)
+        // 1) Locomotion
+        if (m_Locomotion != LocomotionState.Dash)
         {
-            SetState(PlayerState.Aiming);
-            return;
+            Vector3 move = m_Motor.GetCurrentVelocity();
+            var next = (move.sqrMagnitude > 0.001f) ? LocomotionState.Running : LocomotionState.Idle;
+            if (next != m_Locomotion) ApplyLocomotion(next);
         }
 
-        // Determine speed from actual displacement (independent from input)
-        Vector3 move = m_Motor.GetCurrentVelocity();
-        if (move.sqrMagnitude > 0.001f)
-            SetState(PlayerState.Running);
-        else
-            SetState(PlayerState.Idle);
+        // 2) Independent aiming (disabled during dash)
+        bool aiming = m_WaterBalloon != null && m_WaterBalloon.IsAiming && m_Locomotion != LocomotionState.Dash;
+        ApplyAiming(aiming);
     }
 
     private void HandleShot()
     {
-        SetState(PlayerState.Shoot);
-        m_ShootUnlockTime = Time.time + ShootLockTime;
+        // Shooting does not interrupt locomotion; only fires the trigger
+        if (m_Animator != null && !string.IsNullOrEmpty(m_AnimTriggerShoot))
+            m_Animator.SetTrigger(m_AnimTriggerShoot);
     }
 
     public void OnEvent(DashStartEvent evt)
     {
-        SetState(PlayerState.Dash);
+        ApplyLocomotion(LocomotionState.Dash);
+        // Force aiming off during dash
+        ApplyAiming(false);
     }
 
     public void OnEvent(DashEndEvent evt)
     {
-        // When dash finishes, re-evaluate immediately in Update
-        if (m_State == PlayerState.Dash)
-            SetState(PlayerState.Idle);
+        // Re-evaluate locomotion immediately
+        Vector3 move = m_Motor.GetCurrentVelocity();
+        var next = (move.sqrMagnitude > 0.001f) ? LocomotionState.Running : LocomotionState.Idle;
+        ApplyLocomotion(next);
+
+        // Restore aiming if active in the skill
+        bool aiming = m_WaterBalloon != null && m_WaterBalloon.IsAiming;
+        ApplyAiming(aiming);
     }
 
-    private void SetState(PlayerState newState)
+    private void ApplyLocomotion(LocomotionState newState)
     {
-        if (m_State == newState) return;
-        m_State = newState;
+        if (m_Locomotion == newState) return;
+        m_Locomotion = newState;
 
-        switch (m_State)
+        switch (m_Locomotion)
         {
-            case PlayerState.Idle:
+            case LocomotionState.Idle:
                 if (m_Animator != null)
-                {
                     m_Animator.SetBool(m_AnimParamIsRunning, false);
-                    m_Animator.SetBool(m_AnimParamIsAiming, false);
-                }
+                StopRunParticles();
                 break;
 
-            case PlayerState.Running:
+            case LocomotionState.Running:
                 if (m_Animator != null)
-                {
                     m_Animator.SetBool(m_AnimParamIsRunning, true);
-                    m_Animator.SetBool(m_AnimParamIsAiming, false);
-                }
+                PlayRunParticles();
                 break;
 
-            case PlayerState.Aiming:
+            case LocomotionState.Dash:
                 if (m_Animator != null)
                 {
                     m_Animator.SetBool(m_AnimParamIsRunning, false);
-                    m_Animator.SetBool(m_AnimParamIsAiming, true);
-                }
-                break;
-
-            case PlayerState.Shoot:
-                if (m_Animator != null)
-                {
-                    // Usually after SHOOT it will return via Has Exit Time to the previous state
-                    m_Animator.SetBool(m_AnimParamIsRunning, false);
-                    m_Animator.SetBool(m_AnimParamIsAiming, false);
-                    if (!string.IsNullOrEmpty(m_AnimTriggerShoot))
-                        m_Animator.SetTrigger(m_AnimTriggerShoot);
-                }
-                break;
-
-            case PlayerState.Dash:
-                if (m_Animator != null)
-                {
-                    m_Animator.SetBool(m_AnimParamIsRunning, false);
-                    m_Animator.SetBool(m_AnimParamIsAiming, false);
                     if (!string.IsNullOrEmpty(m_AnimTriggerDash))
                         m_Animator.SetTrigger(m_AnimTriggerDash);
                 }
+                StopRunParticles();
                 break;
         }
+    }
+
+    private void ApplyAiming(bool aiming)
+    {
+        if (m_Animator != null)
+            m_Animator.SetBool(m_AnimParamIsAiming, aiming);
+    }
+
+    private void PlayRunParticles()
+    {
+        if (m_RunParticles != null && !m_RunParticles.isPlaying)
+            m_RunParticles.Play();
+    }
+
+    private void StopRunParticles()
+    {
+        if (m_RunParticles != null && m_RunParticles.isPlaying)
+            // Stop particle emission, let existing particles fade out
+            m_RunParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
     }
 }

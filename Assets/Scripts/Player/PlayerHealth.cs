@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Game.Framework;
 
 public class PlayerHealth : MonoBehaviour, IDamageable, IEventListener<DashStartEvent>, IEventListener<DashEndEvent>
 {
@@ -35,20 +36,18 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IEventListener<DashStart
 
     public void OnEvent(DashStartEvent evt)
     {
-        // Now there is only one PlayerMotor, so we can assume it's the current player
         m_IsInvulnerable = true;
     }
 
     public void OnEvent(DashEndEvent evt)
     {
-        // Now there is only one PlayerMotor, so we can assume it's the current player
         m_IsInvulnerable = false;
     }
 
     public void TakeDamage(float amount, bool allyFire = false)
     {
         if (allyFire || m_IsInvulnerable)
-            return; // Ignore friendly fire damage
+            return; // Ignorar daño de aliados o durante dash
 
         if (!m_IsAlive)
             return;
@@ -66,8 +65,13 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IEventListener<DashStart
 
     private void Die()
     {
+        if (!m_IsAlive) return;
         m_IsAlive = false;
-        // Add death logic here: animations, events, etc.
+
+        // Notify end of the game
+        EventManager.TriggerEvent(new GameEndEvent(false));
+
+        // Death logic
         gameObject.SetActive(false);
     }
 }

@@ -14,7 +14,7 @@ public class WettableEnemyConfig : ScriptableObject
     [Range(0.1f, 1f)]
     public float MinSpeedPercent = 0.3f;
 
-    [Header("AI (optional)")]
-    [Tooltip("If true and the WettableEnemy has no AI, one will be added at runtime.")]
-    public bool AddAIIfMissing = false;
+    [Header("Movement")]
+    [Tooltip("NavMeshAgent speed to apply on AI (if present).")]
+    public float MoveSpeed = 3.5f;
 }
