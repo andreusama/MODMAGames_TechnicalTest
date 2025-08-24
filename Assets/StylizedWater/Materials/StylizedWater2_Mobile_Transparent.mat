@@ -16,7 +16,6 @@ Material:
   - _FOAM
   - _RECEIVE_SHADOWS_OFF
   - _SMOOTH_INTERSECTION
-  - _UNLIT
   m_InvalidKeywords:
   - ADVANCED_LIGHTING
   - _CROSSPAN_INTERSECTION
@@ -198,7 +197,7 @@ Material:
     - _IntersectionTiling: 0.36999983
     - _IntersectionWaveDist: 33.28
     - _LightingMode: 0
-    - _LightingOn: 0
+    - _LightingOn: 1
     - _Metallic: 0
     - _Metallicness: 0.1
     - _NORMALMAPOn: 1
@@ -290,7 +289,7 @@ Material:
     - _ZClip: 1
     - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 0.19120172, g: 0.2086369, b: 0.9734455, a: 0.3137255}
+    - _BaseColor: {r: 0.19215685, g: 0.5803133, b: 0.972549, a: 0.3137255}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _DepthMapBounds: {r: -402.3, g: -459.43, b: 0.0012693577, a: 0}
     - _Direction: {r: 1, g: 1, b: 0, a: 0}
@@ -298,7 +297,7 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
     - _FoamTiling: {r: 0.05, g: 0.05, b: 0, a: 0}
-    - _HorizonColor: {r: 0.92158204, g: 0.19120172, b: 0.9559735, a: 1}
+    - _HorizonColor: {r: 0.990566, g: 0.990566, b: 0.990566, a: 1}
     - _IntersectionColor: {r: 1, g: 1, b: 1, a: 1}
     - _NormalTiling: {r: 0.01, g: 0.01, b: 0, a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
