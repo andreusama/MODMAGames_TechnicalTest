@@ -17,6 +17,6 @@ MonoBehaviour:
   CleanRadius: 2
   CleanableLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 2048
   AddAIIfMissing: 0
   AIConfig: {fileID: 0}

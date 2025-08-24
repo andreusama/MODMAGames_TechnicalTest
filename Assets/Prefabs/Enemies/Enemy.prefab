@@ -334,6 +334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3661831f3a766e043af1fdcede2b654a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Config: {fileID: 11400000, guid: 7fb778e2e9c67ea40a17ed6c782c9049, type: 2}
   MaxHealth: 10
   m_DestroyDelay: 1
   CleanRadius: 4.27
@@ -375,10 +376,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 113b01351b1cb8749876562f21c50777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Config: {fileID: 11400000, guid: 5f6b0a00d7b439142a2a44c44ae376de, type: 2}
   Damage: 10
   AttackRange: 1.5
   AttackCooldown: 1
-  MinSpeedPercent: 0.3
   m_Animator: {fileID: 5330704940399809103}
   m_AnimParamIsRunning: IsRunning
   m_AnimTriggerAttack: Attack

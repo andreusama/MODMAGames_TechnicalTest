@@ -4,10 +4,13 @@ using System.Collections;
 
 public class DashSkill : Skill
 {
+    [Header("Config")]
+    [SerializeField] private DashConfig m_Config;
+
     [Header("Dash Settings")]
-    public float DashDistance = 5f;
-    public float DashCooldown = 1f;
-    public float DashDuration = 0.2f;
+    public float DashDistance;
+    public float DashCooldown;
+    public float DashDuration;
 
     [Header("Dash Animation Curve")]
     public bool UseDashCurve = false;
@@ -33,11 +36,26 @@ public class DashSkill : Skill
 
     private void Awake()
     {
+        if (m_Config == null)
+        {
+            Debug.LogWarning($"{name}: DashConfig not assigned, Disabling the ability to avoid errors, please assign a config for the skill on Inspector.");
+            enabled = false;
+            return;
+        }
+
+        DashDistance = m_Config.DashDistance;
+        DashCooldown = m_Config.DashCooldown;
+        DashDuration = m_Config.DashDuration;
+        UseDashCurve = m_Config.UseDashCurve;
+        DashCurve = m_Config.DashCurve;
+
         InitCooldown(DashCooldown);
     }
 
     public void Activate()
     {
+        if (!enabled) return;
+
         SetCooldown(DashCooldown);
         if (IsCooldownReady && !m_IsDashing)
         {
@@ -67,12 +85,12 @@ public class DashSkill : Skill
 
         Vector3 startPosition = transform.position;
         Vector3 dashDir = transform.forward;
-        float safeOffset = 1.1f;
+        float safeOffset = m_Config.SafeOffset;
         Vector3 targetPosition = startPosition + dashDir * DashDistance;
 
         if (Physics.Raycast(startPosition, dashDir, out RaycastHit hit, DashDistance))
         {
-            int ignoreLayer = LayerMask.NameToLayer("IgnoreDashImpact");
+            int ignoreLayer = LayerMask.NameToLayer(m_Config.IgnoreLayerName);
             if (hit.collider.gameObject.layer != ignoreLayer)
                 targetPosition = hit.point - dashDir * safeOffset;
         }

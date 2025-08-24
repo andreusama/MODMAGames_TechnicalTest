@@ -4,9 +4,12 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    public float Damage = 10f;
-    public float AttackRange = 1.5f;
-    public float AttackCooldown = 1f;
+    [Header("Config")]
+    [SerializeField] private EnemyBaseConfig m_Config;
+
+    public float Damage;
+    public float AttackRange;
+    public float AttackCooldown;
 
     [Header("Animation")]
     [SerializeField, Child] private Animator m_Animator;
@@ -29,6 +32,17 @@ public class EnemyAI : MonoBehaviour
 
     private void Awake()
     {
+        if (m_Config == null)
+        {
+            Debug.LogWarning($"{name}: EnemyBaseConfig not assigned. Disabling EnemyAI.");
+            enabled = false;
+            return;
+        }
+
+        Damage = m_Config.Damage;
+        AttackRange = m_Config.AttackRange;
+        AttackCooldown = m_Config.AttackCooldown;
+
         m_Agent = GetComponent<NavMeshAgent>();
         m_Agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
         m_Agent.avoidancePriority = 99;

@@ -14,6 +14,16 @@ public struct GameEndEvent
     public GameEndEvent(bool win) { Win = win; }
 }
 
+/// <summary>
+/// Fired once per second while the match is running.
+/// </summary>
+public struct GameSecondTickEvent
+{
+    public int ElapsedSeconds;    // seconds since start
+    public int RemainingSeconds;  // seconds left until GameDuration
+    public float Progress01;      // 0..1 (elapsed/GameDuration)
+}
+
 public class GameController : MonoBehaviour
 {
     [Header("Settings")]
@@ -27,6 +37,9 @@ public class GameController : MonoBehaviour
     private bool m_GameEnded = false;
     private float m_ElapsedTime = 0f;
 
+    // Last whole second sent as tick (-1 means none sent yet)
+    private int m_LastTickSecond = -1;
+
     private void Start()
     {
         StartCoroutine(GameLoop());
@@ -34,17 +47,20 @@ public class GameController : MonoBehaviour
 
     private IEnumerator GameLoop()
     {
-        // 1. Intro
+        // 1) Intro
         EventManager.TriggerEvent(new GameIntroEvent());
         yield return new WaitForSeconds(IntroDuration);
 
-        // 2. Game start
+        // 2) Game start
         EventManager.TriggerEvent(new GameStartEvent());
 
-        // 3. Wait for end condition (win/lose)
+        // Optional: emit tick at 0s immediately
+        EmitSecondTickIfChanged();
+
+        // 3) Wait for end condition (win/lose)
         yield return StartCoroutine(WaitForEndCondition());
 
-        // 4. Game end
+        // 4) Game end
         m_GameEnded = true;
         bool win = CheckWinCondition();
         EventManager.TriggerEvent(new GameEndEvent(win));
@@ -53,13 +69,38 @@ public class GameController : MonoBehaviour
     private IEnumerator WaitForEndCondition()
     {
         m_ElapsedTime = 0f;
+        m_LastTickSecond = -1;
+
         while (m_ElapsedTime < GameDuration)
         {
             if (CheckLoseCondition())
                 yield break;
+
             m_ElapsedTime += Time.deltaTime;
+
+            // Emit once when the whole elapsed second changes
+            EmitSecondTickIfChanged();
+
             yield return null;
         }
+    }
+
+    private void EmitSecondTickIfChanged()
+    {
+        int elapsedWhole = Mathf.FloorToInt(m_ElapsedTime);
+        if (elapsedWhole == m_LastTickSecond) return;
+
+        m_LastTickSecond = elapsedWhole;
+
+        int remaining = Mathf.Max(0, Mathf.CeilToInt(GameDuration - m_ElapsedTime));
+        float progress = Mathf.Clamp01(m_ElapsedTime / GameDuration);
+
+        EventManager.TriggerEvent(new GameSecondTickEvent
+        {
+            ElapsedSeconds = elapsedWhole,
+            RemainingSeconds = remaining,
+            Progress01 = progress
+        });
     }
 
     // Win logic: after time has passed, was enough cleaning done?

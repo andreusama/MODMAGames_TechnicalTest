@@ -5,12 +5,15 @@ using KBCore.Refs;
 [RequireComponent(typeof(BalloonGunSkill))]
 public class AutoShootSkill : MonoBehaviour
 {
+    [Header("Config")]
+    [SerializeField] private AutoShotConfiguration m_Config;
+
     [Header("Auto Shoot Settings")]
     [SerializeField, Self]
     private BalloonGunSkill m_SkillToUse;
-    public float MinInterval = 2f;
-    public float MaxInterval = 4f;
-    public float AimTime = 0.5f; // Time to keep "aiming" before shooting
+    public float MinInterval;
+    public float MaxInterval;
+    public float AimTime; // Time to keep "aiming" before shooting
     public LayerMask ValidGroundLayers = ~0; // Valid layers to shoot at (tune in inspector)
 
     private bool m_IsActive = false;
@@ -20,6 +23,18 @@ public class AutoShootSkill : MonoBehaviour
 
     private void OnEnable()
     {
+        if (m_Config == null)
+        {
+            Debug.LogWarning($"{name}: AutoShotConfiguration not assigned. Disabling AutoShoot.");
+            enabled = false;
+            return;
+        }
+
+        MinInterval = m_Config.MinInterval;
+        MaxInterval = m_Config.MaxInterval;
+        AimTime = m_Config.AimTime;
+        ValidGroundLayers = m_Config.ValidGroundLayers;
+
         m_IsActive = true;
         StartCoroutine(AutoShootRoutine());
     }

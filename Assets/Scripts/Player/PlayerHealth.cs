@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, IDamageable, IEventListener<DashStartEvent>, IEventListener<DashEndEvent>
@@ -11,6 +12,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IEventListener<DashStart
     public bool IsAlive => m_IsAlive;
 
     private bool m_IsInvulnerable = false;
+
+    public Action<float> OnHealthChanged;
 
     private void Awake()
     {
@@ -57,6 +60,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IEventListener<DashStart
             m_CurrentHealth = 0f;
             Die();
         }
+
+        OnHealthChanged?.Invoke(m_CurrentHealth);
     }
 
     private void Die()

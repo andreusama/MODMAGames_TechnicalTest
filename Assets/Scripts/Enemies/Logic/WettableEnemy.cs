@@ -7,12 +7,15 @@ using UnityEngine;
 
 public class WettableEnemy : WettableObject, IExplodable
 {
+    [Header("Config")]
+    [SerializeField] private WettableEnemyConfig m_Config;
+
     [Header("Wettable Enemy Settings")]
-    public float ExplosionRadius = 2f;
-    public int DotsToSpawn = 10;
-    public float DestroyDelay = 1f;
+    public float ExplosionRadius;
+    public int DotsToSpawn;
+    public float DestroyDelay;
     [Tooltip("Minimum distance between dirt dots")]
-    public float MinDotDistance = 0.3f;
+    public float MinDotDistance;
 
     [Header("Wettable Slowdown")]
     [SerializeField, Self]
@@ -29,6 +32,20 @@ public class WettableEnemy : WettableObject, IExplodable
     protected override void Awake()
     {
         base.Awake();
+
+        if (m_Config == null)
+        {
+            Debug.LogWarning($"{name}: WettableEnemyConfig not assigned.");
+        }
+        else
+        {
+            ExplosionRadius = m_Config.ExplosionRadius;
+            DotsToSpawn = m_Config.DotsToSpawn;
+            DestroyDelay = m_Config.DestroyDelay;
+            MinDotDistance = m_Config.MinDotDistance;
+            MinSpeedPercent = m_Config.MinSpeedPercent;
+        }
+
         if (m_WettableEnemyAI == null)
             m_WettableEnemyAI = GetComponent<WettableEnemyAI>();
     }

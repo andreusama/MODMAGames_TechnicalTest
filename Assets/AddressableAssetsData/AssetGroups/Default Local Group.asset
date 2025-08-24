@@ -25,6 +25,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3b31576ef67473c48a289aa427421e9d
+    m_Address: Assets/Fonts/Bubblegum.ttf
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4755f264af1ad784586adcb07f20c6b3
     m_Address: Assets/ScriptableObjects/Abilities/DashDamage.asset
     m_ReadOnly: 0

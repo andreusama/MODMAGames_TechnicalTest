@@ -5,12 +5,15 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
+    [Header("Config")]
+    [SerializeField] private EnemyConfig m_Config;
+
     [Header("Enemy Settings")]
-    public float MaxHealth = 100f;
-    [SerializeField] private float m_DestroyDelay = 1f;
+    public float MaxHealth;
+    [SerializeField] private float m_DestroyDelay;
 
     [Header("Clean on Death")]
-    public float CleanRadius = 2f;
+    public float CleanRadius;
     public LayerMask CleanableLayers = ~0; // By default, all layers
 
     private float m_CurrentHealth;
@@ -27,6 +30,18 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private void Awake()
     {
+        if (m_Config == null)
+        {
+            Debug.LogWarning($"{name}: EnemyConfig not assigned.");
+        }
+        else
+        {
+            MaxHealth = m_Config.MaxHealth;
+            m_DestroyDelay = m_Config.DestroyDelay;
+            CleanRadius = m_Config.CleanRadius;
+            CleanableLayers = m_Config.CleanableLayers;
+        }
+
         m_CurrentHealth = MaxHealth;
         m_IsAlive = true;
     }

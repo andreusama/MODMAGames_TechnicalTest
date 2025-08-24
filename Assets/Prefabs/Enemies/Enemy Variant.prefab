@@ -594,6 +594,7 @@ MonoBehaviour:
   m_Wetness: 0
   Transform: {fileID: 3886073106981038281}
   MaxScale: 10
+  m_Config: {fileID: 11400000, guid: 7f0765b9f57732e49a449859b7b3eaa9, type: 2}
   ExplosionRadius: 20
   DotsToSpawn: 12
   DestroyDelay: 1
@@ -613,6 +614,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7d7dade2261a5d46a69ff36ecd92355, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Config: {fileID: 11400000, guid: 780584345f66887438bde475392980d4, type: 2}
   m_SkillToUse: {fileID: 3819236278531130589}
   MinInterval: 2
   MaxInterval: 4
