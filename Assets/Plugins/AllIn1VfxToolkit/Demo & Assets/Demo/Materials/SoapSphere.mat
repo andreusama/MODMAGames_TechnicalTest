@@ -19,7 +19,7 @@ Material:
   - SHAPE2_ON
   m_InvalidKeywords: []
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -156,7 +156,7 @@ Material:
     - _RandomSh2Mult: 1
     - _RandomSh3Mult: 1
     - _RenderingMode: 5
-    - _RimAddAmount: 0.456
+    - _RimAddAmount: 0.272
     - _RimBias: 0
     - _RimErodesAlpha: 0
     - _RimIntensity: 0.94
@@ -243,7 +243,7 @@ Material:
     - _FrontFaceTint: {r: 1, g: 1, b: 1, a: 1}
     - _GlowColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightColor: {r: 1, g: 1, b: 1, a: 1}
-    - _RimColor: {r: 0.92158204, g: 0.19120172, b: 0.9559735, a: 1}
+    - _RimColor: {r: 0.19120172, g: 0.2086369, b: 0.9734455, a: 1}
     - _Shape2Color: {r: 1, g: 1, b: 1, a: 1}
     - _Shape3Color: {r: 1, g: 1, b: 1, a: 1}
     - _ShapeColor: {r: 1, g: 1, b: 1, a: 1}
