@@ -24,7 +24,6 @@ public struct GameSecondTickEvent
     public float Progress01;      // 0..1 (elapsed/GameDuration)
 }
 
-
 public class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
@@ -37,7 +36,7 @@ public class GameController : MonoBehaviour
     public float GameDuration = 60f;
     [Tooltip("Clean percentage required to win (0-1)")]
     [Range(0f, 1f)]
-    public float RequiredCleanPercentage = 0.8f;
+    public float MaxDirtPercentage = 0.8f;
 
     private bool m_GameEnded = false;
     private float m_ElapsedTime = 0f;
@@ -45,7 +44,9 @@ public class GameController : MonoBehaviour
     // Last whole second sent as tick (-1 means none sent yet)
     private int m_LastTickSecond = -1;
 
+    // Spawn gates
     public bool SpawnedPlayer = false;
+    public bool SpongeSpawned = false;
 
     private void Awake()
     {
@@ -72,13 +73,16 @@ public class GameController : MonoBehaviour
         Time.timeScale = 1f;
         if (EnGUIManager.Instance.ScreenFader != null)
             yield return EnGUIManager.Instance.FadeOut<IFader>(0.1f);
-        // 1) Intro
+
+        // 1) Intro / spawning phase
         EventManager.TriggerEvent(new GameSpawnPlayer());
-        
-        yield return new WaitUntil(() => SpawnedPlayer);
+
+        // Wait until both player and sponge are spawned
+        yield return new WaitUntil(() => SpawnedPlayer && SpongeSpawned);
 
         if (EnGUIManager.Instance.ScreenFader != null)
             yield return EnGUIManager.Instance.FadeIn<IFader>(1f);
+
         // 2) Game start
         EventManager.TriggerEvent(new GameStartEvent());
 
@@ -137,8 +141,7 @@ public class GameController : MonoBehaviour
     private bool CheckWinCondition()
     {
         float dirtiness = DirtyDotManager.Instance != null ? DirtyDotManager.Instance.GetDirtPercentage() : 0f;
-        float cleaned = 1f - (dirtiness / 100f); // Convert to clean percentage (0-1)
-        return cleaned >= RequiredCleanPercentage;
+        return dirtiness <= MaxDirtPercentage;
     }
 
     // Lose logic: customize if there are more conditions
@@ -183,6 +186,5 @@ public class GameController : MonoBehaviour
         yield return new WaitUntil(() => EnGUIManager.Instance.IsEmpty);
 
         SceneLoaderManager.Instance.LoadSceneGroup(SceneGroupToLoad);
-
     }
 }

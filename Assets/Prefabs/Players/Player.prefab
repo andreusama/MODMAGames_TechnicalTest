@@ -215,8 +215,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerMotor: {fileID: 7346660142300454559}
   Skills:
-  - {fileID: 2612534734359323342}
   - {fileID: 6161034944610703723}
+  - {fileID: 2612534734359323342}
 --- !u!114 &7346660142300454559
 MonoBehaviour:
   m_ObjectHideFlags: 0

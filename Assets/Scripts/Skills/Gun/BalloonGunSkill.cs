@@ -91,7 +91,7 @@ public class BalloonGunSkill : Skill
 
     public void OnAimingPerformed(Vector2 input)
     {
-        if (!enabled) return;
+        if (!enabled || !IsCooldownReady) return;
 
         Vector2 invertedInput = new Vector2(-input.x, -input.y);
 

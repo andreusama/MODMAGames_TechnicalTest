@@ -58,10 +58,11 @@ public class PlayerSpawner : MonoBehaviour, IEventListener<GameSpawnPlayer>
             
             if (m_PlayerInstance == null) yield break; ; // bail out if destroyed
             var healthComponent = m_PlayerInstance.GetComponent<PlayerHealth>();
+            var skillManagerComponent = m_PlayerInstance.GetComponent<SkillManager>();
 
             if (healthComponent != null && HUDController.Instance != null)
             {
-                HUDController.Instance.CreateHUD(healthComponent);
+                HUDController.Instance.CreateHUD(healthComponent, skillManagerComponent);
             }
 
             GameController.Instance.SpawnedPlayer = true;

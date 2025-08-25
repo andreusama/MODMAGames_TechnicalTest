@@ -33,7 +33,7 @@ public class HUDController : MonoBehaviour, IEventListener<GameEndEvent>
     }
 
     // Called from PlayerSpawner once the player is ready
-    public void CreateHUD(PlayerHealth playerHealth)
+    public void CreateHUD(PlayerHealth playerHealth, SkillManager skillManager)
     {
         if (m_PlayerHUDInstance == null)
         {
@@ -57,7 +57,7 @@ public class HUDController : MonoBehaviour, IEventListener<GameEndEvent>
             return;
         }
 
-        m_PlayerHUDInstance.Initialize(playerHealth);
+        m_PlayerHUDInstance.Initialize(playerHealth, skillManager);
     }
 
     public void OnEvent(GameEndEvent e)

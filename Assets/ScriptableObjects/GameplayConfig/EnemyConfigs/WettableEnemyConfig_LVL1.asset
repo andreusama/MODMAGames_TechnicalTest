@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WettableEnemyConfig_LVL1
   m_EditorClassIdentifier: 
   ExplosionRadius: 10
-  DotsToSpawn: 15
+  DotsToSpawn: 17
   DestroyDelay: 1
   MinDotDistance: 0.3
   MinSpeedPercent: 0.3

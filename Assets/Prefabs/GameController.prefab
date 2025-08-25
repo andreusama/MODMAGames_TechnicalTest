@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2496550398173175536
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2707859058377292880}
+  - component: {fileID: 8248074330032849927}
+  - component: {fileID: 3371975265256494166}
+  - component: {fileID: 3415491180846037685}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2707859058377292880
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2496550398173175536}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -27.73024, y: 36.32601, z: -21.892155}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8248074330032849927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2496550398173175536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eba23927b43066c44b8973e2ca56af43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerReference:
+    m_AssetGUID: 2cb0ef1f9ed407f47bced0a92c7bb140
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  SpawnPoint: {fileID: 0}
+--- !u!114 &3371975265256494166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2496550398173175536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aff6417f3bcdef4888d06d4649d522e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SceneGroupToLoad: {fileID: 11400000, guid: a1a8c72f407bef643b3aaf7928eab531, type: 2}
+  IntroDuration: 2
+  GameDuration: 60
+  RequiredCleanPercentage: 0.3
+  SpawnedPlayer: 0
+--- !u!114 &3415491180846037685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2496550398173175536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf6c13fc39dd33459ad974bd9239739, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DotPooler: {fileID: 0}
+  FallbackDotPrefab: {fileID: 5679464411059033884, guid: 36e5c9cc55a8255489f679fed96bf09a, type: 3}
