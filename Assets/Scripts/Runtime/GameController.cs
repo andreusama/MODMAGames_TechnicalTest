@@ -35,8 +35,8 @@ public class GameController : MonoBehaviour
     [Tooltip("Game duration in seconds")]
     public float GameDuration = 60f;
     [Tooltip("Clean percentage required to win (0-1)")]
-    [Range(0f, 1f)]
-    public float MaxDirtPercentage = 0.8f;
+    [Range(0f, 100f)]
+    public float MaxDirtPercentage = 30f;
 
     private bool m_GameEnded = false;
     private float m_ElapsedTime = 0f;

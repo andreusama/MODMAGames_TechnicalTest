@@ -1504,14 +1504,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3371975265256494166, guid: c1d2db177ead2b74fa3b8a47ef6fe9ca, type: 3}
-      propertyPath: MaxDirtPercentage
-      value: 0.3
-      objectReference: {fileID: 0}
     - target: {fileID: 3415491180846037685, guid: c1d2db177ead2b74fa3b8a47ef6fe9ca, type: 3}
       propertyPath: DotPooler
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 812054323}
     - target: {fileID: 8248074330032849927, guid: c1d2db177ead2b74fa3b8a47ef6fe9ca, type: 3}
       propertyPath: SpawnPoint
       value: 
@@ -1772,6 +1768,17 @@ MonoBehaviour:
   m_IgnoreFromBuild: 1
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
+--- !u!114 &812054323 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2311945639847195474, guid: 63aaa102f317353418ac4851c8a0f4eb, type: 3}
+  m_PrefabInstance: {fileID: 2129377493}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e660e8deeb853a44918d8cecac19c4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &832133022
 PrefabInstance:
   m_ObjectHideFlags: 0

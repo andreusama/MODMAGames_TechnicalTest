@@ -68,8 +68,9 @@ MonoBehaviour:
   SceneGroupToLoad: {fileID: 11400000, guid: a1a8c72f407bef643b3aaf7928eab531, type: 2}
   IntroDuration: 2
   GameDuration: 60
-  RequiredCleanPercentage: 0.3
+  MaxDirtPercentage: 30
   SpawnedPlayer: 0
+  SpongeSpawned: 0
 --- !u!114 &3415491180846037685
 MonoBehaviour:
   m_ObjectHideFlags: 0
