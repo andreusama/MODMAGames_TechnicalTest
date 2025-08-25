@@ -8,7 +8,8 @@ public class PlayerHealthGUI : MonoBehaviour
 
     private void OnDisable()
     {
-        m_PlayerHealth.OnHealthChanged -= UpdateHealthDisplay;
+        if (m_PlayerHealth != null)
+            m_PlayerHealth.OnHealthChanged -= UpdateHealthDisplay;
     }
 
     public void Initialize(PlayerHealth playerHealth)

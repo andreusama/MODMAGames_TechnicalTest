@@ -1,7 +1,4 @@
 using MoreMountains.Feedbacks;
-using PetoonsStudio.PSEngine.Gameplay;
-using PetoonsStudio.PSEngine.Input;
-using PetoonsStudio.PSEngine.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,7 +29,6 @@ namespace EnGUI
         [SerializeField] protected bool m_PauseOnOpen = false;
         [Tooltip("Should this content propagate its cancelAction to Selectable children")]
         [SerializeField] protected bool m_HandleCancelEvents;
-        [SerializeField, ConditionalHide("m_HandleCancelEvents")] protected bool m_ResetPreviousSelectedOnCancel;
 
         [Header("Feedbacks")]
         [SerializeField] protected MMF_Player m_OpenFeedback;
@@ -278,8 +274,7 @@ namespace EnGUI
 
         public virtual void OnCancel()
         {
-            if (m_ResetPreviousSelectedOnCancel)
-                m_ResetPreviousSelected = true;
+           
         }
     }
 }
